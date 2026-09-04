@@ -34,6 +34,30 @@ const HOL = {
     staff:         { maxLoans: 6, days: 28, label: "Staff" },
   },
 
+  /* Push notifications, through Firebase Cloud Messaging.
+
+     The VAPID key is a PUBLIC key. It is meant to ship in client code and
+     identifies this site to the push service; it grants nobody anything. The
+     private half never leaves Google.
+
+     The rest of these values come from the Firebase console:
+       Project settings, General, Your apps, Web app, SDK setup and config.
+     They are public too: Firebase access is controlled by security rules on
+     the server, not by hiding this object. See
+     https://firebase.google.com/docs/projects/api-keys
+
+     If a value below is still a placeholder, push stays switched off and
+     js/push.js says so in the console rather than failing silently. */
+  FIREBASE: {
+    apiKey:            "FILL_IN_FROM_FIREBASE_CONSOLE",
+    authDomain:        "holibrary.firebaseapp.com",
+    projectId:         "holibrary",
+    messagingSenderId: "FILL_IN_FROM_FIREBASE_CONSOLE",
+    appId:             "FILL_IN_FROM_FIREBASE_CONSOLE",
+  },
+
+  VAPID_KEY: "BAfvExLPIPeAh7qjkKTghlL1AXBJesbR8V3mPYWOIVZ6wpEzBgNa7ekPZ-ZwOWp6hETakRzI4jrtOUJtTkwU6JY",
+
   /* Times arrive from the API in UTC as RFC 3339 strings. Every time shown to
      a reader is Lagos time. Use formatDateTime() in format.js; never print a
      raw timestamp. */

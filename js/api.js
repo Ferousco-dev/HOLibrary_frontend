@@ -100,7 +100,10 @@ const api = (function () {
     get:  (path)          => request("GET", path),
     post: (path, payload) => request("POST", path, payload),
     patch:(path, payload) => request("PATCH", path, payload),
-    del:  (path)          => request("DELETE", path),
+    // DELETE carries a body on /me/devices, which names the device being
+    // removed. Unusual for the verb, but it is what the contract says:
+    // https://api.library.appmd.dev/docs
+    del:  (path, payload) => request("DELETE", path, payload),
 
     async login(identifier, password) {
       const tokens = await request("POST", "/auth/login", { identifier, password });

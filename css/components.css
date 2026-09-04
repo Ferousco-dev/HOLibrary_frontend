@@ -314,3 +314,21 @@
 .errorpage__search { margin: var(--space-6) auto var(--space-5); max-width: 30rem; display: flex; gap: var(--space-3); }
 .errorpage__search .input { flex: 1 1 auto; }
 .errorpage__links { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; font-size: var(--text-sm); }
+
+/* --- notification offer --------------------------------------------------
+   A quiet strip, not a modal. It appears only after the reader has done
+   something that makes the offer make sense, and it is dismissible for good.
+   A site that begs for notification permission on arrival is the reason
+   browsers now block sites that ask twice. */
+.pushoffer {
+  display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;
+  padding: var(--space-4);
+  background: var(--indigo-wash);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+.pushoffer__text { flex: 1 1 260px; min-width: 0; }
+.pushoffer__text b { display: block; color: var(--indigo); font-size: var(--text-base); }
+.pushoffer__text span { font-size: var(--text-sm); color: var(--ink-muted); }
+.pushoffer__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
