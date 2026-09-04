@@ -1,29 +1,14 @@
 <!DOCTYPE html>
 <!--
-  ===========================================================================
-  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
-
-      cp pages/_template.html pages/05-my-loans.html
-
-  Change only the four marked spots:
-      1. <title>
-      2. aria-current="page" on this screen's nav link, removed from the rest
-      3. the breadcrumb trail
-      4. everything inside <main>
-
-  The header and footer are identical on every page. If one of them needs to
-  change, that is a pull request, not a local edit: eleven pages have to match.
-  ===========================================================================
+  Shown when a URL matches nothing. Vercel serves this automatically for any
+  unmatched path; see vercel.json.
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- 1. CHANGE THIS -->
-  <title>Page name | Hezekiah Oluwasanmi Library</title>
-  <meta name="description" content="One sentence describing this page.">
-
+  <title>Page not found | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="That page does not exist. Search the catalogue instead.">
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
@@ -33,7 +18,6 @@
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<!-- ================= HEADER -- copy exactly, do not edit ================= -->
 <header class="siteheader">
   <div class="siteheader__inner">
     <a class="brand" href="../index.html">
@@ -66,42 +50,36 @@
 </header>
 
 
-<!-- ====================== end header ==================================== -->
-
-<div class="shell">
-  <!-- 3. CHANGE THIS -->
-  <nav class="crumbs" aria-label="Breadcrumb">
-    <ol>
-      <li><a href="../index.html">Catalogue</a></li>
-      <li aria-current="page">Page name</li>
-    </ol>
-  </nav>
-</div>
 
 <main id="main" class="shell page">
+  <div class="errorpage">
+    <p class="errorpage__code" aria-hidden="true">404</p>
 
-  <!-- 4. CHANGE EVERYTHING BELOW ---------------------------------------- -->
+    <!-- The heading says what happened in words. The big number above is for
+         a sighted reader to recognise at a glance and is hidden from assistive
+         technology, which would otherwise announce a bare "404". -->
+    <h1>We could not find that page</h1>
 
-  <div class="page__head">
-    <h1>Page name</h1>
-    <p class="page__lead">One sentence saying what a reader can do here.</p>
+    <p>
+      The address may have been mistyped, or the page may have been moved. It is
+      also possible we removed it. Nothing is wrong with your account, and
+      nothing you were doing has been lost.
+    </p>
+
+    <form class="errorpage__search" action="../index.html" method="get" role="search">
+      <label class="sr-only" for="q">Search the catalogue</label>
+      <input class="input" type="search" id="q" name="q" placeholder="Search for a book instead">
+      <button class="btn btn--primary" type="submit">Search</button>
+    </form>
+
+    <p class="errorpage__links">
+      <a href="../index.html">Back to the catalogue</a>
+      <a href="05-my-loans.html">Books you have out</a>
+      <a href="04-signin.html">Sign in</a>
+    </p>
   </div>
-
-  <!-- Outcomes are announced here for screen reader users, who get no visual
-       cue that anything happened. It is visually hidden on purpose. Write to
-       it with announce("Loan recorded."), never innerHTML. -->
-  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
-
-  <section class="panel">
-    <h2 class="panel__title">Section heading</h2>
-    <p>Content goes here.</p>
-  </section>
-
-  <!-- ------------------------------------------------------------------- -->
-
 </main>
 
-<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
 <footer class="sitefoot">
   <div class="sitefoot__inner">
     <div>
@@ -145,14 +123,11 @@
 </footer>
 
 
-<!-- ====================== end footer ==================================== -->
 
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/nav.js"></script>
-
-<!-- Your page's own script goes here. -->
 
 </body>
 </html>

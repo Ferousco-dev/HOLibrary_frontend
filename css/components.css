@@ -295,3 +295,22 @@
   background: var(--surface); border: var(--border); border-radius: var(--radius);
 }
 .loading p { color: var(--ink-muted); font-size: var(--text-sm); margin: 0; }
+
+/* --- error page ---------------------------------------------------------
+   A dead end should still offer a way onward. The number is set large because
+   it is the one piece of information a reader can act on when reporting the
+   problem, not because it is decoration. */
+.errorpage { text-align: center; padding: var(--space-7) var(--space-5); max-width: 46rem; margin: 0 auto; }
+.errorpage__code {
+  font-family: var(--font-head); font-size: 5rem; font-weight: 700;
+  color: var(--indigo); line-height: 1; margin: 0 0 var(--space-3);
+}
+.errorpage h1 { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
+/* `.errorpage p` is one element more specific than `.errorpage__code`, so
+   without this it would repaint the big number in the muted body colour.
+   Naming the element here keeps the two at the same weight. */
+.errorpage p.errorpage__code { color: var(--indigo); }
+.errorpage p { color: var(--ink-muted); max-width: 46ch; margin-left: auto; margin-right: auto; }
+.errorpage__search { margin: var(--space-6) auto var(--space-5); max-width: 30rem; display: flex; gap: var(--space-3); }
+.errorpage__search .input { flex: 1 1 auto; }
+.errorpage__links { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; font-size: var(--text-sm); }
