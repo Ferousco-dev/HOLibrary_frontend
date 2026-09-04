@@ -1,5 +1,5 @@
 /* ==========================================================================
-   push.js — asking for permission, and registering the device.
+   push.js , asking for permission, and registering the device.
 
    Push is an enhancement and never a requirement. Every notification this
    system sends also goes by email, so a reader who refuses permission, uses a

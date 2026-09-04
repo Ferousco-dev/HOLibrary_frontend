@@ -1,5 +1,5 @@
 /* ==========================================================================
-   config.js — where the back end lives.
+   config.js , where the back end lives.
    Loaded first, before every other script. Do not hardcode a URL anywhere
    else in this project.
    ========================================================================== */

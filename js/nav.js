@@ -1,5 +1,5 @@
 /* ==========================================================================
-   nav.js — the menu button.
+   nav.js , the menu button.
 
    The navigation is a dropdown at every width, so there is one menu to build,
    test and keep in step rather than a desktop row plus a mobile drawer.

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   validate.js — checking a form before it is sent.
+   validate.js , checking a form before it is sent.
 
    Two kinds of checking exist and they are not alternatives:
 

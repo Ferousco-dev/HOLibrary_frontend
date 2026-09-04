@@ -1,5 +1,5 @@
 /* ==========================================================================
-   api.js — every conversation with the back end goes through this file.
+   api.js , every conversation with the back end goes through this file.
 
    Why one file: so that the token handling, the error shape and the refresh
    logic are written once and correctly, instead of eleven times with eleven
