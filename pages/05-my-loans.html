@@ -22,7 +22,7 @@
 
   <!-- 1. CHANGE THIS -->
   <title>My Loans | Hezekiah Oluwasanmi Library</title>
-  <meta name="description" content="One sentence describing this page.">
+  <meta name="description" content="View books currently borrowed and their due dates.">
 
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/base.css">
@@ -65,7 +65,6 @@
   </div>
 </header>
 
-
 <!-- ====================== end header ==================================== -->
 
 <div class="shell">
@@ -78,96 +77,364 @@
   </nav>
 </div>
 
+<!-- =========================== MAIN ===================================== -->
+
 <main id="main" class="shell page">
 
- <div class="page__head">
-  <h1>My Loans</h1>
-  <p class="page__lead">
-    View the books you currently have out and when they are due back.
-  </p>
-</div>
+  <style>
+    /* My Loans visual polish */
+    .loans-intro {
+      position: relative;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 1rem;
+      background: linear-gradient(
+        135deg,
+        #260e54 0%,
+        #3b1b70 100%
+      );
+      color: white;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(38, 14, 84, 0.18);
+    }
 
-<p class="liveregion" id="live" aria-live="polite" role="status"></p>
-<section class="stats" aria-label="Loan summary">
-  <div class="stat">
-    <span class="stat__value">3</span>
-    <span class="stat__label">Books out</span>
-  </div>
+    .loans-intro::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: rgba(228, 180, 84, 0.16);
+    }
 
-  <div class="stat">
-    <span class="stat__value">2</span>
-    <span class="stat__label">Due soon</span>
-  </div>
+    .loans-intro h1 {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
 
-  <div class="stat">
-    <span class="stat__value">1</span>
-    <span class="stat__label">Overdue</span>
-  </div>
-</section>
-<section class="panel" aria-labelledby="current-loans-heading">
-  <h2 class="panel__title" id="current-loans-heading">Books you have out</h2>
+    .loans-intro .page__lead {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.86);
+    }
 
-  <div class="results">
+    .loans-intro__accent {
+      display: inline-block;
+      width: 48px;
+      height: 4px;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      background: #e4b454;
+    }
 
-    <article class="result">
-      <div class="result__body">
-        <h3 class="result__title">Introduction to Software Engineering</h3>
+    .loans-stats {
+      margin-bottom: 2rem;
+    }
 
-        <p class="result__meta">
-          Accession number:
-          <span class="accession">SE-00421</span>
-        </p>
+    .loans-stats .stat {
+      border: 1px solid rgba(38, 14, 84, 0.1);
+      border-top: 4px solid #260e54;
+      border-radius: 0.85rem;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(38, 14, 84, 0.09);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
 
-        <p class="result__text">
-          Due date: <strong>September 8, 2026</strong>
-        </p>
+    .loans-stats .stat:nth-child(2) {
+      border-top-color: #e4b454;
+    }
 
-        <p>
-          <span class="status status--ok">4 days left</span>
-        </p>
-      </div>
-    </article>
+    .loans-stats .stat:nth-child(3) {
+      border-top-color: #260e54;
+    }
 
-    <article class="result">
-      <div class="result__body">
-        <h3 class="result__title">Database System Concepts</h3>
+    .loans-stats .stat:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(38, 14, 84, 0.14);
+    }
 
-        <p class="result__meta">
-          Accession number:
-          <span class="accession">CS-01872</span>
-        </p>
+    .loans-stats .stat__value {
+      color: #260e54;
+    }
 
-        <p class="result__text">
-          Due date: <strong>September 5, 2026</strong>
-        </p>
+    .loans-stats .stat:nth-child(2) .stat__value {
+      color: #a87912;
+    }
 
-        <p>
-          <span class="status status--ok">1 day left</span>
-        </p>
-      </div>
-    </article>
+    .loans-panel {
+      border: 1px solid rgba(38, 14, 84, 0.1);
+      border-radius: 1rem;
+      box-shadow: 0 10px 28px rgba(38, 14, 84, 0.08);
+      overflow: hidden;
+    }
 
-    <article class="result">
-      <div class="result__body">
-        <h3 class="result__title">Computer Networks</h3>
+    .loans-panel .panel__title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #260e54;
+    }
 
-        <p class="result__meta">
-          Accession number:
-          <span class="accession">CS-01209</span>
-        </p>
+    .loans-panel .panel__title::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 26px;
+      border-radius: 999px;
+      background: #e4b454;
+    }
 
-        <p class="result__text">
-          Due date: <strong>September 2, 2026</strong>
-        </p>
+    .loan-list {
+      display: grid;
+      gap: 1rem;
+    }
 
-        <p>
-          <span class="status status--bad">3 days overdue</span>
-        </p>
-      </div>
-    </article>
+    .loan-card {
+      position: relative;
+      border: 1px solid rgba(38, 14, 84, 0.1);
+      border-left: 5px solid #260e54;
+      border-radius: 0.8rem;
+      background: #ffffff;
+      box-shadow: 0 7px 20px rgba(38, 14, 84, 0.07);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
 
-  </div>
-</section>
+    .loan-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(38, 14, 84, 0.13);
+    }
+
+    .loan-card--soon {
+      border-left-color: #e4b454;
+    }
+
+    .loan-card--overdue {
+      border-left-color: #260e54;
+    }
+
+    .loan-card__inner {
+      padding: 1.25rem;
+    }
+
+    .loan-card__category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0 0 0.55rem;
+      color: #260e54;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .loan-card__category::before {
+      content: "▰";
+      color: #e4b454;
+      font-size: 0.65rem;
+    }
+
+    .loan-card .result__title {
+      color: #260e54;
+      margin-bottom: 0.65rem;
+    }
+
+    .loan-card .result__text {
+      margin-bottom: 0.5rem;
+    }
+
+    .loan-card__due {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding-top: 0.9rem;
+      border-top: 1px solid rgba(38, 14, 84, 0.08);
+    }
+
+    .loan-card__due-date {
+      font-weight: 600;
+      color: #260e54;
+    }
+
+    .loan-card__due-date strong {
+      color: #a87912;
+    }
+
+    .loan-card--overdue .loan-card__due-date strong {
+      color: #260e54;
+    }
+
+    .loan-card .status {
+      font-weight: 700;
+      border-radius: 999px;
+    }
+
+    @media (max-width: 600px) {
+      .loans-intro {
+        padding: 1.5rem;
+      }
+
+      .loans-intro::after {
+        width: 130px;
+        height: 130px;
+        right: -55px;
+        top: -55px;
+      }
+
+      .loan-card__inner {
+        padding: 1rem;
+      }
+
+      .loan-card__due {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+
+  <!-- Intro -->
+  <section class="loans-intro" aria-labelledby="loans-heading">
+    <span class="loans-intro__accent" aria-hidden="true"></span>
+
+    <h1 id="loans-heading">My Loans</h1>
+
+    <p class="page__lead">
+      View the books you currently have out and when they are due back.
+    </p>
+  </section>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <!-- Loan summary -->
+  <section class="stats loans-stats" aria-label="Loan summary">
+
+    <div class="stat">
+      <span class="stat__value">3</span>
+      <span class="stat__label">Books out</span>
+    </div>
+
+    <div class="stat">
+      <span class="stat__value">2</span>
+      <span class="stat__label">Due soon</span>
+    </div>
+
+    <div class="stat">
+      <span class="stat__value">1</span>
+      <span class="stat__label">Overdue</span>
+    </div>
+
+  </section>
+
+  <!-- Current loans -->
+  <section class="panel loans-panel" aria-labelledby="current-loans-heading">
+
+    <h2 class="panel__title" id="current-loans-heading">
+      Books you have out
+    </h2>
+
+    <div class="loan-list">
+
+      <!-- Loan 1 -->
+      <article class="loan-card">
+        <div class="loan-card__inner">
+
+          <p class="loan-card__category">Software Engineering</p>
+
+          <h3 class="result__title">
+            Introduction to Software Engineering
+          </h3>
+
+          <p class="result__meta">
+            Accession number:
+            <span class="accession">SE-00421</span>
+          </p>
+
+          <div class="loan-card__due">
+            <p class="loan-card__due-date">
+              Due <strong>September 8, 2026</strong>
+            </p>
+
+            <span class="status status--ok">
+              4 days left
+            </span>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Loan 2 -->
+      <article class="loan-card loan-card--soon">
+        <div class="loan-card__inner">
+
+          <p class="loan-card__category">Databases</p>
+
+          <h3 class="result__title">
+            Database System Concepts
+          </h3>
+
+          <p class="result__meta">
+            Accession number:
+            <span class="accession">CS-01872</span>
+          </p>
+
+          <div class="loan-card__due">
+            <p class="loan-card__due-date">
+              Due <strong>September 5, 2026</strong>
+            </p>
+
+            <span class="status status--ok">
+              1 day left
+            </span>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Loan 3 -->
+      <article class="loan-card loan-card--overdue">
+        <div class="loan-card__inner">
+
+          <p class="loan-card__category">Computer Science</p>
+
+          <h3 class="result__title">
+            Computer Networks
+          </h3>
+
+          <p class="result__meta">
+            Accession number:
+            <span class="accession">CS-01209</span>
+          </p>
+
+          <div class="loan-card__due">
+            <p class="loan-card__due-date">
+              Due <strong>September 2, 2026</strong>
+            </p>
+
+            <span class="status status--bad">
+              3 days overdue
+            </span>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+  </section>
+
 </main>
 
 <!-- ================= FOOTER -- copy exactly, do not edit ================= -->
@@ -208,12 +475,12 @@
       </ul>
     </div>
   </div>
+
   <div class="sitefoot__base">
     <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
     <span>Catalogue and circulation only. This library does not lend digital texts.</span>
   </div>
 </footer>
-
 
 <!-- ====================== end footer ==================================== -->
 
