@@ -1,17 +1,17 @@
 # The front end, split three ways
 
-Nine screens remain. The catalogue search page (`index.html`) is finished and is
+Ten screens remain. The catalogue search page (`index.html`) is finished and is
 the **reference implementation**: when you are unsure how something should be
 written, open it and copy the pattern.
 
 | Who | Branch | Screens |
 |---|---|---|
 | Developer A | `feature/a-catalogue-and-access` | Book detail, Sign in, Change password |
-| Developer B | `feature/b-member-records` | My loans, Reservations, Dashboard |
+| Developer B | `feature/b-member-records` | My loans, Reservations, Dashboard, Saved titles |
 | Developer C | `feature/c-circulation-desk` | Issue a copy, Receive a return, Members |
 
-Three screens each, balanced by difficulty rather than by count: A and C each
-carry one hard screen, B carries three medium ones.
+A and C have three screens each and carry one hard screen apiece. B has four,
+all of them medium, and the fourth is the newest feature: saved titles.
 
 ## Before you write anything
 
