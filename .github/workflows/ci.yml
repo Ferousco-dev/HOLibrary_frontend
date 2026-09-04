@@ -1,0 +1,71 @@
+# Runs on every pull request. It is not here to judge anyone's taste; it checks
+# the few things that are objectively either right or wrong, so that a review
+# can be about the design instead of about a missing alt attribute.
+name: checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  html:
+    name: HTML and accessibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Every page is valid HTML
+        run: |
+          npm install -g html-validate --silent
+          npx html-validate "**/*.html" || exit 1
+
+      - name: Every image has an alt attribute
+        run: |
+          # An <img> with no alt at all is invisible to a screen reader.
+          # alt="" is allowed: it means "decorative, skip me", which is a
+          # decision. A missing attribute is not a decision.
+          if grep -rEn '<img(?![^>]*\balt=)' --include='*.html' -P .; then
+            echo "::error::An <img> above has no alt attribute."
+            exit 1
+          fi
+          echo "all images carry an alt attribute"
+
+      - name: No inline styles
+        run: |
+          # A style attribute in a page cannot be reused and does not respond
+          # to the tokens. If a component is missing, add it to components.css.
+          if grep -rn 'style="' --include='*.html' . | grep -v '_template.html'; then
+            echo "::error::Inline style found. Use a class from css/components.css."
+            exit 1
+          fi
+          echo "no inline styles"
+
+      - name: No raw colours outside the token file
+        run: |
+          # Every colour lives in css/tokens.css. A hex code anywhere else means
+          # two screens will drift apart.
+          if grep -rEn '#[0-9a-fA-F]{3,6}\b' --include='*.css' css/ | grep -v 'css/tokens.css'; then
+            echo "::error::Raw hex colour outside tokens.css. Use var(--token)."
+            exit 1
+          fi
+          echo "colours all come from tokens"
+
+      - name: Nobody wrote their own fetch
+        run: |
+          # api.js handles the token, the refresh and the error shape. A bare
+          # fetch bypasses all three and will break silently when a token expires.
+          if grep -rn 'fetch(' --include='*.html' . ; then
+            echo "::error::Direct fetch() in a page. Use api.get / api.post from js/api.js."
+            exit 1
+          fi
+          echo "all requests go through api.js"
+
+      - name: Focus outlines are never removed
+        run: |
+          if grep -rEn 'outline:\s*(none|0)' --include='*.css' .; then
+            echo "::error::outline:none removes the keyboard focus ring (WCAG 2.4.7)."
+            exit 1
+          fi
+          echo "focus outlines intact"

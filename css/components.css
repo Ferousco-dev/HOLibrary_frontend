@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Components — the parts you assemble screens from.
+
+   If a screen needs something that is not here, say so in your pull request
+   rather than writing a one-off style in the page. A component added here
+   is available to everyone; a style buried in one page is not.
+   ========================================================================== */
+
+/* --- panel --------------------------------------------------------------
+   The default container. Flat, bordered, no shadow: institutional, not a
+   floating card. Never add a coloured stripe to one edge. */
+.panel {
+  background: var(--surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+.panel__title { margin-top: 0; }
+.panel--tight { padding: var(--space-4); }
+
+/* --- buttons ------------------------------------------------------------ */
+.btn {
+  display: inline-block;
+  font: inherit; font-size: var(--text-sm); font-weight: 600;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.btn--primary { background: var(--blue); color: #fff; }
+.btn--primary:hover { background: var(--blue-dark); color: #fff; }
+.btn--secondary { background: var(--surface); color: var(--indigo); border-color: var(--rule-strong); }
+.btn--secondary:hover { background: var(--wash); }
+.btn--danger { background: var(--bad); color: #fff; }
+
+/* A disabled button must still say WHY. Pair it with .hint, never leave a
+   dead control with no explanation. */
+.btn:disabled, .btn[aria-disabled="true"] {
+  background: var(--wash); color: var(--ink-muted);
+  border-color: var(--rule); cursor: not-allowed;
+}
+
+/* --- forms -------------------------------------------------------------- */
+.field { margin-bottom: var(--space-4); }
+.field > label {
+  display: block; font-weight: 600; font-size: var(--text-sm);
+  margin-bottom: var(--space-2); color: var(--ink);
+}
+.input, .select, .textarea {
+  width: 100%; font: inherit;
+  padding: var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--surface); color: var(--ink);
+}
+.input:focus, .select:focus, .textarea:focus { border-color: var(--blue); }
+
+/* Helper text. Link it to its input with aria-describedby so a screen reader
+   reads it when the field takes focus. */
+.hint { font-size: var(--text-sm); color: var(--ink-muted); margin: var(--space-2) 0 0; }
+
+/* A validation failure. Must say what to do, not just that something is wrong. */
+.field__error { font-size: var(--text-sm); color: var(--bad); font-weight: 600; margin: var(--space-2) 0 0; }
+
+.formrow { display: flex; gap: var(--space-3); align-items: flex-end; flex-wrap: wrap; }
+.formrow .field { flex: 1 1 220px; margin-bottom: 0; }
+
+/* --- tables -------------------------------------------------------------
+   For tabular data only, never for layout (SEN106: tables describe
+   relationships). Always give a <caption> and scope on every <th>. */
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.table caption {
+  text-align: left; font-weight: 600; color: var(--ink-muted);
+  padding-bottom: var(--space-3);
+}
+.table th, .table td {
+  text-align: left; padding: var(--space-3);
+  border-bottom: 1px solid var(--rule); vertical-align: top;
+}
+.table thead th {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--ink-muted); border-bottom: 2px solid var(--rule-strong);
+  white-space: nowrap;
+}
+.table tbody tr:nth-child(even) { background: var(--wash); }
+.table td.num, .table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.accession { font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
+
+/* --- status -------------------------------------------------------------
+   Colour is never the only signal (WCAG 1.4.1). Every status carries words,
+   which is why there is no icon-only variant here. */
+.status { display: inline-block; font-size: var(--text-xs); font-weight: 700;
+  padding: 2px var(--space-2); border-radius: var(--radius); border: 1px solid; }
+.status--ok   { color: var(--ok);   background: var(--ok-wash);   border-color: #B7DEC8; }
+.status--warn { color: var(--warn); background: var(--warn-wash); border-color: #E8D3A4; }
+.status--bad  { color: var(--bad);  background: var(--bad-wash);  border-color: #E5B9B9; }
+.status--none { color: var(--ink-muted); background: var(--wash); border-color: var(--rule); }
+
+/* A block-level message: an availability line, a refusal, a confirmation. */
+.notice { border: 1px solid var(--rule); border-radius: var(--radius);
+  padding: var(--space-4); background: var(--wash); margin-bottom: var(--space-4); }
+.notice__head { font-weight: 700; margin: 0 0 var(--space-1); }
+.notice__body { margin: 0; font-size: var(--text-sm); color: var(--ink-muted); }
+.notice--ok   { background: var(--ok-wash);   border-color: #B7DEC8; }
+.notice--ok   .notice__head { color: var(--ok); }
+.notice--warn { background: var(--warn-wash); border-color: #E8D3A4; }
+.notice--warn .notice__head { color: var(--warn); }
+.notice--bad  { background: var(--bad-wash);  border-color: #E5B9B9; }
+.notice--bad  .notice__head { color: var(--bad); }
+
+/* --- result list -------------------------------------------------------- */
+.results { list-style: none; margin: 0; padding: 0; }
+.results > li { border: var(--border); border-radius: var(--radius);
+  background: var(--surface); padding: var(--space-5); margin-bottom: var(--space-3); }
+.result__title { font-family: var(--font-head); font-size: var(--text-xl);
+  margin: 0 0 var(--space-2); }
+.result__title a { text-decoration: none; }
+.result__title a:hover { text-decoration: underline; }
+.result__meta { font-size: var(--text-sm); color: var(--ink-muted);
+  display: flex; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-3); }
+.result__actions { display: flex; gap: var(--space-4); margin-top: var(--space-3);
+  font-size: var(--text-sm); flex-wrap: wrap; align-items: center; }
+
+/* --- statistics --------------------------------------------------------- */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3); margin-bottom: var(--space-5); }
+.stat { background: var(--surface); border: var(--border); border-radius: var(--radius);
+  padding: var(--space-4); }
+.stat__value { font-family: var(--font-head); font-size: var(--text-3xl);
+  font-weight: 700; color: var(--indigo); line-height: 1; }
+.stat__label { font-size: var(--text-sm); color: var(--ink-muted); margin-top: var(--space-2); }
+
+/* --- misc --------------------------------------------------------------- */
+.dl { margin: 0; }
+.dl dt { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--ink-muted); margin-top: var(--space-3); }
+.dl dd { margin: 2px 0 0; }
+
+.empty { text-align: center; padding: var(--space-7) var(--space-5); color: var(--ink-muted); }
+
+/* Live region for messages announced after an action. Give it
+   aria-live="polite" in the markup; js/api.js writes into it. */
+.liveregion:empty { display: none; }
+
+/* A field that should not stretch with its row: a submit button beside an
+   input. Prevents the button growing to fill the flex line. */
+.field--fixed { flex: 0 0 auto; }

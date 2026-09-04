@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  TEMPLATE — copy this file to start a new screen. Do not edit it in place.
+
+      cp pages/_template.html pages/05-my-loans.html
+
+  Everything between "PAGE FRAME START" and "PAGE FRAME END" is shared. Change
+  only the four marked spots:
+      1. <title>
+      2. aria-current="page" on the nav item for this screen
+      3. the breadcrumb trail
+      4. everything inside <main>
+
+  If you find yourself needing to change the frame itself, that is a
+  conversation for a pull request, not a local edit. Eleven pages have to
+  match.
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 1. CHANGE THIS -->
+  <title>Page name | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="One sentence describing this page.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<!-- ==================== PAGE FRAME START — do not edit ==================== -->
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="utility">
+  <div class="utility__inner">
+    <span>Obafemi Awolowo University, Ile-Ife</span>
+    <span><a href="https://oaucdl.edu.ng">University home</a> &middot; <a href="../pages/04-signin.html">Staff sign in</a></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="masthead__inner">
+    <img class="masthead__crest" src="../assets/oau-logo.png"
+         alt="Obafemi Awolowo University crest">
+    <div class="masthead__titles">
+      <p class="masthead__parent">University Library System</p>
+      <p class="masthead__name"><a href="../index.html">Hezekiah Oluwasanmi Library</a></p>
+    </div>
+    <span class="rolebadge" id="rolebadge">Public visitor</span>
+  </div>
+</header>
+
+<nav class="mainnav" aria-label="Main navigation">
+  <div class="mainnav__inner">
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+      <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+      Menu
+    </button>
+    <!-- 2. Put aria-current="page" on THIS page's link, and remove it from
+            the others. It marks the active item for a screen reader; the
+            gold underline is the visual half of the same statement. -->
+    <ul class="mainnav__list" id="primary-nav">
+      <li><a class="mainnav__link" href="../index.html">Catalogue</a></li>
+      <li><a class="mainnav__link" href="05-my-loans.html">My loans</a></li>
+      <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+      <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+      <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+      <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ===================== PAGE FRAME END — edit below ====================== -->
+
+<div class="shell">
+  <!-- 3. CHANGE THIS -->
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Page name</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <!-- 4. CHANGE EVERYTHING BELOW ---------------------------------------- -->
+
+  <div class="page__head">
+    <h1>Page name</h1>
+    <p class="page__lead">One sentence saying what a reader can do here.</p>
+  </div>
+
+  <!-- Results of an action are announced here for screen reader users.
+       Write to it with announce("Loan recorded."), never innerHTML. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <section class="panel">
+    <h2 class="panel__title">Section heading</h2>
+    <p>Content goes here.</p>
+  </section>
+
+  <!-- ------------------------------------------------------------------- -->
+
+</main>
+
+<!-- ==================== PAGE FRAME START — do not edit ==================== -->
+
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+
+<!-- ===================== PAGE FRAME END — edit below ====================== -->
+
+<!-- Your page's own script goes here, or in js/pages/<your-page>.js -->
+
+</body>
+</html>

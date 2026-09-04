@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Layout — the page frame every screen shares.
+
+   Structure, top to bottom, exactly as a university site is built:
+
+     .utility     thin dark strip: parent institution, staff link
+     .masthead    crest, library name, role badge
+     .mainnav     primary navigation + hamburger below 900px
+     .crumbs      breadcrumb trail
+     main.shell   the page content
+     .sitefoot    four-column institutional footer
+
+   The header markup is identical on all eleven pages. Copy it from
+   pages/_template.html rather than writing your own.
+   ========================================================================== */
+
+.shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+.shell--narrow { max-width: var(--shell-narrow); }
+
+/* --- utility strip ------------------------------------------------------ */
+.utility {
+  background: var(--indigo-dark);
+  color: #C6BEE2;
+  font-size: var(--text-xs);
+}
+.utility__inner {
+  max-width: var(--shell); margin: 0 auto;
+  padding: var(--space-2) var(--space-5);
+  display: flex; justify-content: space-between; gap: var(--space-4);
+}
+.utility a { color: #E4DEF5; text-decoration: none; }
+.utility a:hover { text-decoration: underline; }
+
+/* --- masthead ----------------------------------------------------------- */
+.masthead { background: var(--indigo); color: #fff; }
+.masthead__inner {
+  max-width: var(--shell); margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+  display: flex; align-items: center; gap: var(--space-4);
+}
+.masthead__crest { width: 54px; height: auto; flex: none; }
+.masthead__titles { flex: 1 1 auto; min-width: 0; }
+.masthead__parent {
+  font-size: var(--text-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--gold); margin: 0 0 2px;
+}
+.masthead__name {
+  font-family: var(--font-head); font-size: var(--text-2xl);
+  font-weight: 700; color: #fff; margin: 0; line-height: 1.15;
+}
+.masthead a { color: inherit; text-decoration: none; }
+
+/* Who the server thinks you are. Not a security control — a reminder. */
+.rolebadge {
+  flex: none; font-size: var(--text-xs);
+  border: 1px solid #6B5CA5; border-radius: 999px;
+  padding: var(--space-1) var(--space-3); color: #E4DEF5; white-space: nowrap;
+}
+
+/* --- primary navigation ------------------------------------------------- */
+.mainnav { background: var(--surface); border-bottom: 1px solid var(--rule); }
+.mainnav__inner {
+  max-width: var(--shell); margin: 0 auto;
+  padding: 0 var(--space-5);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mainnav__list {
+  list-style: none; display: flex; gap: var(--space-1);
+  margin: 0; padding: 0;
+}
+.mainnav__link {
+  display: block;
+  padding: var(--space-4) var(--space-4);
+  font-weight: 600; font-size: var(--text-sm);
+  color: var(--indigo); text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+.mainnav__link:hover { background: var(--wash); color: var(--indigo); }
+/* aria-current="page" marks the active item for assistive technology.
+   The underline is the visual half of the same statement. */
+.mainnav__link[aria-current="page"] { border-bottom-color: var(--gold); }
+
+/* Hidden on desktop, shown below 900px. Toggled by js/nav.js. */
+.navtoggle {
+  display: none;
+  align-items: center; gap: var(--space-2);
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+  font: inherit; font-size: var(--text-sm); font-weight: 600;
+  color: var(--indigo); background: var(--surface);
+  border: 1px solid var(--rule); border-radius: var(--radius);
+  cursor: pointer;
+}
+.navtoggle__bars { display: block; width: 18px; height: 12px; position: relative; }
+.navtoggle__bars::before, .navtoggle__bars::after, .navtoggle__bars span {
+  content: ""; position: absolute; left: 0; right: 0; height: 2px;
+  background: var(--indigo); border-radius: 1px;
+}
+.navtoggle__bars::before { top: 0; }
+.navtoggle__bars span    { top: 5px; }
+.navtoggle__bars::after  { bottom: 0; }
+
+@media (max-width: 900px) {
+  .mainnav__inner { flex-direction: column; align-items: stretch; }
+  .navtoggle { display: flex; align-self: flex-start; }
+  .mainnav__list { flex-direction: column; gap: 0; }
+  /* Collapsed by default on small screens. nav.js flips the hidden attribute
+     and aria-expanded together, so the button always announces its state. */
+  .mainnav__list[hidden] { display: none; }
+  .mainnav__link { padding: var(--space-3) var(--space-2); border-bottom: 1px solid var(--rule); }
+  .mainnav__link[aria-current="page"] { border-bottom-color: var(--gold); border-bottom-width: 3px; }
+  .masthead__name { font-size: var(--text-xl); }
+  .utility__inner { flex-direction: column; gap: var(--space-1); }
+}
+
+/* --- breadcrumbs -------------------------------------------------------- */
+.crumbs { padding: var(--space-3) 0; font-size: var(--text-sm); color: var(--ink-muted); }
+.crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; }
+.crumbs li::after { content: "/"; margin-left: var(--space-2); color: var(--rule-strong); }
+.crumbs li:last-child::after { content: ""; }
+
+/* --- page body ---------------------------------------------------------- */
+.page { padding: var(--space-2) 0 var(--space-7); }
+.page__head { margin-bottom: var(--space-5); }
+.page__lead { font-size: var(--text-lg); color: var(--ink-muted); max-width: 68ch; margin: 0; }
+
+/* Two-column: main content + supporting sidebar. Stacks below 900px. */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-5); align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+/* --- footer ------------------------------------------------------------- */
+.sitefoot { background: var(--indigo-dark); color: #BDB4DC; font-size: var(--text-sm); margin-top: var(--space-7); }
+.sitefoot__inner {
+  max-width: var(--shell); margin: 0 auto; padding: var(--space-6) var(--space-5);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5);
+}
+.sitefoot h2 { font-family: var(--font-body); font-size: var(--text-sm); color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 var(--space-3); }
+.sitefoot ul { list-style: none; margin: 0; padding: 0; }
+.sitefoot li { margin-bottom: var(--space-2); }
+.sitefoot a { color: #DDD6F0; text-decoration: none; }
+.sitefoot a:hover { text-decoration: underline; }
+.sitefoot__base {
+  border-top: 1px solid #2F1E5C;
+  max-width: var(--shell); margin: 0 auto; padding: var(--space-4) var(--space-5);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);
+  font-size: var(--text-xs); color: #8B80B8;
+}
+@media (max-width: 900px) { .sitefoot__inner { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .sitefoot__inner { grid-template-columns: 1fr; } }

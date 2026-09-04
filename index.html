@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!--
+  The catalogue landing page, and the reference implementation for this
+  project. It is complete and it works against the live API. When you are
+  unsure how something should be written, look here first.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search the catalogue | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Search the physical collection of the Hezekiah Oluwasanmi Library, Obafemi Awolowo University.">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<div class="utility">
+  <div class="utility__inner">
+    <span>Obafemi Awolowo University, Ile-Ife</span>
+    <span><a href="https://oaucdl.edu.ng">University home</a> &middot; <a href="pages/04-signin.html">Staff sign in</a></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="masthead__inner">
+    <img class="masthead__crest" src="assets/oau-logo.png" alt="Obafemi Awolowo University crest">
+    <div class="masthead__titles">
+      <p class="masthead__parent">University Library System</p>
+      <p class="masthead__name"><a href="index.html">Hezekiah Oluwasanmi Library</a></p>
+    </div>
+    <span class="rolebadge" id="rolebadge">Public visitor</span>
+  </div>
+</header>
+
+<nav class="mainnav" aria-label="Main navigation">
+  <div class="mainnav__inner">
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+      <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+      Menu
+    </button>
+    <ul class="mainnav__list" id="primary-nav">
+      <li><a class="mainnav__link" href="index.html" aria-current="page">Catalogue</a></li>
+      <li><a class="mainnav__link" href="pages/05-my-loans.html">My loans</a></li>
+      <li><a class="mainnav__link" href="pages/06-reservations.html">Reservations</a></li>
+      <li><a class="mainnav__link" href="pages/08-desk-issue.html">Circulation desk</a></li>
+      <li><a class="mainnav__link" href="pages/10-members.html">Members</a></li>
+      <li><a class="mainnav__link" href="pages/04-signin.html">Sign in</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="shell page">
+
+  <div class="page__head">
+    <h1>Search the catalogue</h1>
+    <p class="page__lead">
+      Find a book on the shelves of the Hezekiah Oluwasanmi Library, and see
+      whether a copy can be borrowed today.
+    </p>
+  </div>
+
+  <section class="panel" aria-labelledby="search-heading">
+    <h2 class="sr-only" id="search-heading">Catalogue search</h2>
+    <form id="search-form" role="search">
+      <div class="formrow">
+        <div class="field">
+          <label for="q">Search by title, author, ISBN or subject</label>
+          <input class="input" type="search" id="q" name="q"
+                 placeholder="structural analysis" aria-describedby="q-hint" autocomplete="off">
+          <p class="hint" id="q-hint">
+            Spelling does not have to be exact. Searching for
+            <em>strutural</em> will still find <em>Structural Analysis</em>.
+          </p>
+        </div>
+        <div class="field field--fixed">
+          <button class="btn btn--primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div class="split">
+    <section aria-labelledby="results-heading">
+      <h2 class="sr-only" id="results-heading">Search results</h2>
+      <div id="results">
+        <div class="panel empty">
+          <p><strong>Enter a search above to begin.</strong></p>
+          <p class="hint">
+            The catalogue holds the physical collection: titles on the shelves of
+            the North and South Wings. It does not lend digital texts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="panel" aria-labelledby="legend-heading">
+      <h2 id="legend-heading" class="panel__title">Reading the availability line</h2>
+      <dl class="dl">
+        <dt>Borrowable now</dt>
+        <dd>More than one copy is free, so at least one can leave the building.</dd>
+        <dt>In-library only</dt>
+        <dd>A copy is free, but it is the last one. The final copy always stays.</dd>
+        <dt>All copies out</dt>
+        <dd>No copy is on the shelf. Sign in to join the reservation queue.</dd>
+      </dl>
+    </aside>
+  </div>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="index.html">Search the catalogue</a></li>
+        <li><a href="pages/06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="pages/04-signin.html">Sign in</a></li>
+        <li><a href="pages/05-my-loans.html">Books you have out</a></li>
+        <li><a href="pages/07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/format.js"></script>
+<script src="js/api.js"></script>
+<script src="js/nav.js"></script>
+<script>
+/* ---------------------------------------------------------------------------
+   Catalogue search.
+
+   Worth reading before you write your own screen. Four things happen here
+   that every screen in this project has to do:
+
+     1. The form's submit event is intercepted, so the page never reloads.
+     2. The reader is told the request has started, then told the outcome.
+     3. Every value from the API goes in through textContent, never by
+        pasting a string into innerHTML.
+     4. A failure is shown as a sentence, not swallowed into the console.
+   --------------------------------------------------------------------------- */
+
+const form = document.getElementById("search-form");
+const input = document.getElementById("q");
+const results = document.getElementById("results");
+
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const query = input.value.trim();
+  if (!query) { input.focus(); return; }
+
+  results.innerHTML = "";
+  results.appendChild(message("Searching the catalogue…"));
+  announce("Searching.");
+
+  try {
+    const page = await api.get("/books?q=" + encodeURIComponent(query) + "&per_page=10");
+    render(page, query);
+  } catch (err) {
+    results.innerHTML = "";
+    const panel = message(err.message);
+    panel.classList.add("notice--bad");
+    results.appendChild(panel);
+    announce(err.message);
+  }
+});
+
+function render(page, query) {
+  const items = page.data || [];
+  results.innerHTML = "";
+
+  if (items.length === 0) {
+    const empty = message("No titles match “" + query + "”.");
+    results.appendChild(empty);
+    announce("No results found.");
+    return;
+  }
+
+  const count = page.meta ? page.meta.total : items.length;
+  announce(count + " titles found.");
+
+  const summary = document.createElement("p");
+  summary.className = "hint";
+  summary.textContent = count + " titles found. Results are titles; a title's "
+    + "copies and their shelf locations appear on its own page.";
+  results.appendChild(summary);
+
+  const list = document.createElement("ul");
+  list.className = "results";
+  items.forEach(function (book) { list.appendChild(resultItem(book)); });
+  results.appendChild(list);
+}
+
+function resultItem(book) {
+  const li = document.createElement("li");
+
+  const h3 = document.createElement("h3");
+  h3.className = "result__title";
+  const link = document.createElement("a");
+  link.href = "pages/03-book.html?id=" + encodeURIComponent(book.id);
+  link.textContent = book.title;                 // textContent, not innerHTML
+  h3.appendChild(link);
+  li.appendChild(h3);
+
+  const meta = document.createElement("p");
+  meta.className = "result__meta";
+  [book.author, book.isbn13 ? "ISBN " + book.isbn13 : null,
+   book.call_number ? "Call number " + book.call_number : null]
+    .filter(Boolean)
+    .forEach(function (text) {
+      const span = document.createElement("span");
+      span.textContent = text;
+      meta.appendChild(span);
+    });
+  li.appendChild(meta);
+
+  // availabilityLine() lives in format.js so that every screen describes the
+  // same stock figures with the same words.
+  const state = availabilityLine(book.total_copies || 0, book.available_copies || 0);
+  const notice = document.createElement("div");
+  notice.className = "notice notice--" + state.tone;
+  const head = document.createElement("p");
+  head.className = "notice__head";
+  head.textContent = state.head;
+  const body = document.createElement("p");
+  body.className = "notice__body";
+  body.textContent = state.body;
+  notice.append(head, body);
+  li.appendChild(notice);
+
+  const actions = document.createElement("p");
+  actions.className = "result__actions";
+  const detail = document.createElement("a");
+  detail.href = link.href;
+  detail.textContent = "View copies and shelf location";
+  actions.appendChild(detail);
+  li.appendChild(actions);
+
+  return li;
+}
+
+function message(text) {
+  const div = document.createElement("div");
+  div.className = "panel empty";
+  const p = document.createElement("p");
+  p.textContent = text;
+  div.appendChild(p);
+  return div;
+}
+</script>
+
+</body>
+</html>
