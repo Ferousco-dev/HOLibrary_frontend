@@ -46,40 +46,62 @@ function dueState(dueIso) {
   return { tone: "ok", text: "Due in " + days + " days" };
 }
 
-/* The sentence a reader sees under a title.
+/* "1 copy" but "2 copies". Printing "1 total copies" is the kind of thing a
+   reader notices immediately and quietly stops trusting the rest of. */
+function plural(n, one, many) {
+  return n + " " + (n === 1 ? one : many);
+}
 
-   Note what this does NOT do: it does not work out how many copies may be
-   borrowed. The server already decided that and sends it as `borrowable`,
-   along with `shelf_copy_retained` saying whether a copy is being held back.
-   Recomputing either here would give the interface its own opinion, and the
-   first time the library's rules changed the two would disagree.
+/* What a reader is told about a title, underneath its name.
 
-   The field names are the API's own. It returns PascalCase for stored fields
-   (Title, ISBN13, CallNumber) and snake_case for derived ones (wing,
-   borrowable, is_available). That is inconsistent, but it is what the
-   documented contract says, so match it rather than guessing:
-   https://api.library.appmd.dev/docs */
+   The word "available" is avoided on purpose. In a library it is heard as
+   "free of charge" at least as often as "on the shelf", and the difference
+   here matters: a copy can be on the shelf and still not borrowable. So the
+   text says where a copy is and whether it can leave, in those words.
+
+   This does not decide how many copies may be borrowed. The server already
+   did, and sends it as `borrowable`. Working it out again here would give the
+   interface its own opinion, and the first time the rule changed the two
+   would disagree. */
 function availabilityLine(book) {
   const stock = (book.Availability && book.Availability.total_copies) || 0;
-  const free  = (book.Availability && book.Availability.available) || 0;
+  const onShelf = (book.Availability && book.Availability.available) || 0;
   const canBorrow = book.borrowable || 0;
 
+  const holds = "The library holds " + plural(stock, "copy", "copies") + ".";
+
   if (canBorrow > 0) {
-    return { tone: "ok",
-      head: canBorrow === 1 ? "1 copy can be borrowed today." : canBorrow + " copies can be borrowed today.",
-      body: stock + " total copies; " + free + " available in the building. "
-          + "One available copy is retained for in-library use." };
+    return {
+      tone: "ok",
+      head: "You can borrow this today.",
+      body: holds + " " + plural(onShelf, "copy is", "copies are")
+          + " on the shelf, and one of those stays here for reading in the library.",
+    };
   }
-  if (free > 0) {
-    return { tone: "warn",
-      head: "Available to read in the library, not available to borrow.",
-      body: stock + " total copies; " + free + " on the shelf. "
-          + "Because it is the final available copy, borrowing is closed." };
+
+  if (onShelf > 0) {
+    // A title the library owns only one of is reference-only for good, not
+    // just today, and saying "the library holds 1 copy, only 1 copy is on the
+    // shelf" twice over is how a reader learns to skim past this text.
+    return {
+      tone: "warn",
+      head: "You can read this here, but not take it home.",
+      body: stock === 1
+        ? "This is the library's only copy, so it stays in the building where "
+          + "anyone can come and consult it."
+        : holds + " Only " + plural(onShelf, "copy is", "copies are") + " on the shelf, "
+          + "and the last copy of a title always stays here so that it is never "
+          + "out of reach.",
+    };
   }
-  return { tone: "bad",
-    head: "All copies are currently out or reserved.",
-    body: stock + " total copies; none available in the building. "
-        + "Join the reservation queue to be notified when a copy returns." };
+
+  return {
+    tone: "bad",
+    head: stock === 1 ? "The only copy is out on loan." : "Every copy is out on loan.",
+    body: (stock === 1 ? "" : holds + " ")
+        + "Nothing is on the shelf right now. Sign in to join the queue and we "
+        + "will tell you as soon as a copy comes back.",
+  };
 }
 
 /* Escapes text before it goes into innerHTML.

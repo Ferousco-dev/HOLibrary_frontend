@@ -24,36 +24,38 @@
     <a class="brand" href="index.html">
       <img class="brand__crest" src="assets/oau-logo.png"
            alt="Obafemi Awolowo University crest">
-      <span>
-        <span class="brand__name">Hezekiah Oluwasanmi Library</span>
-        <span class="brand__sub">Obafemi Awolowo University</span>
-      </span>
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
     </a>
 
-    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
-      <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
-      Menu
-    </button>
-
     <nav class="mainnav" aria-label="Main navigation">
-      <ul class="mainnav__list" id="primary-nav">
-        <li><a class="mainnav__link" href="index.html" aria-current="page">Catalogue</a></li>
-        <li><a class="mainnav__link" href="pages/05-my-loans.html">My loans</a></li>
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="index.html" aria-current="page">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="pages/04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="pages/05-my-loans.html">Books you have out</a></li>
         <li><a class="mainnav__link" href="pages/06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
         <li><a class="mainnav__link" href="pages/08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="pages/10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
       </ul>
     </nav>
-
-    <a class="account" id="account" href="pages/04-signin.html">Sign in</a>
   </div>
 </header>
 
 <section class="hero">
   <div class="hero__inner">
-    <h1>Find any book on our shelves</h1>
+    <h1>Find a book, and know if you can take it</h1>
     <p class="hero__lead">
-      Search the physical collection of the Hezekiah Oluwasanmi Library, and
-      see whether a copy can be borrowed before you walk to the shelf.
+      Search everything on the shelves at Hezekiah Oluwasanmi Library, and find
+      out whether you can borrow it before you make the trip.
     </p>
 
     <form id="search-form" class="hero__search" role="search">
@@ -63,14 +65,14 @@
       <button class="btn btn--primary" type="submit">Search</button>
     </form>
     <p class="hero__hint" id="q-hint">
-      Spelling does not have to be exact. Searching for <em>strutural</em> still finds
-      <em>Structural Analysis</em>.
+      You do not have to spell it perfectly. Searching for <em>strutural</em> still
+      finds <em>Structural Analysis</em>.
     </p>
 
     <div class="hero__stats">
       <p class="hero__stat"><b>223</b><span>titles catalogued</span></p>
       <p class="hero__stat"><b>892</b><span>physical copies</span></p>
-      <p class="hero__stat"><b>2</b><span>wings, North and South</span></p>
+      <p class="hero__stat"><b>2</b><span>wings to search</span></p>
     </div>
   </div>
 </section>
@@ -87,22 +89,25 @@
         <div class="panel empty">
           <p><strong>Enter a search above to begin.</strong></p>
           <p class="hint">
-            The catalogue holds the physical collection: titles on the shelves of
-            the North and South Wings. It does not lend digital texts.
+            Everything here is a book you can walk up to and take off a shelf,
+            in either the North or the South Wing. The library does not lend
+            digital copies.
           </p>
         </div>
       </div>
     </section>
 
-    <aside class="panel" aria-labelledby="legend-heading">
-      <h2 id="legend-heading" class="panel__title">Reading the availability line</h2>
+    <aside class="split__aside panel" aria-labelledby="legend-heading">
+      <h2 id="legend-heading" class="panel__title">Can you take it home?</h2>
       <dl class="dl">
-        <dt>Borrowable now</dt>
-        <dd>More than one copy is free, so at least one can leave the building.</dd>
-        <dt>In-library only</dt>
-        <dd>A copy is free, but it is the last one. The final copy always stays.</dd>
-        <dt>All copies out</dt>
-        <dd>No copy is on the shelf. Sign in to join the reservation queue.</dd>
+        <dt>Yes</dt>
+        <dd>More than one copy is on the shelf, so one of them can go home with you.</dd>
+        <dt>Read it here only</dt>
+        <dd>A copy is on the shelf, but it is the last one. The final copy of any
+            title stays in the library so it is always there to consult.</dd>
+        <dt>Not right now</dt>
+        <dd>Every copy is out on loan. Sign in to join the queue and we will tell
+            you when one comes back.</dd>
       </dl>
     </aside>
   </div>
@@ -173,18 +178,50 @@ const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
 
-form.addEventListener("submit", async function (event) {
+form.addEventListener("submit", function (event) {
   event.preventDefault();
   const query = input.value.trim();
   if (!query) { input.focus(); return; }
 
+  // Put the search in the address bar before running it. A result page is
+  // then a real page: it can be shared, bookmarked, and reached again with
+  // the back button. Without this, every search is a dead end the moment the
+  // reader navigates away.
+  go(query, 1);
+});
+
+/* Puts the search in the address bar, then runs it. A results page is then a
+   real page: shareable, bookmarkable, and reachable with the back button. */
+function go(query, page) {
+  const url = new URL(window.location);
+  url.searchParams.set("q", query);
+  if (page > 1) { url.searchParams.set("page", page); } else { url.searchParams.delete("page"); }
+  history.pushState({ q: query, page: page }, "", url);
+  runSearch(query, page);
+}
+
+// The back and forward buttons should move between searches, not out of the
+// page entirely.
+window.addEventListener("popstate", function () {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q") || "";
+  input.value = q;
+  if (q) runSearch(q, Number(params.get("page")) || 1);
+});
+
+const PER_PAGE = 10;
+
+async function runSearch(query, page) {
+  page = page || 1;
+
   results.innerHTML = "";
-  results.appendChild(message("Searching the catalogue…"));
+  results.appendChild(loading());
   announce("Searching.");
 
   try {
-    const page = await api.get("/books?q=" + encodeURIComponent(query) + "&per_page=10");
-    render(page, query);
+    const result = await api.get("/books?q=" + encodeURIComponent(query)
+      + "&page=" + page + "&per_page=" + PER_PAGE);
+    render(result, query, page);
   } catch (err) {
     results.innerHTML = "";
     const panel = message(err.message);
@@ -192,10 +229,18 @@ form.addEventListener("submit", async function (event) {
     results.appendChild(panel);
     announce(err.message);
   }
-});
+}
 
-function render(page, query) {
-  const items = page.data || [];
+// A page opened at ?q=... runs that search straight away, so a shared link
+// lands on results rather than an empty box.
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q");
+  if (q) { input.value = q; runSearch(q, Number(params.get("page")) || 1); }
+})();
+
+function render(result, query, page) {
+  const items = result.data || [];
   results.innerHTML = "";
 
   if (items.length === 0) {
@@ -205,19 +250,85 @@ function render(page, query) {
     return;
   }
 
-  const count = page.meta ? page.meta.total : items.length;
+  const count = result.meta ? result.meta.total : items.length;
   announce(count + " titles found.");
+
+  const pages = Math.max(1, Math.ceil(count / PER_PAGE));
+  const first = (page - 1) * PER_PAGE + 1;
+  const last = Math.min(page * PER_PAGE, count);
 
   const summary = document.createElement("p");
   summary.className = "hint";
-  summary.textContent = count + " titles found. Results are titles; a title's "
-    + "copies and their shelf locations appear on its own page.";
+  summary.textContent = pages > 1
+    ? "Showing " + first + " to " + last + " of " + count + " titles."
+    : plural(count, "title", "titles") + " found.";
   results.appendChild(summary);
 
   const list = document.createElement("ul");
   list.className = "results";
   items.forEach(function (book) { list.appendChild(resultItem(book)); });
   results.appendChild(list);
+
+  if (pages > 1) results.appendChild(pager(query, page, pages));
+}
+
+/* Page links.
+
+   Real <a> elements with real hrefs, so a reader can middle-click a page, and
+   so the links still work if the script fails. The click handler only exists
+   to avoid a full reload; it is an enhancement, not the mechanism. */
+function pager(query, page, pages) {
+  const nav = document.createElement("nav");
+  nav.className = "pager";
+  nav.setAttribute("aria-label", "Search result pages");
+
+  const list = document.createElement("ul");
+  list.className = "pager__list";
+
+  function link(n, text, current) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.className = "pager__link";
+    a.textContent = text;
+    a.href = "?q=" + encodeURIComponent(query) + (n > 1 ? "&page=" + n : "");
+    if (current) a.setAttribute("aria-current", "page");
+    // Spell the destination out: "3" alone tells a screen reader nothing.
+    a.setAttribute("aria-label", current ? "Page " + n + ", current page" : "Page " + n);
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      go(query, n);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    li.appendChild(a);
+    return li;
+  }
+
+  function gap() {
+    const li = document.createElement("li");
+    li.className = "pager__gap";
+    li.textContent = "\u2026";
+    li.setAttribute("aria-hidden", "true");
+    return li;
+  }
+
+  if (page > 1) list.appendChild(link(page - 1, "Previous"));
+
+  // First, last, and a window around the current page. Two hundred page
+  // numbers in a row is not navigation.
+  const shown = new Set([1, pages, page, page - 1, page + 1]);
+  let previous = 0;
+  Array.from(shown).filter(function (n) { return n >= 1 && n <= pages; })
+    .sort(function (a, b) { return a - b; })
+    .forEach(function (n) {
+      if (n - previous > 1) list.appendChild(gap());
+      list.appendChild(link(n, String(n), n === page));
+      previous = n;
+    });
+
+  if (page < pages) list.appendChild(link(page + 1, "Next"));
+
+  nav.appendChild(list);
+  return nav;
 }
 
 function resultItem(book) {
@@ -279,6 +390,24 @@ function resultItem(book) {
   text.appendChild(actions);
 
   return li;
+}
+
+/* Shown while a search is in flight.
+
+   The loader carries role="status" and an accessible name of its own, so a
+   screen reader says "Loading" rather than leaving the reader wondering
+   whether the button worked. */
+function loading() {
+  const box = document.createElement("div");
+  box.className = "loading";
+  const spinner = document.createElement("div");
+  spinner.className = "loader";
+  spinner.setAttribute("role", "status");
+  spinner.setAttribute("aria-label", "Searching the catalogue");
+  const caption = document.createElement("p");
+  caption.textContent = "Looking through the shelves\u2026";
+  box.append(spinner, caption);
+  return box;
 }
 
 function message(text) {

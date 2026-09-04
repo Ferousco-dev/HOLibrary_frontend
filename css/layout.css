@@ -47,65 +47,79 @@
   font-family: var(--font-head); font-size: 1.0625rem; font-weight: 700;
   color: var(--indigo); line-height: 1.15; margin: 0;
 }
-.brand__sub {
-  font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-muted); margin: 1px 0 0;
+/* The university's name is not repeated here. It is on the crest, it is in
+   the menu, and it is in the footer; a third copy in the header is noise. */
+
+/* Navigation lives behind one button at every width.
+
+   A row of links that turns into a hamburger below 900px is two navigations
+   to build, test and keep in step. One is enough, and it keeps the header to
+   a single quiet line so the search field is the loudest thing on the page. */
+.mainnav { margin-left: auto; position: relative; }
+
+.navtoggle {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font: inherit; font-size: var(--text-sm); font-weight: 600;
+  color: var(--indigo); background: transparent;
+  border: 1px solid var(--rule-strong); border-radius: var(--radius);
+  cursor: pointer;
+}
+.navtoggle:hover { background: var(--wash); }
+/* Three bars that become a cross when the menu is open.
+
+   The shape is driven by aria-expanded, not by a class of its own. That is
+   deliberate: the attribute a screen reader reads and the picture a sighted
+   reader sees are then the same fact, and they cannot drift apart. */
+.navtoggle__bars { display: block; width: 16px; height: 11px; position: relative; }
+.navtoggle__bars::before, .navtoggle__bars::after, .navtoggle__bars span {
+  content: ""; position: absolute; left: 0; right: 0; height: 2px;
+  background: var(--indigo); border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.15s ease;
+}
+.navtoggle__bars::before { top: 0; }
+.navtoggle__bars span    { top: 4.5px; }
+.navtoggle__bars::after  { bottom: 0; }
+
+.navtoggle[aria-expanded="true"] .navtoggle__bars::before {
+  transform: translateY(4.5px) rotate(45deg);
+}
+.navtoggle[aria-expanded="true"] .navtoggle__bars span { opacity: 0; }
+.navtoggle[aria-expanded="true"] .navtoggle__bars::after {
+  transform: translateY(-4.5px) rotate(-45deg);
 }
 
-.mainnav { margin-left: auto; }
-.mainnav__list { list-style: none; display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: 0; }
+.mainnav__list {
+  list-style: none; margin: 0; padding: var(--space-2);
+  position: absolute; right: 0; top: calc(100% + var(--space-2));
+  min-width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 28px rgba(26, 26, 46, 0.14);
+  z-index: 60;
+}
+.mainnav__list[hidden] { display: none; }
 .mainnav__link {
-  display: block; padding: var(--space-2) var(--space-3);
+  display: block; padding: var(--space-3) var(--space-4);
   font-size: var(--text-sm); font-weight: 600;
   color: var(--ink); text-decoration: none; border-radius: var(--radius);
 }
 .mainnav__link:hover { background: var(--wash); color: var(--indigo); }
 .mainnav__link[aria-current="page"] { color: var(--indigo); background: var(--indigo-wash); }
 
-/* The account control. A button when signed out, the member's name when in. */
-.account {
-  flex: none; margin-left: var(--space-3);
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  font-size: var(--text-sm); font-weight: 600;
-  padding: var(--space-2) var(--space-4);
-  border-radius: 999px; text-decoration: none;
-  background: var(--indigo); color: var(--on-dark); border: 1px solid var(--indigo);
+/* A rule between groups of links: the catalogue, then your account, then the
+   desk. Presentational only, so it is hidden from assistive technology. */
+.mainnav__sep { height: 1px; background: var(--rule); margin: var(--space-2) var(--space-3); }
+.mainnav__label {
+  padding: var(--space-2) var(--space-4) var(--space-1);
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink-muted);
 }
-.account:hover { background: var(--indigo-soft); color: var(--on-dark); text-decoration: none; }
-.account--in { background: transparent; color: var(--indigo); border-color: var(--rule-strong); }
-.account--in:hover { background: var(--wash); color: var(--indigo); }
 
-.navtoggle {
-  display: none; margin-left: auto;
-  align-items: center; gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
-  font: inherit; font-size: var(--text-sm); font-weight: 600;
-  color: var(--indigo); background: transparent;
-  border: 1px solid var(--rule-strong); border-radius: var(--radius);
-  cursor: pointer;
-}
-.navtoggle__bars { display: block; width: 16px; height: 11px; position: relative; }
-.navtoggle__bars::before, .navtoggle__bars::after, .navtoggle__bars span {
-  content: ""; position: absolute; left: 0; right: 0; height: 2px;
-  background: var(--indigo); border-radius: 1px;
-}
-.navtoggle__bars::before { top: 0; }
-.navtoggle__bars span    { top: 4.5px; }
-.navtoggle__bars::after  { bottom: 0; }
-
-@media (max-width: 900px) {
-  .siteheader__inner { flex-wrap: wrap; gap: var(--space-3); }
-  .navtoggle { display: inline-flex; }
-  .mainnav { margin-left: 0; flex: 1 1 100%; order: 3; }
-  .mainnav__list { flex-direction: column; align-items: stretch; gap: 0; }
-  .mainnav__list[hidden] { display: none; }
-  .mainnav__link { padding: var(--space-3); border-radius: 0; border-bottom: 1px solid var(--rule); }
-  .account { order: 2; margin-left: 0; }
+@media (max-width: 560px) {
   .brand__name { font-size: 0.9375rem; }
-}
-@media (max-width: 420px) {
-  .brand__sub { display: none; }
-  .account { padding: var(--space-2) var(--space-3); }
+  .mainnav__list { min-width: 220px; }
 }
 
 /* --- hero ---------------------------------------------------------------
@@ -155,7 +169,26 @@
 
 /* Two-column: main content + supporting sidebar. Stacks below 900px. */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-5); align-items: start; }
-@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+
+/* The sidebar explains how to read the results, so it has to stay visible
+   while the results are being read. It sticks below the header rather than at
+   the top of the screen, or the header would cover it.
+
+   max-height plus overflow so that a sidebar taller than the window can still
+   be scrolled to its end instead of having its last line cut off. */
+.split__aside {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-4));
+  max-height: calc(100vh - var(--header-h) - var(--space-6));
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; }
+  /* Sticking is pointless in one column: it would pin the aside over the
+     results it is meant to sit beside. */
+  .split__aside { position: static; max-height: none; }
+}
 
 /* --- footer ------------------------------------------------------------- */
 .sitefoot { background: var(--indigo-dark); color: var(--on-dark-faint); font-size: var(--text-sm); margin-top: var(--space-7); }
