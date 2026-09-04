@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Components — the parts you assemble screens from.
+   Components , the parts you assemble screens from.
 
    If a screen needs something that is not here, say so in your pull request
    rather than writing a one-off style in the page. A component added here
@@ -332,3 +332,47 @@
 .pushoffer__text b { display: block; color: var(--indigo); font-size: var(--text-base); }
 .pushoffer__text span { font-size: var(--text-sm); color: var(--ink-muted); }
 .pushoffer__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* --- loan cards ---------------------------------------------------------
+   A member's own loans. Contributed on the My Loans screen and moved here so
+   the other screens can use the same shapes.
+
+   Flat and bordered, like every other panel. The submitted version used a
+   gradient, a thirty pixel shadow and a large radius, which is a different
+   design language from the rest of the site. */
+.loan-list { display: grid; gap: var(--space-3); }
+
+.loan-card {
+  background: var(--surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-5);
+}
+.loan-card__category {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink-muted); margin: 0 0 var(--space-2);
+}
+.loan-card__due {
+  display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;
+  margin-top: var(--space-3); padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+.loan-card__due-date { margin: 0; font-size: var(--text-sm); color: var(--ink); }
+
+/* A summary strip above the list: how many are out, due soon, overdue. Not in
+   the brief; contributed, and worth keeping. */
+.loan-summary {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3); margin-bottom: var(--space-5);
+}
+.loan-summary__item {
+  background: var(--surface); border: var(--border);
+  border-radius: var(--radius); padding: var(--space-4);
+}
+.loan-summary__value {
+  font-family: var(--font-head); font-size: var(--text-2xl); font-weight: 700;
+  color: var(--indigo); line-height: 1;
+}
+.loan-summary__label { font-size: var(--text-sm); color: var(--ink-muted); margin-top: var(--space-2); }
+.loan-summary__item--warn .loan-summary__value { color: var(--warn); }
+.loan-summary__item--bad  .loan-summary__value { color: var(--bad); }

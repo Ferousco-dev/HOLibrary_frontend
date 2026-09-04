@@ -67,6 +67,26 @@ for html in files(".html"):
         # component is missing, add it to components.css so everyone gets it.
         scan(html, "html", r'\sstyle\s*=\s*"', "inline style; use a class from components.css")
 
+        # A <style> block in a page is the same problem wearing a hat, and it
+        # was not being checked. A submitted screen arrived with 22 hardcoded
+        # colours inside one, none of them from the tokens and one of them a
+        # near-miss of the brand indigo. The rule is the same wherever CSS is
+        # written: if nobody can name a colour, no two screens can drift apart.
+        for i, line in enumerate(text.splitlines(), 1):
+            if re.search(r"<style\b", line):
+                report(html, i, "<style> block in a page; put styles in css/components.css")
+
+        # Colours anywhere in the page, including inside a <style> block.
+        #
+        # theme-color is the one honest exception: the browser reads it out of
+        # the markup before any stylesheet is parsed, so it cannot be a
+        # variable. Anything else naming a colour in a page is drift.
+        for i, line in enumerate(text.splitlines(), 1):
+            if "theme-color" in line:
+                continue
+            if re.search(r"#[0-9a-fA-F]{3,8}\b", line):
+                report(html, i, "raw colour in a page; use a var(--token) from tokens.css")
+
         # api.js owns the Authorization header, the refresh-and-replay and the
         # error shape. A bare fetch bypasses all three.
         scan(html, "html", r"\bfetch\s*\(", "direct fetch(); use api.get / api.post")
