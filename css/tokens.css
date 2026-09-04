@@ -14,6 +14,7 @@
   --indigo:        #240C54;   /* masthead, primary framing */
   --indigo-dark:   #17073A;   /* utility bar, footer */
   --indigo-soft:   #3B2C7A;   /* hover on indigo surfaces */
+  --indigo-wash:   #EEEBF6;   /* active nav item, soft tints */
   --gold:          #E4B454;   /* accent. Used sparingly, never as a fill */
   --blue:          #1D4ED8;   /* links and primary actions */
   --blue-dark:     #1739A8;   /* link and button hover */
@@ -26,14 +27,26 @@
   --surface:       #FFFFFF;   /* panels */
   --wash:          #F4F5F9;   /* page background, table stripes */
 
+  /* --- on dark ---------------------------------------------------------
+     Text and rules that sit on an indigo surface. Named by their job, not
+     their lightness, so a change of brand colour does not orphan them. */
+  --on-dark:        #FFFFFF;   /* headings and primary text on indigo */
+  --on-dark-muted:  #CFC7EA;   /* lead paragraphs on indigo */
+  --on-dark-faint:  #B3A9D8;   /* captions and hints on indigo */
+  --on-dark-link:   #DDD6F0;   /* links in the footer */
+  --on-dark-rule:   #2F1E5C;   /* dividers inside a dark block */
+
   /* --- state -----------------------------------------------------------
      Colour is never the only signal. Always pair with words. */
   --ok:            #1E7A46;
   --ok-wash:       #E8F5EE;
+  --ok-line:       #B7DEC8;
   --warn:          #8A5A00;
   --warn-wash:     #FDF4E3;
+  --warn-line:     #E8D3A4;
   --bad:           #A32020;
   --bad-wash:      #FBEBEB;
+  --bad-line:      #E5B9B9;
 
   /* --- type ------------------------------------------------------------- */
   --font-head: Cambria, Georgia, "Times New Roman", serif;

@@ -21,100 +21,122 @@
 }
 .shell--narrow { max-width: var(--shell-narrow); }
 
-/* --- utility strip ------------------------------------------------------ */
-.utility {
-  background: var(--indigo-dark);
-  color: #C6BEE2;
-  font-size: var(--text-xs);
-}
-.utility__inner {
-  max-width: var(--shell); margin: 0 auto;
-  padding: var(--space-2) var(--space-5);
-  display: flex; justify-content: space-between; gap: var(--space-4);
-}
-.utility a { color: #E4DEF5; text-decoration: none; }
-.utility a:hover { text-decoration: underline; }
+/* --- site header --------------------------------------------------------
+   One bar, not three. The crest and library name sit on the left, navigation
+   on the right, and the account control at the end of it.
 
-/* --- masthead ----------------------------------------------------------- */
-.masthead { background: var(--indigo); color: #fff; }
-.masthead__inner {
+   There is deliberately no badge announcing "Public visitor". Telling someone
+   they are nobody is not information they asked for; what they need is a way
+   to sign in, which is what the button is. Once signed in, the button becomes
+   their name, which answers the same question by showing rather than saying. */
+.siteheader {
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 50;
+}
+.siteheader__inner {
   max-width: var(--shell); margin: 0 auto;
-  padding: var(--space-4) var(--space-5);
-  display: flex; align-items: center; gap: var(--space-4);
-}
-.masthead__crest { width: 54px; height: auto; flex: none; }
-.masthead__titles { flex: 1 1 auto; min-width: 0; }
-.masthead__parent {
-  font-size: var(--text-xs); letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--gold); margin: 0 0 2px;
-}
-.masthead__name {
-  font-family: var(--font-head); font-size: var(--text-2xl);
-  font-weight: 700; color: #fff; margin: 0; line-height: 1.15;
-}
-.masthead a { color: inherit; text-decoration: none; }
-
-/* Who the server thinks you are. Not a security control — a reminder. */
-.rolebadge {
-  flex: none; font-size: var(--text-xs);
-  border: 1px solid #6B5CA5; border-radius: 999px;
-  padding: var(--space-1) var(--space-3); color: #E4DEF5; white-space: nowrap;
+  padding: var(--space-3) var(--space-5);
+  display: flex; align-items: center; gap: var(--space-5);
 }
 
-/* --- primary navigation ------------------------------------------------- */
-.mainnav { background: var(--surface); border-bottom: 1px solid var(--rule); }
-.mainnav__inner {
-  max-width: var(--shell); margin: 0 auto;
-  padding: 0 var(--space-5);
-  display: flex; align-items: center; justify-content: space-between;
+.brand { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; flex: none; }
+.brand:hover { text-decoration: none; }
+.brand__crest { width: 42px; height: auto; }
+.brand__name {
+  font-family: var(--font-head); font-size: 1.0625rem; font-weight: 700;
+  color: var(--indigo); line-height: 1.15; margin: 0;
 }
-.mainnav__list {
-  list-style: none; display: flex; gap: var(--space-1);
-  margin: 0; padding: 0;
+.brand__sub {
+  font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-muted); margin: 1px 0 0;
 }
+
+.mainnav { margin-left: auto; }
+.mainnav__list { list-style: none; display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: 0; }
 .mainnav__link {
-  display: block;
-  padding: var(--space-4) var(--space-4);
-  font-weight: 600; font-size: var(--text-sm);
-  color: var(--indigo); text-decoration: none;
-  border-bottom: 3px solid transparent;
+  display: block; padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm); font-weight: 600;
+  color: var(--ink); text-decoration: none; border-radius: var(--radius);
 }
 .mainnav__link:hover { background: var(--wash); color: var(--indigo); }
-/* aria-current="page" marks the active item for assistive technology.
-   The underline is the visual half of the same statement. */
-.mainnav__link[aria-current="page"] { border-bottom-color: var(--gold); }
+.mainnav__link[aria-current="page"] { color: var(--indigo); background: var(--indigo-wash); }
 
-/* Hidden on desktop, shown below 900px. Toggled by js/nav.js. */
+/* The account control. A button when signed out, the member's name when in. */
+.account {
+  flex: none; margin-left: var(--space-3);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-sm); font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px; text-decoration: none;
+  background: var(--indigo); color: var(--on-dark); border: 1px solid var(--indigo);
+}
+.account:hover { background: var(--indigo-soft); color: var(--on-dark); text-decoration: none; }
+.account--in { background: transparent; color: var(--indigo); border-color: var(--rule-strong); }
+.account--in:hover { background: var(--wash); color: var(--indigo); }
+
 .navtoggle {
-  display: none;
+  display: none; margin-left: auto;
   align-items: center; gap: var(--space-2);
-  margin: var(--space-2) 0;
   padding: var(--space-2) var(--space-3);
   font: inherit; font-size: var(--text-sm); font-weight: 600;
-  color: var(--indigo); background: var(--surface);
-  border: 1px solid var(--rule); border-radius: var(--radius);
+  color: var(--indigo); background: transparent;
+  border: 1px solid var(--rule-strong); border-radius: var(--radius);
   cursor: pointer;
 }
-.navtoggle__bars { display: block; width: 18px; height: 12px; position: relative; }
+.navtoggle__bars { display: block; width: 16px; height: 11px; position: relative; }
 .navtoggle__bars::before, .navtoggle__bars::after, .navtoggle__bars span {
   content: ""; position: absolute; left: 0; right: 0; height: 2px;
   background: var(--indigo); border-radius: 1px;
 }
 .navtoggle__bars::before { top: 0; }
-.navtoggle__bars span    { top: 5px; }
+.navtoggle__bars span    { top: 4.5px; }
 .navtoggle__bars::after  { bottom: 0; }
 
 @media (max-width: 900px) {
-  .mainnav__inner { flex-direction: column; align-items: stretch; }
-  .navtoggle { display: flex; align-self: flex-start; }
-  .mainnav__list { flex-direction: column; gap: 0; }
-  /* Collapsed by default on small screens. nav.js flips the hidden attribute
-     and aria-expanded together, so the button always announces its state. */
+  .siteheader__inner { flex-wrap: wrap; gap: var(--space-3); }
+  .navtoggle { display: inline-flex; }
+  .mainnav { margin-left: 0; flex: 1 1 100%; order: 3; }
+  .mainnav__list { flex-direction: column; align-items: stretch; gap: 0; }
   .mainnav__list[hidden] { display: none; }
-  .mainnav__link { padding: var(--space-3) var(--space-2); border-bottom: 1px solid var(--rule); }
-  .mainnav__link[aria-current="page"] { border-bottom-color: var(--gold); border-bottom-width: 3px; }
-  .masthead__name { font-size: var(--text-xl); }
-  .utility__inner { flex-direction: column; gap: var(--space-1); }
+  .mainnav__link { padding: var(--space-3); border-radius: 0; border-bottom: 1px solid var(--rule); }
+  .account { order: 2; margin-left: 0; }
+  .brand__name { font-size: 0.9375rem; }
+}
+@media (max-width: 420px) {
+  .brand__sub { display: none; }
+  .account { padding: var(--space-2) var(--space-3); }
+}
+
+/* --- hero ---------------------------------------------------------------
+   The catalogue's front door. A search field is what almost everyone came
+   for, so it is the first and largest thing on the page rather than one
+   panel among several. */
+.hero {
+  background: var(--indigo);
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(228,180,84,0.16), transparent 42%),
+    radial-gradient(circle at 88% 82%, rgba(59,44,122,0.65), transparent 48%);
+  color: var(--on-dark);
+  padding: var(--space-7) 0;
+}
+.hero__inner { max-width: var(--shell); margin: 0 auto; padding: 0 var(--space-5); }
+.hero h1 { color: var(--on-dark); font-size: 2.5rem; margin-bottom: var(--space-3); max-width: 20ch; }
+.hero__lead { font-size: var(--text-lg); color: var(--on-dark-muted); max-width: 56ch; margin-bottom: var(--space-6); }
+.hero__search { display: flex; gap: var(--space-3); max-width: 720px; flex-wrap: wrap; }
+.hero__search .input {
+  flex: 1 1 300px; font-size: var(--text-base);
+  padding: var(--space-4); border: none; border-radius: var(--radius-lg);
+}
+.hero__search .btn { padding: var(--space-4) var(--space-6); font-size: var(--text-base); border-radius: var(--radius-lg); }
+.hero__hint { font-size: var(--text-sm); color: var(--on-dark-faint); margin: var(--space-3) 0 0; }
+.hero__stats { display: flex; gap: var(--space-6); margin-top: var(--space-6); flex-wrap: wrap; }
+.hero__stat b { display: block; font-family: var(--font-head); font-size: var(--text-2xl); color: var(--gold); }
+.hero__stat span { font-size: var(--text-sm); color: var(--on-dark-faint); }
+
+@media (max-width: 700px) {
+  .hero { padding: var(--space-6) 0; }
+  .hero h1 { font-size: 1.875rem; }
 }
 
 /* --- breadcrumbs -------------------------------------------------------- */
@@ -124,7 +146,10 @@
 .crumbs li:last-child::after { content: ""; }
 
 /* --- page body ---------------------------------------------------------- */
-.page { padding: var(--space-2) 0 var(--space-7); }
+/* Longhand, deliberately. `main` carries both .shell and .page, and a
+   `padding:` shorthand here would reset the horizontal padding .shell sets,
+   putting text hard against the screen edge on a phone. */
+.page { padding-top: var(--space-2); padding-bottom: var(--space-7); }
 .page__head { margin-bottom: var(--space-5); }
 .page__lead { font-size: var(--text-lg); color: var(--ink-muted); max-width: 68ch; margin: 0; }
 
@@ -133,7 +158,7 @@
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
 
 /* --- footer ------------------------------------------------------------- */
-.sitefoot { background: var(--indigo-dark); color: #BDB4DC; font-size: var(--text-sm); margin-top: var(--space-7); }
+.sitefoot { background: var(--indigo-dark); color: var(--on-dark-faint); font-size: var(--text-sm); margin-top: var(--space-7); }
 .sitefoot__inner {
   max-width: var(--shell); margin: 0 auto; padding: var(--space-6) var(--space-5);
   display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-5);
@@ -142,13 +167,13 @@
   text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 var(--space-3); }
 .sitefoot ul { list-style: none; margin: 0; padding: 0; }
 .sitefoot li { margin-bottom: var(--space-2); }
-.sitefoot a { color: #DDD6F0; text-decoration: none; }
+.sitefoot a { color: var(--on-dark-link); text-decoration: none; }
 .sitefoot a:hover { text-decoration: underline; }
 .sitefoot__base {
-  border-top: 1px solid #2F1E5C;
+  border-top: 1px solid var(--on-dark-rule);
   max-width: var(--shell); margin: 0 auto; padding: var(--space-4) var(--space-5);
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);
-  font-size: var(--text-xs); color: #8B80B8;
+  font-size: var(--text-xs); color: var(--on-dark-faint);
 }
 @media (max-width: 900px) { .sitefoot__inner { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .sitefoot__inner { grid-template-columns: 1fr; } }

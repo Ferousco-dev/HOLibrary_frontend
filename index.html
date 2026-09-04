@@ -19,70 +19,64 @@
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<div class="utility">
-  <div class="utility__inner">
-    <span>Obafemi Awolowo University, Ile-Ife</span>
-    <span><a href="https://oaucdl.edu.ng">University home</a> &middot; <a href="pages/04-signin.html">Staff sign in</a></span>
-  </div>
-</div>
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="index.html">
+      <img class="brand__crest" src="assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span>
+        <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+        <span class="brand__sub">Obafemi Awolowo University</span>
+      </span>
+    </a>
 
-<header class="masthead">
-  <div class="masthead__inner">
-    <img class="masthead__crest" src="assets/oau-logo.png" alt="Obafemi Awolowo University crest">
-    <div class="masthead__titles">
-      <p class="masthead__parent">University Library System</p>
-      <p class="masthead__name"><a href="index.html">Hezekiah Oluwasanmi Library</a></p>
-    </div>
-    <span class="rolebadge" id="rolebadge">Public visitor</span>
-  </div>
-</header>
-
-<nav class="mainnav" aria-label="Main navigation">
-  <div class="mainnav__inner">
     <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
       <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
       Menu
     </button>
-    <ul class="mainnav__list" id="primary-nav">
-      <li><a class="mainnav__link" href="index.html" aria-current="page">Catalogue</a></li>
-      <li><a class="mainnav__link" href="pages/05-my-loans.html">My loans</a></li>
-      <li><a class="mainnav__link" href="pages/06-reservations.html">Reservations</a></li>
-      <li><a class="mainnav__link" href="pages/08-desk-issue.html">Circulation desk</a></li>
-      <li><a class="mainnav__link" href="pages/10-members.html">Members</a></li>
-      <li><a class="mainnav__link" href="pages/04-signin.html">Sign in</a></li>
-    </ul>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <ul class="mainnav__list" id="primary-nav">
+        <li><a class="mainnav__link" href="index.html" aria-current="page">Catalogue</a></li>
+        <li><a class="mainnav__link" href="pages/05-my-loans.html">My loans</a></li>
+        <li><a class="mainnav__link" href="pages/06-reservations.html">Reservations</a></li>
+        <li><a class="mainnav__link" href="pages/08-desk-issue.html">Circulation desk</a></li>
+      </ul>
+    </nav>
+
+    <a class="account" id="account" href="pages/04-signin.html">Sign in</a>
   </div>
-</nav>
+</header>
+
+<section class="hero">
+  <div class="hero__inner">
+    <h1>Find any book on our shelves</h1>
+    <p class="hero__lead">
+      Search the physical collection of the Hezekiah Oluwasanmi Library, and
+      see whether a copy can be borrowed before you walk to the shelf.
+    </p>
+
+    <form id="search-form" class="hero__search" role="search">
+      <label class="sr-only" for="q">Search by title, author, ISBN or subject</label>
+      <input class="input" type="search" id="q" name="q"
+             placeholder="Try: structural analysis" aria-describedby="q-hint" autocomplete="off">
+      <button class="btn btn--primary" type="submit">Search</button>
+    </form>
+    <p class="hero__hint" id="q-hint">
+      Spelling does not have to be exact. Searching for <em>strutural</em> still finds
+      <em>Structural Analysis</em>.
+    </p>
+
+    <div class="hero__stats">
+      <p class="hero__stat"><b>223</b><span>titles catalogued</span></p>
+      <p class="hero__stat"><b>892</b><span>physical copies</span></p>
+      <p class="hero__stat"><b>2</b><span>wings, North and South</span></p>
+    </div>
+  </div>
+</section>
 
 <main id="main" class="shell page">
 
-  <div class="page__head">
-    <h1>Search the catalogue</h1>
-    <p class="page__lead">
-      Find a book on the shelves of the Hezekiah Oluwasanmi Library, and see
-      whether a copy can be borrowed today.
-    </p>
-  </div>
-
-  <section class="panel" aria-labelledby="search-heading">
-    <h2 class="sr-only" id="search-heading">Catalogue search</h2>
-    <form id="search-form" role="search">
-      <div class="formrow">
-        <div class="field">
-          <label for="q">Search by title, author, ISBN or subject</label>
-          <input class="input" type="search" id="q" name="q"
-                 placeholder="structural analysis" aria-describedby="q-hint" autocomplete="off">
-          <p class="hint" id="q-hint">
-            Spelling does not have to be exact. Searching for
-            <em>strutural</em> will still find <em>Structural Analysis</em>.
-          </p>
-        </div>
-        <div class="field field--fixed">
-          <button class="btn btn--primary" type="submit">Search</button>
-        </div>
-      </div>
-    </form>
-  </section>
 
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
@@ -143,7 +137,7 @@
       </ul>
     </div>
     <div>
-      <h2>Contact</h2>
+      <h2>Visit</h2>
       <ul>
         <li>Hezekiah Oluwasanmi Library</li>
         <li>Obafemi Awolowo University</li>
@@ -229,29 +223,42 @@ function render(page, query) {
 function resultItem(book) {
   const li = document.createElement("li");
 
+  // Cover on the left, text beside it. coverElement() renders the call-number
+  // placeholder immediately and swaps in a real cover only if one loads, so
+  // the row never changes height.
+  const row = document.createElement("div");
+  row.className = "result__body";
+  row.appendChild(coverElement(book, "list"));
+  const text = document.createElement("div");
+  text.className = "result__text";
+  row.appendChild(text);
+  li.appendChild(row);
+
   const h3 = document.createElement("h3");
   h3.className = "result__title";
   const link = document.createElement("a");
-  link.href = "pages/03-book.html?id=" + encodeURIComponent(book.id);
-  link.textContent = book.title;                 // textContent, not innerHTML
+  link.href = "pages/03-book.html?id=" + encodeURIComponent(book.ID);
+  link.textContent = book.Title;                 // textContent, not innerHTML
   h3.appendChild(link);
-  li.appendChild(h3);
+  text.appendChild(h3);
 
   const meta = document.createElement("p");
   meta.className = "result__meta";
-  [book.author, book.isbn13 ? "ISBN " + book.isbn13 : null,
-   book.call_number ? "Call number " + book.call_number : null]
+  [(book.Authors || []).join(", ") || null,
+   book.ISBN13 ? "ISBN " + book.ISBN13 : null,
+   book.CallNumber ? "Call number " + book.CallNumber : null,
+   book.wing && book.wing !== "Unknown" ? book.wing + " Wing" : null]
     .filter(Boolean)
     .forEach(function (text) {
       const span = document.createElement("span");
       span.textContent = text;
       meta.appendChild(span);
     });
-  li.appendChild(meta);
+  text.appendChild(meta);
 
   // availabilityLine() lives in format.js so that every screen describes the
   // same stock figures with the same words.
-  const state = availabilityLine(book.total_copies || 0, book.available_copies || 0);
+  const state = availabilityLine(book);
   const notice = document.createElement("div");
   notice.className = "notice notice--" + state.tone;
   const head = document.createElement("p");
@@ -261,7 +268,7 @@ function resultItem(book) {
   body.className = "notice__body";
   body.textContent = state.body;
   notice.append(head, body);
-  li.appendChild(notice);
+  text.appendChild(notice);
 
   const actions = document.createElement("p");
   actions.className = "result__actions";
@@ -269,7 +276,7 @@ function resultItem(book) {
   detail.href = link.href;
   detail.textContent = "View copies and shelf location";
   actions.appendChild(detail);
-  li.appendChild(actions);
+  text.appendChild(actions);
 
   return li;
 }

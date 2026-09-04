@@ -46,29 +46,34 @@ function dueState(dueIso) {
   return { tone: "ok", text: "Due in " + days + " days" };
 }
 
-/* How many copies of a title may actually leave the building.
+/* The sentence a reader sees under a title.
 
-   The last available copy is always retained for in-library use, so a title
-   with 3 free copies lends 2, and a title with 1 free copy lends none. This
-   is the rule most likely to be got wrong: "available" and "borrowable" are
-   different numbers and the interface must show the difference. */
-function borrowableCount(available) {
-  return Math.max(0, available - 1);
-}
+   Note what this does NOT do: it does not work out how many copies may be
+   borrowed. The server already decided that and sends it as `borrowable`,
+   along with `shelf_copy_retained` saying whether a copy is being held back.
+   Recomputing either here would give the interface its own opinion, and the
+   first time the library's rules changed the two would disagree.
 
-/* The sentence a reader sees under a title in search results. */
-function availabilityLine(stock, available) {
-  const canBorrow = borrowableCount(available);
+   The field names are the API's own. It returns PascalCase for stored fields
+   (Title, ISBN13, CallNumber) and snake_case for derived ones (wing,
+   borrowable, is_available). That is inconsistent, but it is what the
+   documented contract says, so match it rather than guessing:
+   https://api.library.appmd.dev/docs */
+function availabilityLine(book) {
+  const stock = (book.Availability && book.Availability.total_copies) || 0;
+  const free  = (book.Availability && book.Availability.available) || 0;
+  const canBorrow = book.borrowable || 0;
+
   if (canBorrow > 0) {
     return { tone: "ok",
       head: canBorrow === 1 ? "1 copy can be borrowed today." : canBorrow + " copies can be borrowed today.",
-      body: stock + " total copies; " + available + " available in the building. "
+      body: stock + " total copies; " + free + " available in the building. "
           + "One available copy is retained for in-library use." };
   }
-  if (available === 1) {
+  if (free > 0) {
     return { tone: "warn",
       head: "Available to read in the library, not available to borrow.",
-      body: stock + " total copies; 1 copy is on the shelf. "
+      body: stock + " total copies; " + free + " on the shelf. "
           + "Because it is the final available copy, borrowing is closed." };
   }
   return { tone: "bad",
@@ -86,4 +91,50 @@ function escapeHtml(value) {
   return String(value == null ? "" : value)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+/* Builds the cover for a book.
+
+   Covers come from Open Library, addressed by the ISBN we already store. We
+   hold no image ourselves; the reader's browser fetches it directly.
+
+   Three details that each cost a debugging session:
+
+   - "?default=false" makes Open Library answer 404 for a title it has no
+     cover for. Without it the service returns a grey placeholder image that
+     loads successfully, so a missing cover cannot be told from a real one.
+
+   - The <img> is placed in the document immediately, not built detached and
+     inserted on load. A detached image with loading="lazy" never enters a
+     viewport, so it never loads at all.
+
+   - Only about 40% of our titles have a cover, so absent is the normal case,
+     not an error. The call number sits underneath and is revealed if the
+     image fails, which means the row never changes height and a reader on a
+     slow connection sees something useful straight away. */
+function coverElement(book, size) {
+  const box = document.createElement("div");
+  box.className = "cover" + (size === "detail" ? " cover--detail" : "");
+
+  const label = document.createElement("span");
+  label.className = "cover__call";
+  label.textContent = book.CallNumber || "No cover";
+  box.appendChild(label);
+
+  if (!book.ISBN13) return box;
+
+  const img = document.createElement("img");
+  img.loading = "lazy";
+  // Decorative: the title is the heading immediately beside it, so giving the
+  // cover its own alt text would make a screen reader announce the book
+  // twice. WCAG 1.1.1 permits alt="" for exactly this case.
+  img.alt = "";
+  img.addEventListener("load", function () { box.classList.add("is-loaded"); });
+  img.addEventListener("error", function () { img.remove(); });
+  img.src = "https://covers.openlibrary.org/b/isbn/"
+          + encodeURIComponent(book.ISBN13) + "-"
+          + (size === "detail" ? "L" : "M") + ".jpg?default=false";
+  box.appendChild(img);
+
+  return box;
 }

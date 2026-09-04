@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <!--
   ===========================================================================
-  TEMPLATE — copy this file to start a new screen. Do not edit it in place.
+  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
 
       cp pages/_template.html pages/05-my-loans.html
 
-  Everything between "PAGE FRAME START" and "PAGE FRAME END" is shared. Change
-  only the four marked spots:
+  Change only the four marked spots:
       1. <title>
-      2. aria-current="page" on the nav item for this screen
+      2. aria-current="page" on this screen's nav link, removed from the rest
       3. the breadcrumb trail
       4. everything inside <main>
 
-  If you find yourself needing to change the frame itself, that is a
-  conversation for a pull request, not a local edit. Eleven pages have to
-  match.
+  The header and footer are identical on every page. If one of them needs to
+  change, that is a pull request, not a local edit: eleven pages have to match.
   ===========================================================================
 -->
 <html lang="en">
@@ -33,50 +31,39 @@
 </head>
 <body>
 
-<!-- ==================== PAGE FRAME START — do not edit ==================== -->
-
 <a class="skip-link" href="#main">Skip to main content</a>
 
-<div class="utility">
-  <div class="utility__inner">
-    <span>Obafemi Awolowo University, Ile-Ife</span>
-    <span><a href="https://oaucdl.edu.ng">University home</a> &middot; <a href="../pages/04-signin.html">Staff sign in</a></span>
-  </div>
-</div>
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span>
+        <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+        <span class="brand__sub">Obafemi Awolowo University</span>
+      </span>
+    </a>
 
-<header class="masthead">
-  <div class="masthead__inner">
-    <img class="masthead__crest" src="../assets/oau-logo.png"
-         alt="Obafemi Awolowo University crest">
-    <div class="masthead__titles">
-      <p class="masthead__parent">University Library System</p>
-      <p class="masthead__name"><a href="../index.html">Hezekiah Oluwasanmi Library</a></p>
-    </div>
-    <span class="rolebadge" id="rolebadge">Public visitor</span>
-  </div>
-</header>
-
-<nav class="mainnav" aria-label="Main navigation">
-  <div class="mainnav__inner">
     <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
       <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
       Menu
     </button>
-    <!-- 2. Put aria-current="page" on THIS page's link, and remove it from
-            the others. It marks the active item for a screen reader; the
-            gold underline is the visual half of the same statement. -->
-    <ul class="mainnav__list" id="primary-nav">
-      <li><a class="mainnav__link" href="../index.html">Catalogue</a></li>
-      <li><a class="mainnav__link" href="05-my-loans.html">My loans</a></li>
-      <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
-      <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
-      <li><a class="mainnav__link" href="10-members.html">Members</a></li>
-      <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
-    </ul>
-  </div>
-</nav>
 
-<!-- ===================== PAGE FRAME END — edit below ====================== -->
+    <nav class="mainnav" aria-label="Main navigation">
+      <ul class="mainnav__list" id="primary-nav">
+        <li><a class="mainnav__link" href="../index.html" aria-current="page">Catalogue</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">My loans</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+      </ul>
+    </nav>
+
+    <a class="account" id="account" href="04-signin.html">Sign in</a>
+  </div>
+</header>
+
+<!-- ====================== end header ==================================== -->
 
 <div class="shell">
   <!-- 3. CHANGE THIS -->
@@ -97,8 +84,9 @@
     <p class="page__lead">One sentence saying what a reader can do here.</p>
   </div>
 
-  <!-- Results of an action are announced here for screen reader users.
-       Write to it with announce("Loan recorded."), never innerHTML. -->
+  <!-- Outcomes are announced here for screen reader users, who get no visual
+       cue that anything happened. It is visually hidden on purpose. Write to
+       it with announce("Loan recorded."), never innerHTML. -->
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
   <section class="panel">
@@ -110,8 +98,7 @@
 
 </main>
 
-<!-- ==================== PAGE FRAME START — do not edit ==================== -->
-
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
 <footer class="sitefoot">
   <div class="sitefoot__inner">
     <div>
@@ -140,7 +127,7 @@
       </ul>
     </div>
     <div>
-      <h2>Contact</h2>
+      <h2>Visit</h2>
       <ul>
         <li>Hezekiah Oluwasanmi Library</li>
         <li>Obafemi Awolowo University</li>
@@ -154,14 +141,14 @@
   </div>
 </footer>
 
+<!-- ====================== end footer ==================================== -->
+
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/nav.js"></script>
 
-<!-- ===================== PAGE FRAME END — edit below ====================== -->
-
-<!-- Your page's own script goes here, or in js/pages/<your-page>.js -->
+<!-- Your page's own script goes here. -->
 
 </body>
 </html>
