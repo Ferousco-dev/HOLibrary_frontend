@@ -49,11 +49,12 @@ const HOL = {
      If a value below is still a placeholder, push stays switched off and
      js/push.js says so in the console rather than failing silently. */
   FIREBASE: {
-    apiKey:            "FILL_IN_FROM_FIREBASE_CONSOLE",
+    apiKey:            "AIzaSyDWg_nCRHuMTSLzht-FMVqmGxUbd1JnNhk",
     authDomain:        "holibrary.firebaseapp.com",
     projectId:         "holibrary",
-    messagingSenderId: "FILL_IN_FROM_FIREBASE_CONSOLE",
-    appId:             "FILL_IN_FROM_FIREBASE_CONSOLE",
+    storageBucket:     "holibrary.firebasestorage.app",
+    messagingSenderId: "769142524932",
+    appId:             "1:769142524932:web:1276786a86de303905b951",
   },
 
   VAPID_KEY: "BAfvExLPIPeAh7qjkKTghlL1AXBJesbR8V3mPYWOIVZ6wpEzBgNa7ekPZ-ZwOWp6hETakRzI4jrtOUJtTkwU6JY",
