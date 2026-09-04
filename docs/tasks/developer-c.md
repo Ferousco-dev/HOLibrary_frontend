@@ -58,7 +58,7 @@ They are a copy of the server's rules for display only. The server decides.
 ### Endpoints
 
 ```
-POST /loans          body { "accession_number": "...", "identifier": "..." }
+POST /loans          body { "accession_number": "...", "login": "..." }
 GET  /books/lookup?accession=...     to show the title before issuing
 ```
 

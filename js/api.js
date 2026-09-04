@@ -79,6 +79,10 @@ const api = (function () {
     if (text) { try { body = JSON.parse(text); } catch (e) { body = { message: text }; } }
 
     if (!response.ok) throw new ApiError(response.status, body);
+
+    // Every successful response is wrapped: { "data": ..., "meta": ... }.
+    // The wrapper is returned whole rather than unwrapped here, because a
+    // listing needs meta for its pager. Read result.data for the records.
     return body;
   }
 
@@ -90,7 +94,8 @@ const api = (function () {
         body: JSON.stringify({ refresh_token: refreshToken() }),
       });
       if (!r.ok) { clearSession(); return false; }
-      setSession(await r.json());
+      const body = await r.json();
+      setSession(body.data || body);
       return true;
     } catch (e) { clearSession(); return false; }
   }
@@ -105,10 +110,15 @@ const api = (function () {
     // https://api.library.appmd.dev/docs
     del:  (path, payload) => request("DELETE", path, payload),
 
-    async login(identifier, password) {
-      const tokens = await request("POST", "/auth/login", { identifier, password });
-      setSession(tokens);
-      return tokens;
+    // The field is "login", not "identifier". It carries a matric or staff
+    // number such as SWE/2025/001, never an email address.
+    // https://api.library.appmd.dev/docs
+    async login(login, password) {
+      const body = await request("POST", "/auth/login", { login, password });
+      const session = body.data || body;
+      setSession(session);
+      return session;   // { access_token, refresh_token, expires_in,
+                        //   must_change_password, user }
     },
     logout() { clearSession(); },
     isSignedIn() { return Boolean(accessToken || refreshToken()); },

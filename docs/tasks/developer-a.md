@@ -83,8 +83,8 @@ Deliberately narrow and plain. Use `.shell--narrow`.
 
 Two fields and a button:
 
-- **Matric or staff number** (`identifier`). Not an email: members are known by
-  `SWE/2025/001`. Say so in the hint.
+- **Matric or staff number**, sent as `login`. Not an email: members are known
+  by `SWE/2025/001`. Say so in the hint.
 - **Password** (`password`), `type="password"`.
 
 Both need a real `<label for>` matching the input's `id`. A placeholder is not
@@ -93,14 +93,18 @@ a label; it disappears the moment someone types.
 Submit with:
 
 ```js
-await api.login(identifier, password);
+const session = await api.login(login, password);
 ```
+
+The API wraps every successful response, so what comes back is
+`{ data: { access_token, refresh_token, must_change_password, user } }`.
+`api.login` unwraps it for you and returns the inner object.
 
 That stores the session for you. Do not touch `sessionStorage` yourself.
 
 ### After a successful sign-in
 
-Read `must_change_password` from the response. If it is true, send them to
+Read `must_change_password` from the returned session. If it is true, send them to
 `07-change-password.html` and nowhere else: the server will refuse every other
 route until the password is changed, so any other destination produces a
 confusing error.
@@ -120,8 +124,8 @@ not have.
 ### Endpoints
 
 ```
-POST /auth/login             body { "identifier": "...", "password": "..." }
-POST /auth/forgot-password   body { "identifier": "..." }
+POST /auth/login             body { "login": "...", "password": "..." }
+POST /auth/forgot-password   body { "login": "..." }
 ```
 
 Add a "Forgotten your password?" link that reveals a small form posting to
