@@ -1,0 +1,26 @@
+# The catalogue is public, exactly as a card catalogue in the foyer is public.
+# Anything behind a sign-in is not, and is listed below so a crawler does not
+# waste requests on pages it will only be refused.
+
+User-agent: *
+Allow: /$
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+
+# Personal pages. A crawler cannot sign in, so these would only ever return a
+# sign-in prompt, and a search result pointing at somebody's loans would be
+# misleading even though it could never expose one.
+Disallow: /pages/04-signin
+Disallow: /pages/05-my-loans
+Disallow: /pages/06-reservations
+Disallow: /pages/07-change-password
+Disallow: /pages/12-saved
+
+# Staff screens.
+Disallow: /pages/08-desk-issue
+Disallow: /pages/09-desk-return
+Disallow: /pages/10-members
+Disallow: /pages/11-dashboard
+
+Sitemap: https://library.appmd.dev/sitemap.xml

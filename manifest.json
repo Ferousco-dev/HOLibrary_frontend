@@ -1,0 +1,14 @@
+{
+  "name": "Hezekiah Oluwasanmi Library",
+  "short_name": "HOL Library",
+  "description": "Search the physical collection of the Hezekiah Oluwasanmi Library, Obafemi Awolowo University.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#240C54",
+  "lang": "en-NG",
+  "icons": [
+    { "src": "/assets/oau-logo.png", "sizes": "512x500", "type": "image/png", "purpose": "any" }
+  ]
+}
