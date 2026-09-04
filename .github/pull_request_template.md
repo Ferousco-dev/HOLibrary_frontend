@@ -19,6 +19,8 @@ Tick each one only if you actually did it.
 - [ ] `aria-current="page"` is on this page's nav link, and no other
 - [ ] Every colour and gap comes from a `var(--…)` token, no raw hex or pixels
 - [ ] Every `<input>` has a `<label for>` that matches its `id`
+- [ ] Every form calls `validate.attach` and `validate.form` before sending
+- [ ] Every error message appears next to its field and says what to do
 - [ ] Every `<img>` has meaningful `alt` text (or `alt=""` if decorative)
 - [ ] The hamburger opens and closes, and Esc closes it
 - [ ] I tabbed through the whole page and could reach every control

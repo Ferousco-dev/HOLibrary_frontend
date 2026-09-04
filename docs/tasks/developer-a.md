@@ -166,6 +166,81 @@ POST /auth/change-password   body { "current_password": "...", "new_password": "
 
 ---
 
+---
+
+## Client-side validation (required on every form you build)
+
+The course assesses **meaningful interactivity and client-side validation**.
+Interactivity you get largely for free by following the patterns in
+`index.html`. Validation you must write, and it is checked in review.
+
+Use `js/validate.js`. Do not write your own.
+
+```js
+validate.attach(form);                 // check fields as the reader leaves them
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (!validate.form(form)) return;    // stop, errors are already shown
+  // ... send the request
+});
+```
+
+`validate.attach` checks a field when it loses focus, then re-checks on every
+keystroke once it has been marked wrong, so the error clears the moment it is
+fixed. `validate.form` checks everything, shows **every** problem at once, and
+moves focus to the first bad field.
+
+### On each input
+
+| Attribute | Use it for |
+|---|---|
+| `required` | A field that must be filled |
+| `type="email"` | An email address; the browser checks the shape |
+| `type="password"` | Any password, so the value is masked |
+| `minlength` | A minimum length, checked explicitly by our module |
+| `data-error` | Your own wording, which beats anything generic |
+| `data-hint` | The id of the hint paragraph, so both are announced |
+
+```html
+<div class="field">
+  <label for="email">Email address</label>
+  <input class="input" type="email" id="email" name="email" required
+         data-hint="email-hint"
+         data-error="Enter the email address on the member's ID card.">
+  <p class="hint" id="email-hint">Used for due date reminders.</p>
+</div>
+```
+
+### Two values that must match
+
+The browser has no attribute for this, so the module provides one:
+
+```js
+if (!validate.mustMatch(newPassword, confirmPassword,
+    "The two passwords do not match.")) return;
+```
+
+### What validation is and is not
+
+**It is a courtesy, not a control.** It saves the reader a round trip to be
+told something the browser already knew. Anybody can open the developer tools
+and delete an attribute, so the server checks everything again regardless.
+
+That means: **never validate a library rule here.** Checking that two fields
+match is yours. Deciding whether a member may borrow is the server's, and
+duplicating that decision would give the interface its own opinion that will
+eventually disagree with the real one.
+
+### What review will check
+
+- Every form calls `validate.attach` and `validate.form`
+- Every error appears **next to its field**, not at the top of the page
+- Every message says **what to do**, not that something is wrong
+- `aria-invalid` and `aria-describedby` are set (the module does this)
+- Errors are readable without colour
+- Focus moves to the first bad field on submit
+
 ## When you are finished
 
 - `python3 scripts/check.py` passes

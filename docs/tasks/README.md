@@ -39,6 +39,9 @@ all of them medium, and the fourth is the newest feature: saved titles.
   from `js/api.js`. They handle the token, the refresh and the error shape.
 - **Never write a colour or a pixel gap.** Use `var(--indigo)`, `var(--space-4)`
   and the rest from `css/tokens.css`.
+- **Every form validates before it submits.** Use `validate.attach` and
+  `validate.form` from `js/validate.js`. The course assesses client-side
+  validation directly, and review checks it.
 - **Never put data into `innerHTML`.** A book title can contain `<`, and a
   member's name comes from a form. Use `textContent`.
 - **The server decides.** Hiding a button is tidiness, never security. Design

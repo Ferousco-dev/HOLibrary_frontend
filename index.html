@@ -132,8 +132,10 @@
 
     <form id="search-form" class="hero__search" role="search">
       <label class="sr-only" for="q">Search by title, author, ISBN or subject</label>
-      <input class="input" type="search" id="q" name="q"
-             placeholder="Try: structural analysis" aria-describedby="q-hint" autocomplete="off">
+      <input class="input" type="search" id="q" name="q" required minlength="2"
+             placeholder="Try: structural analysis" aria-describedby="q-hint"
+             autocomplete="off" data-hint="q-hint"
+             data-error="Type something to search for, at least two letters.">
       <button class="btn btn--primary" type="submit">Search</button>
     </form>
     <p class="hero__hint" id="q-hint">
@@ -231,6 +233,7 @@
 
 <script src="js/config.js"></script>
 <script src="js/format.js"></script>
+<script src="js/validate.js"></script>
 <script src="js/api.js"></script>
 <script src="js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -254,10 +257,18 @@ const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
 
+// Check the field as the reader leaves it, and report the reason next to it.
+validate.attach(form);
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
+
+  // Client side checking is a courtesy, not a control. It saves a round trip
+  // to be told something the browser already knew. The server checks again
+  // regardless, because a browser is under the reader's control.
+  if (!validate.form(form)) return;
+
   const query = input.value.trim();
-  if (!query) { input.focus(); return; }
 
   // Put the search in the address bar before running it. A result page is
   // then a real page: it can be shared, bookmarked, and reached again with
