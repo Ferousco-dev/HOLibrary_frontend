@@ -492,7 +492,24 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
-<!-- Your page's own script goes here. -->
+<script>
+/* The only place the push offer is made.
+
+   push.js has always been able to ask, but nothing called offerPush(), so the
+   prompt could never appear and no device ever registered a token. This is
+   that call.
+
+   Here rather than anywhere else because this is the page where a reminder
+   obviously relates to what the reader is looking at: their own loans and the
+   dates they are due back. Asking on the catalogue would mean asking someone
+   who has borrowed nothing, which is how a site teaches people to click Block.
+
+   offerPush() decides for itself whether to appear. It stays silent unless
+   push is configured, the browser can receive it, the reader is signed in,
+   they have not already answered the permission prompt, and they have not
+   dismissed this offer before. So on a signed-out visit it does nothing. */
+offerPush(document.querySelector(".loans-panel"));
+</script>
 
 </body>
 </html>
