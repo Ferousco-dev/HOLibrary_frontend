@@ -66,76 +66,7 @@
     <p class="page__lead">Where the collection stands today, and what the desk has done most recently.</p>
   </div>
 
-  <!-- DUMMY DATA. These are the real collection figures as of the last
-       import, standing in until GET /reports is wired up. -->
-  <section class="panel" aria-labelledby="statistics-heading">
-    <h2 class="panel__title" id="statistics-heading">The collection today</h2>
-    <div class="stats">
-      <article class="stat">
-        <p class="stat__label">Titles catalogued</p>
-        <p class="stat__value">223</p>
-      </article>
-      <article class="stat">
-        <p class="stat__label">Physical copies</p>
-        <p class="stat__value">892</p>
-      </article>
-      <article class="stat">
-        <p class="stat__label">Out on loan</p>
-        <p class="stat__value">86</p>
-      </article>
-      <article class="stat">
-        <p class="stat__label">Overdue</p>
-        <p class="stat__value">7</p>
-      </article>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="activity-heading">
-    <h2 class="panel__title" id="activity-heading">Recent activity</h2>
-    <div class="table-wrap">
-      <table class="table">
-        <caption>The last four actions taken at the circulation desk</caption>
-        <thead>
-          <tr>
-            <th scope="col">Staff member</th>
-            <th scope="col">Action</th>
-            <th scope="col">When</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Ada Okafor</td>
-            <td>Issued HOL/2019/00412 to SWE/2025/001.</td>
-            <td><time datetime="2026-09-04T10:42">4 Sep 2026, 10:42</time></td>
-          </tr>
-          <tr>
-            <td>Oresajo Oluwaferanmi</td>
-            <td>Returned HOL/2016/01887.</td>
-            <td><time datetime="2026-09-04T09:18">4 Sep 2026, 09:18</time></td>
-          </tr>
-          <tr>
-            <td>Fatima Bello</td>
-            <td>Renewed HOL/2021/00734 for SEN/2024/118.</td>
-            <td><time datetime="2026-09-04T08:56">4 Sep 2026, 08:56</time></td>
-          </tr>
-          <tr>
-            <td>Daniel Adeyemi</td>
-            <td>Added HOL/2026/00291 to the collection.</td>
-            <td><time datetime="2026-09-03T16:27">3 Sep 2026, 16:27</time></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Shown instead of everything above when a signed-in member who is not
-       staff reaches this URL. The server refuses the data either way; this
-       is only so the refusal reads as a sentence rather than an empty page. -->
-  <section class="notice notice--bad" aria-labelledby="access-denied-heading" hidden>
-    <h2 class="notice__head" id="access-denied-heading">This page is for library staff</h2>
-    <p class="notice__body">Your account does not have the permission this page needs.</p>
-    <p><a class="btn btn--secondary" href="../index.html">Back to the catalogue</a></p>
-  </section>
+  <div id="content"></div>
 
 </main>
 
@@ -188,12 +119,100 @@
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
-<!-- Your page's own script goes here. -->
+<script>
+/* The dashboard is one GET. Everything below is how its five numbers and the
+   recent activity are drawn, not how they are obtained. */
+
+const content = document.getElementById("content");
+
+function statCard(label, value) {
+  return el("article", { className: "stat" }, [
+    el("p", { className: "stat__value" }, value.toLocaleString()),
+    el("p", { className: "stat__label" }, label),
+  ]);
+}
+
+function panel(titleText, body) {
+  const id = titleText.toLowerCase().replace(/[^a-z]+/g, "-");
+  return el("section", { className: "panel", "aria-labelledby": id },
+    [el("h2", { className: "panel__title", id: id }, titleText)].concat(body));
+}
+
+/* Turns COPY_MARKED_LOST into "Copy marked lost". The server stores the verb
+   as a constant because a constant is what a machine should compare; a person
+   should not have to read it in that form. */
+function readableAction(action) {
+  const words = String(action || "").toLowerCase().replace(/_/g, " ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+function activityTable(entries) {
+  return el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+    el("caption", {}, "The most recent actions taken by library staff"),
+    el("thead", {}, el("tr", {}, [
+      el("th", { scope: "col" }, "Staff member"),
+      el("th", { scope: "col" }, "Action"),
+      el("th", { scope: "col" }, "What"),
+      el("th", { scope: "col" }, "When"),
+    ])),
+    el("tbody", {}, entries.map(function (entry) {
+      return el("tr", {}, [
+        el("td", {}, entry.actor_name || "(deleted)"),
+        el("td", {}, readableAction(entry.action)),
+        el("td", {}, entry.entity_type || ""),
+        el("td", {}, el("time", { datetime: entry.created_at },
+          formatDateTime(entry.created_at))),
+      ]);
+    })),
+  ]));
+}
+
+/* Two independent requests. The audit trail is administrator only while the
+   counts are open to any staff member, so a librarian gets the numbers and a
+   panel explaining the absence of the rest, rather than a failed page. */
+load({
+  into: content,
+  label: "Loading the dashboard",
+  needsSignIn: "see the dashboard",
+  fetch: async function () {
+    const counts = await api.get("/admin/dashboard");
+    // Settled, not all: the trail being refused must not lose the counts.
+    const [audit] = await Promise.allSettled([api.get("/admin/audit?per_page=8")]);
+    return { counts, audit };
+  },
+  announce: (r) => "Dashboard loaded. " + (r.counts.data.books || 0) + " titles catalogued.",
+  render: function (result) {
+    const d = result.counts.data || {};
+    const counts = panel("The collection today", el("div", { className: "stats" }, [
+      statCard("Titles catalogued", d.books || 0),
+      statCard("Physical copies", d.copies || 0),
+      statCard("Members", d.members || 0),
+      statCard("Out on loan", d.active_loans || 0),
+      statCard("Overdue", d.overdue || 0),
+    ]));
+
+    const trail = result.audit.value && result.audit.value.data;
+    let activity;
+    if (!trail) {
+      activity = panel("Recent activity", el("p", { className: "hint" },
+        "The audit trail is open to administrators only."));
+    } else if (trail.length === 0) {
+      activity = panel("Recent activity", el("p", { className: "hint" },
+        "Nothing has been recorded yet."));
+    } else {
+      activity = panel("Recent activity", activityTable(trail));
+    }
+
+    return [counts, activity];
+  },
+});
+</script>
 
 </body>
 </html>

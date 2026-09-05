@@ -184,23 +184,6 @@
 .page__head { margin-bottom: var(--space-5); }
 .page__lead { font-size: var(--text-lg); color: var(--ink-muted); max-width: 68ch; margin: 0; }
 
-/* Page-specific two-column layout for reservation history. */
-.layout__two-col {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
-  gap: var(--space-5);
-  align-items: start;
-}
-.layout__two-col > * { min-width: 0; }
-
-/* Right-hand panel title rule for reservations page only */
-.layout__two-col__aside .panel__title {
-  margin-top: 0;
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: var(--space-4);
-}
-
 /* Two-column: main content + supporting sidebar. Stacks below 900px. */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-5); align-items: start; }
 

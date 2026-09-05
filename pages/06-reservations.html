@@ -22,26 +22,12 @@
 
   <!-- 1. CHANGE THIS -->
   <title>Reservations | Hezekiah Oluwasanmi Library</title>
-  <meta name="description" content="One sentence describing this page.">
+  <meta name="description" content="Your place in each reservation queue, and what you have borrowed before.">
 
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
-  <style>
-    .layout__two-col {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
-      align-items: start;
-    }
-
-    @media (min-width: 700px) {
-      .layout__two-col {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
 
@@ -94,79 +80,17 @@
 
 <main id="main" class="shell page">
 
-  <!-- 4. CHANGE EVERYTHING BELOW ---------------------------------------- -->
-
   <div class="page__head">
-    <h1>Reservation and history</h1>
-    <p class="page__lead">View your current queue positions and recent borrowing history.</p>
+    <h1>Reservations</h1>
+    <p class="page__lead">Where you are in each queue, and everything you have borrowed before.</p>
   </div>
 
-  <!-- Outcomes are announced here for screen reader users, who get no visual
-       cue that anything happened. It is visually hidden on purpose. Write to
-       it with announce("Loan recorded."), never innerHTML. -->
-    <p class="liveregion" id="live" aria-live="polite" role="status"></p>
-    <div class="layout__two-col">
-      <!--LEFT: reservations table-->
-      <section class="panel">
-      <h2 class="panel__title">My reservations</h2>
-      <p>Queue positions are shown at title level. when a copy becomes available,
-        desk staff will still verify eligibility before issues.
-      </p>
-      <table>
-        <caption>Current reservations</caption>
-        <thead>
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Call number</th>
-            <th scope="col">Queue position</th>
-            <th scope="col">Placed on</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Things Fall Apart</td>
-            <td>PR9387</td>
-            <td>1 of 3</td>
-            <td>29 aug 2026, 2:40 pm</td>
-            <td><button type="button" class="btn btn--ghost">cancel</button></td>
-          </tr>
-          <tr>
-            <td>Digital signal Processing</td>
-            <td>Tk 51032.9</td>
-            <td>4 of 5</td>
-            <td>27 aug 2026, 11:05 am</td>
-            <td><button type="button" class="btn btn--ghost">Cancel</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-    <!--RIGHT: borrowing history-->
-    <aside class="layout__two-col__aside">
-      <section class="panel">
-        <h2 class="panel__title">Recent borrowing history</h2>
-        <ul>
-          <li>
-            <strong>Half of a yellow Sun</strong><br>
-            copy ACC-PR9387-2231 | Retured 24 jul aug 2026, 3:05 pm
-          </li>
-          <li>
-            <strong>Engineering Mechanics: statics</strong><br>
-            copy ACC-TA349-3044 | Returned 24 Jul 2026, 10:20 am
-          </li>
-          <li>
-           <strong>Nigerian Constitutional law</strong><br>
-            Copy ACC-KTA1805-0309 | Returned 3 Jul 2026, 4:12 pm
-          </li>
-        </ul>
-        <h2 class="panel__title">Why history sits here</h2>
-        <p>The member reservation view is narrow in scope, so the page pairs current queue 
-          position with a compact history panel rather than splitting them into separate destinations</p>
-      </section>
-    </aside>
-    <p>Reservation use the existing members endpoints only: current queue items and prior circultion history.</p>
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div class="split">
+    <section id="reservations" aria-label="Your reservations"></section>
+    <aside class="split__aside" id="history" aria-label="Borrowing history"></aside>
   </div>
-  <!-- ------------------------------------------------------------------- -->
 
 </main>
 
@@ -220,12 +144,131 @@
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
-<!-- Your page's own script goes here. -->
+<script>
+/* Two independent requests, drawn into two independent containers, so a
+   failure in one does not blank the other.
+
+   queue_position is computed by the server on every read. Storing it would
+   make it wrong the moment anybody ahead of you cancelled. */
+
+const reservationsBox = document.getElementById("reservations");
+const historyBox = document.getElementById("history");
+
+const RESERVATION_STATE = {
+  pending: { tone: "warn", text: "Waiting" },
+  ready:   { tone: "ok",   text: "Ready for you" },
+};
+
+function reservationRow(r) {
+  const state = RESERVATION_STATE[r.status] || { tone: "none", text: r.status };
+  const place = r.status === "ready" ? "Held for you" : r.queue_position + ordinal(r.queue_position);
+
+  return el("tr", {}, [
+    el("td", {}, el("a", { href: "03-book.html?id=" + encodeURIComponent(r.book_id) }, r.book_title)),
+    el("td", {}, el("span", { className: "status status--" + state.tone }, state.text)),
+    el("td", {}, place),
+    el("td", {}, el("time", { datetime: r.created_at }, formatDate(r.created_at))),
+    el("td", {}, el("button", {
+      type: "button",
+      className: "btn btn--secondary",
+      // The visible word is "Cancel" on every row, so the accessible name has
+      // to carry the title. Otherwise a screen reader reads "cancel, cancel,
+      // cancel" with no way to tell the rows apart.
+      "aria-label": "Cancel your reservation for " + r.book_title,
+      onClick: function (event) { cancelReservation(r, event.currentTarget); },
+    }, "Cancel")),
+  ]);
+}
+
+async function cancelReservation(reservation, button) {
+  button.disabled = true;
+  button.textContent = "Cancelling\u2026";
+  announce("Cancelling your reservation for " + reservation.book_title + ".");
+
+  try {
+    await api.del("/reservations/" + encodeURIComponent(reservation.id));
+    announce("Reservation for " + reservation.book_title + " cancelled.");
+    // Positions behind this one have all moved up, so the whole list is
+    // re-read rather than the row being spliced out of a now-stale table.
+    showReservations();
+  } catch (err) {
+    button.disabled = false;
+    button.textContent = "Cancel";
+    announce(err.message);
+  }
+}
+
+function showReservations() {
+  return load({
+    into: reservationsBox,
+    label: "Loading your reservations",
+    needsSignIn: "see your reservations",
+    empty: "You have no reservations. Reserve a title from its page when every copy is out.",
+    fetch: () => api.get("/me/reservations"),
+    announce: (r) => (r.data || []).length + " reservation(s).",
+    render: function (result) {
+      const rows = result.data || [];
+      if (rows.length === 0) return null;
+
+      return el("section", { className: "panel", "aria-labelledby": "reservations-heading" }, [
+        el("h2", { className: "panel__title", id: "reservations-heading" }, "Your reservations"),
+        el("p", {}, "Queue positions are counted per title. When a copy comes back, "
+          + "desk staff still check eligibility before issuing it."),
+        el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+          el("caption", {}, "Titles you are waiting for"),
+          el("thead", {}, el("tr", {}, [
+            el("th", { scope: "col" }, "Title"),
+            el("th", { scope: "col" }, "Status"),
+            el("th", { scope: "col" }, "Your place"),
+            el("th", { scope: "col" }, "Reserved on"),
+            el("th", { scope: "col" }, "Action"),
+          ])),
+          el("tbody", {}, rows.map(reservationRow)),
+        ])),
+      ]);
+    },
+  });
+}
+
+function showHistory() {
+  return load({
+    into: historyBox,
+    label: "Loading your history",
+    needsSignIn: "see your borrowing history",
+    empty: "You have not borrowed anything yet.",
+    fetch: () => api.get("/me/history"),
+    render: function (result) {
+      // Returned loans only. What is still out belongs on the loans page, and
+      // showing it in both places invites a reader to think they have two.
+      const past = (result.data || []).filter(function (l) { return l.returned_at; });
+      if (past.length === 0) return null;
+
+      return el("section", { className: "panel" }, [
+        el("h2", { className: "panel__title" }, "Previously borrowed"),
+        el("ul", { className: "plainlist" }, past.slice(0, 10).map(function (loan) {
+          return el("li", {}, [
+            el("strong", {}, loan.book_title),
+            el("p", { className: "hint" }, [
+              el("span", { className: "accession" }, loan.accession_number),
+              " returned ",
+              el("time", { datetime: loan.returned_at }, formatDate(loan.returned_at)),
+            ]),
+          ]);
+        })),
+      ]);
+    },
+  });
+}
+
+showReservations();
+showHistory();
+</script>
  <script>
   document.querySelectorAll('.btn--ghost').forEach(function(btn){
     btn.addEventListener('click', function(){

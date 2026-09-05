@@ -319,121 +319,7 @@
 
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
-  <!-- Loan summary -->
-  <section class="stats loans-stats" aria-label="Loan summary">
-
-    <div class="stat">
-      <span class="stat__value">3</span>
-      <span class="stat__label">Books out</span>
-    </div>
-
-    <div class="stat">
-      <span class="stat__value">2</span>
-      <span class="stat__label">Due soon</span>
-    </div>
-
-    <div class="stat">
-      <span class="stat__value">1</span>
-      <span class="stat__label">Overdue</span>
-    </div>
-
-  </section>
-
-  <!-- Current loans -->
-  <section class="panel loans-panel" aria-labelledby="current-loans-heading">
-
-    <h2 class="panel__title" id="current-loans-heading">
-      Books you have out
-    </h2>
-
-    <div class="loan-list">
-
-      <!-- Loan 1 -->
-      <article class="loan-card">
-        <div class="loan-card__inner">
-
-          <p class="loan-card__category">Software Engineering</p>
-
-          <h3 class="result__title">
-            Introduction to Software Engineering
-          </h3>
-
-          <p class="result__meta">
-            Accession number:
-            <span class="accession">SE-00421</span>
-          </p>
-
-          <div class="loan-card__due">
-            <p class="loan-card__due-date">
-              Due <strong>September 8, 2026</strong>
-            </p>
-
-            <span class="status status--ok">
-              4 days left
-            </span>
-          </div>
-
-        </div>
-      </article>
-
-      <!-- Loan 2 -->
-      <article class="loan-card loan-card--soon">
-        <div class="loan-card__inner">
-
-          <p class="loan-card__category">Databases</p>
-
-          <h3 class="result__title">
-            Database System Concepts
-          </h3>
-
-          <p class="result__meta">
-            Accession number:
-            <span class="accession">CS-01872</span>
-          </p>
-
-          <div class="loan-card__due">
-            <p class="loan-card__due-date">
-              Due <strong>September 5, 2026</strong>
-            </p>
-
-            <span class="status status--ok">
-              1 day left
-            </span>
-          </div>
-
-        </div>
-      </article>
-
-      <!-- Loan 3 -->
-      <article class="loan-card loan-card--overdue">
-        <div class="loan-card__inner">
-
-          <p class="loan-card__category">Computer Science</p>
-
-          <h3 class="result__title">
-            Computer Networks
-          </h3>
-
-          <p class="result__meta">
-            Accession number:
-            <span class="accession">CS-01209</span>
-          </p>
-
-          <div class="loan-card__due">
-            <p class="loan-card__due-date">
-              Due <strong>September 2, 2026</strong>
-            </p>
-
-            <span class="status status--bad">
-              3 days overdue
-            </span>
-          </div>
-
-        </div>
-      </article>
-
-    </div>
-  </section>
+  <div id="content"></div>
 
 </main>
 
@@ -487,12 +373,79 @@
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
 <script>
+/* GET /me/loans answers with the member from the token, so there is no id in
+   the URL to tamper with. dueState() in format.js decides the words and the
+   colour from the due date; this page only arranges them. */
+
+const content = document.getElementById("content");
+
+function loanCard(loan) {
+  const due = dueState(loan.due_at);
+  return el("article", {
+    className: "loan-card" + (loan.is_overdue ? " loan-card--overdue" : ""),
+  }, el("div", { className: "loan-card__inner" }, [
+    el("h3", { className: "result__title" }, loan.book_title),
+    el("p", { className: "result__meta" }, [
+      "Accession number: ",
+      el("span", { className: "accession" }, loan.accession_number),
+    ]),
+    el("div", { className: "loan-card__due" }, [
+      el("p", { className: "loan-card__due-date" }, [
+        "Due ",
+        el("strong", {}, el("time", { datetime: loan.due_at }, formatDate(loan.due_at))),
+      ]),
+      el("span", { className: "status status--" + due.tone }, due.text),
+    ]),
+  ]));
+}
+
+function summary(loans) {
+  // "Due soon" is the same three-day threshold dueState() uses for its warn
+  // tone, so the count and the colours on the cards below cannot disagree.
+  const overdue = loans.filter(function (l) { return l.is_overdue; }).length;
+  const soon = loans.filter(function (l) {
+    return !l.is_overdue && dueState(l.due_at).tone === "warn";
+  }).length;
+
+  return el("section", { className: "stats loans-stats", "aria-label": "Loan summary" }, [
+    ["Books out", loans.length],
+    ["Due soon", soon],
+    ["Overdue", overdue],
+  ].map(function ([label, value]) {
+    return el("div", { className: "stat" }, [
+      el("p", { className: "stat__value" }, value),
+      el("p", { className: "stat__label" }, label),
+    ]);
+  }));
+}
+
+const loaded = load({
+  into: content,
+  label: "Loading your loans",
+  needsSignIn: "see the books you have out",
+  empty: "You have no books out at the moment.",
+  fetch: () => api.get("/me/loans"),
+  announce: (r) => (r.data || []).length + " book(s) currently out.",
+  render: function (result) {
+    const loans = result.data || [];
+    if (loans.length === 0) return null;
+    return [
+      summary(loans),
+      el("section", { className: "panel loans-panel", "aria-labelledby": "current-loans-heading" }, [
+        el("h2", { className: "panel__title", id: "current-loans-heading" }, "Books you have out"),
+        el("div", { className: "loan-list" }, loans.map(loanCard)),
+      ]),
+    ];
+  },
+});
+
 /* The only place the push offer is made.
 
    push.js has always been able to ask, but nothing called offerPush(), so the
@@ -508,7 +461,11 @@
    push is configured, the browser can receive it, the reader is signed in,
    they have not already answered the permission prompt, and they have not
    dismissed this offer before. So on a signed-out visit it does nothing. */
-offerPush(document.querySelector(".loans-panel"));
+loaded.then(function () {
+  // After the load, not before it: the panel does not exist until the loans
+  // have been drawn, and offerPush given a null container quietly does nothing.
+  offerPush(document.querySelector(".loans-panel"));
+});
 </script>
 
 </body>

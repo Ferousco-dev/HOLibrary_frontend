@@ -121,6 +121,7 @@
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
@@ -130,135 +131,20 @@
 /* -----------------------------------------------------------------------
    03-book.html, one title in detail.
 
-   PHASE NOTE FOR WHOEVER INTEGRATES THIS LATER:
-   This screen is built against DUMMY DATA, not the live API, per the current
-   project phase. The dummy records are shaped like the real response, which
-   is documented at https://api.library.appmd.dev/docs:
+   GET /books/{id} answers { data: { book, copies } }. copies is a sibling of
+   book, not a field on it, which is why the two are passed separately all the
+   way down.
 
-       GET /books/{id}  ->  { data: { book: {...}, copies: [ ... ] } }
-
-   Note that copies is a SIBLING of book, not a field on it. Both are passed
-   down separately here for that reason.
-
-   One spot needs to change:
-
-     loadBook(id)   -> const result = await api.get("/books/" + id);
-                       return result.data;
-
-   Three fields on a copy are NOT in the API yet and are invented here so the
-   table has something to show: Location, DueAt and Retained. Whoever wires
-   the real endpoint either adds them to the Copy schema server side or drops
-   the two columns that use them. Everything else on the page, including the
-   availability notice, reads real documented fields.
-
+   The Copy schema carries no shelf location and no due date, so the table
+   shows what the server actually knows: the accession number, the status and
+   what the loan policy means for a reader standing in front of it.
    ------------------------------------------------------------------------ */
 
 const content = document.getElementById("content");
 const crumb = document.getElementById("crumb-title");
 
-/* ---- dummy data, shaped like the data object of GET /books/{id} ------- */
-
-const DUMMY_BOOKS = {
-  "b03ba2f3-75c6-4d77-ba78-b388202b61d0": {
-    book: {
-      ID: "b03ba2f3-75c6-4d77-ba78-b388202b61d0",
-      Title: "Structural Analysis",
-      Subtitle: null,
-      Authors: ["R. C. Hibbeler"],
-      Publisher: "Pearson",
-      PublishedYear: 2017,
-      ISBN13: "9780134610674",
-      CallNumber: "TA 645",
-      LCCClass: "T",
-      Subjects: ["Structural engineering", "Statics", "Analysis of determinate and indeterminate structures"],
-      wing: "North",
-      is_available: true,
-      borrowable: 2,
-      on_shelf: true,
-      shelf_copy_retained: true,
-      Availability: { total_copies: 5, available: 3, on_loan: 1, not_for_loan: 0 }
-    },
-    copies: [
-      { AccessionNumber: "HOL-748211", LoanPolicy: "circulating", Status: "available", Location: "North Wing, Shelf TA-14", Retained: false },
-      { AccessionNumber: "HOL-748212", LoanPolicy: "circulating", Status: "available", Location: "North Wing, Shelf TA-14", Retained: false },
-      { AccessionNumber: "HOL-748213", LoanPolicy: "circulating", Status: "available", Location: "North Wing, Shelf TA-14", Retained: true },
-      { AccessionNumber: "HOL-741039", LoanPolicy: "circulating", Status: "on_loan",   Location: "Checked out", DueAt: "2026-09-12T15:30:00Z" },
-      { AccessionNumber: "HOL-740998", LoanPolicy: "circulating", Status: "on_loan",   Location: "Checked out", DueAt: "2026-09-15T11:00:00Z" }
-    ]
-  },
-
-  // A single copy, out on loan. The retention rule does not apply below two
-  // circulating copies, so this title lends its only copy when it comes back.
-  "5f21a9c4-2b6e-4e3a-9a63-1c7e2d9b0e11": {
-    book: {
-      ID: "5f21a9c4-2b6e-4e3a-9a63-1c7e2d9b0e11",
-      Title: "Electrical Engineering",
-      Subtitle: "Principles and Practice for the Undergraduate Curriculum, With a Second Line of Subtitle to Test How Long Titles Wrap",
-      Authors: ["Steven E. Schwarz", "William G. Oldham"],
-      Publisher: "Prentice Hall",
-      PublishedYear: 2019,
-      ISBN13: null,
-      CallNumber: "TK 145",
-      LCCClass: "T",
-      Subjects: ["Electrical engineering"],
-      wing: "North",
-      is_available: false,
-      borrowable: 0,
-      on_shelf: false,
-      shelf_copy_retained: false,
-      Availability: { total_copies: 1, available: 0, on_loan: 1, not_for_loan: 0 }
-    },
-    copies: [
-      { AccessionNumber: "HOL-730231", LoanPolicy: "circulating", Status: "on_loan", Location: "Checked out", DueAt: "2026-09-06T10:00:00Z" }
-    ]
-  },
-
-  // Reference only: present in the building, never borrowable. The notice
-  // must not tell a reader to wait for a return that will never come.
-  "9e4d0c77-8a51-4f0d-8b06-3a2c5f7e6d02": {
-    book: {
-      ID: "9e4d0c77-8a51-4f0d-8b06-3a2c5f7e6d02",
-      Title: "Introduction to Algorithms",
-      Subtitle: null,
-      Authors: ["Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein"],
-      Publisher: "MIT Press",
-      PublishedYear: 2009,
-      ISBN13: "9780262033848",
-      CallNumber: "QA 76.6",
-      LCCClass: "Q",
-      Subjects: ["Algorithms", "Computer programming"],
-      wing: "South",
-      is_available: false,
-      borrowable: 0,
-      on_shelf: true,
-      shelf_copy_retained: false,
-      Availability: { total_copies: 2, available: 2, on_loan: 0, not_for_loan: 2 }
-    },
-    copies: [
-      { AccessionNumber: "HOL-720410", LoanPolicy: "reference_only", Status: "available", Location: "Reference Room, Shelf QA-3" },
-      { AccessionNumber: "HOL-720411", LoanPolicy: "reference_only", Status: "available", Location: "Reference Room, Shelf QA-3" }
-    ]
-  }
-};
-
-/* --------------------------------------------------------------------- */
-
 function getRequestedId() {
   return new URLSearchParams(window.location.search).get("id");
-}
-
-async function loadBook(id) {
-  // Artificial delay so the loading state is actually visible while
-  // testing, standing in for real network latency.
-  await new Promise(function (resolve) { setTimeout(resolve, 350); });
-
-  const record = DUMMY_BOOKS[id];
-  if (!record) {
-    throw new api.ApiError(404, {
-      message: "That title could not be found. It may have been removed from the catalogue."
-    });
-  }
-  return record;   // { book, copies }, exactly what result.data will hold
 }
 
 (async function init() {
@@ -269,11 +155,16 @@ async function loadBook(id) {
     return;
   }
 
+  replace(content, loadingState("Loading this title"));
+
   try {
-    const record = await loadBook(id);
-    renderBook(record.book, record.copies);
+    const result = await api.get("/books/" + encodeURIComponent(id));
+    const record = result.data || result;
+    renderBook(record.book, record.copies || []);
   } catch (err) {
-    renderNotFound(err.message);
+    renderNotFound(err.status === 404
+      ? "That title could not be found. It may have been removed from the catalogue."
+      : err.message);
   }
 })();
 
@@ -420,19 +311,28 @@ function copyStatus(status) {
   }
 }
 
-function copyNote(copy) {
-  if (copy.Status === "available") {
-    if (copy.LoanPolicy && copy.LoanPolicy !== "circulating") {
-      return "Consulted in the library; this volume does not go out on loan";
-    }
-    return copy.Retained
-      ? "Available to read in the library only; it is the final copy that stays"
-      : "Borrowable today";
+/* What each loan policy means to somebody standing at the shelf. The API
+   sends the constant; the reader needs the consequence. */
+const POLICY_NOTE = {
+  circulating:    "May be borrowed",
+  reference_only: "Reference Room; read here, does not go out",
+  on_display:     "Recent Accessions; not borrowable, but can be reserved",
+  restricted:     "Restricted collection; ask at the desk",
+};
+
+/* The row has to agree with the notice above the table.
+
+   A circulating copy that is the last one free is being retained, so "May be
+   borrowed" would contradict the sentence a few lines up telling the reader
+   they can read it here but not take it home. The policy alone cannot say
+   this: retention is a property of the title's remaining stock, not of the
+   volume, so the book is passed in as well. */
+function copyNote(copy, book) {
+  if (copy.Status !== "available") return "Not available to borrow";
+  if (copy.LoanPolicy === "circulating" && book.shelf_copy_retained === true) {
+    return "Read here; the last free copy stays in the library";
   }
-  if (copy.Status === "on_loan") {
-    return copy.DueAt ? "Due back " + formatDateTime(copy.DueAt) : "Checked out";
-  }
-  return "Not available to borrow";
+  return POLICY_NOTE[copy.LoanPolicy] || "Ask at the desk";
 }
 
 function copiesTable(book, copies) {
@@ -448,7 +348,7 @@ function copiesTable(book, copies) {
 
   const thead = document.createElement("thead");
   const headRow = document.createElement("tr");
-  ["Accession number", "Status", "Location", "Note"].forEach(function (label) {
+  ["Accession number", "Status", "What this copy is for"].forEach(function (label) {
     const th = document.createElement("th");
     th.scope = "col";
     th.textContent = label;
@@ -463,7 +363,7 @@ function copiesTable(book, copies) {
   if (rows.length === 0) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 4;
+    cell.colSpan = 3;
     cell.textContent = "No physical copies are recorded for this title.";
     row.appendChild(cell);
     tbody.appendChild(row);
@@ -484,13 +384,10 @@ function copiesTable(book, copies) {
       badge.textContent = st.text;
       statusCell.appendChild(badge);
 
-      const locCell = document.createElement("td");
-      locCell.textContent = copy.Location || "\u2014";
-
       const noteCell = document.createElement("td");
-      noteCell.textContent = copyNote(copy);
+      noteCell.textContent = copyNote(copy, book);
 
-      row.append(accCell, statusCell, locCell, noteCell);
+      row.append(accCell, statusCell, noteCell);
       tbody.appendChild(row);
     });
   }
@@ -576,22 +473,6 @@ function reservePanel(book) {
     frag.append(actionRow, resultBox);
   }
 
-  const explainer = document.createElement("div");
-  const h3 = document.createElement("h3");
-  h3.textContent = "What this page makes clear";
-  const ul = document.createElement("ul");
-  [
-    "The title record carries bibliographic details only.",
-    "Location and availability belong to each physical copy.",
-    "An available copy can still be in-library only when it is the last one free."
-  ].forEach(function (line) {
-    const li = document.createElement("li");
-    li.textContent = line;
-    ul.appendChild(li);
-  });
-  explainer.append(h3, ul);
-  frag.appendChild(explainer);
-
   return frag;
 }
 
@@ -600,35 +481,36 @@ function reservePanel(book) {
      const position = result.data.queue_position;
    once reservations are wired to the live API. The enabled/disabled
    logic in reservePanel() above does not need to change. */
-/* 1st, 2nd, 3rd, 4th, and 11th to 13th, which do not follow the last digit. */
-function ordinal(n) {
-  if (n % 100 >= 11 && n % 100 <= 13) return "th";
-  return { 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th";
-}
-
 async function reserveTitle(book, btn, resultBox) {
   btn.disabled = true;
   btn.textContent = "Reserving\u2026";
   announce("Placing your reservation.");
 
-  await new Promise(function (resolve) { setTimeout(resolve, 500); });
+  try {
+    const result = await api.post("/reservations", { book_id: book.ID });
+    const reservation = result.data || result;
+    const place = reservation.queue_position + ordinal(reservation.queue_position);
 
-  const position = 2; // stand-in queue position for the design phase
-  const place = position + ordinal(position);
-  resultBox.innerHTML = "";
-  const notice = document.createElement("div");
-  notice.className = "notice notice--ok";
-  const head = document.createElement("p");
-  head.className = "notice__head";
-  head.textContent = "You are " + place + " in the queue.";
-  const body = document.createElement("p");
-  body.className = "notice__body";
-  body.textContent = "We will tell you as soon as a copy of \u201c" + book.Title + "\u201d is ready for you.";
-  notice.append(head, body);
-  resultBox.appendChild(notice);
-
-  btn.remove();
-  announce("You are " + place + " in the queue for " + book.Title + ".");
+    replace(resultBox, el("div", { className: "notice notice--ok" }, [
+      el("p", { className: "notice__head" }, "You are " + place + " in the queue."),
+      el("p", { className: "notice__body" },
+        "We will tell you as soon as a copy of \u201c" + book.Title
+        + "\u201d is ready for you."),
+      el("p", {}, el("a", { href: "06-reservations.html" }, "See your reservations")),
+    ]));
+    btn.remove();
+    announce("You are " + place + " in the queue for " + book.Title + ".");
+  } catch (err) {
+    // The server refuses for reasons the browser cannot know: already in this
+    // queue, account suspended, a limit reached. Show its sentence, not a guess.
+    replace(resultBox, el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "That reservation was not placed."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    btn.disabled = false;
+    btn.textContent = "Reserve title";
+    announce(err.message);
+  }
 }
 </script>
 

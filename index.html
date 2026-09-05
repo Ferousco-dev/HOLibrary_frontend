@@ -338,7 +338,7 @@ function render(result, query, page) {
   }
 
   const count = result.meta ? result.meta.total : items.length;
-  announce(count + " titles found.");
+  announce(plural(count, "title", "titles") + " found.");
 
   const pages = Math.max(1, Math.ceil(count / PER_PAGE));
   const first = (page - 1) * PER_PAGE + 1;

@@ -39,10 +39,19 @@ const api = (function () {
      for a reader. Show that message. Do not replace it with "Error 409" and
      do not invent your own wording: the server knows why it refused. */
 
+  /* The envelope is { "error": { "code", "message" } }, so the sentence is at
+     body.error.message and never at body.message.
+
+     The previous version fell back to body.error, which is that whole object,
+     and Error stringifies it: every refusal the server wrote for a reader
+     reached the page as "[object Object]". The code is kept alongside so a
+     caller can switch on something stable rather than on English. */
   class ApiError extends Error {
     constructor(status, body) {
-      super((body && (body.message || body.error)) || "The request could not be completed.");
+      const detail = (body && body.error) || body || {};
+      super(detail.message || "The request could not be completed.");
       this.status = status;
+      this.code = detail.code || null;
       this.body = body;
     }
   }
@@ -86,7 +95,30 @@ const api = (function () {
     return body;
   }
 
-  async function renew() {
+  /* One refresh at a time, shared by everyone waiting.
+
+     The refresh token is rotated on use: the server hands back a new one and
+     the old one stops working. So two requests that both hit 401 and both
+     call renew() send the same token twice, the second send is rejected, and
+     clearSession() signs the reader out in the middle of a working session.
+
+     This is not hypothetical. The access token lives in memory only, so on
+     every fresh page load it is null and the refresh token is all there is.
+     Any page that asks for two things at once, which the dashboard and the
+     reservations page both do, starts exactly that race.
+
+     Holding the in-flight promise means the second caller awaits the first
+     one's answer instead of starting a second rotation. */
+  let renewing = null;
+
+  function renew() {
+    if (!renewing) {
+      renewing = renewOnce().finally(function () { renewing = null; });
+    }
+    return renewing;
+  }
+
+  async function renewOnce() {
     try {
       const r = await fetch(HOL.API + "/auth/refresh", {
         method: "POST",

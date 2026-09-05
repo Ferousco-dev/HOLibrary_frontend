@@ -48,6 +48,14 @@ function dueState(dueIso) {
 
 /* "1 copy" but "2 copies". Printing "1 total copies" is the kind of thing a
    reader notices immediately and quietly stops trusting the rest of. */
+/* 1st, 2nd, 3rd, 4th, and 11th to 13th, which do not follow their last digit.
+   Both the book page and the reservations page print a queue position, and
+   "3nd" in front of a reader is the sort of thing they remember. */
+function ordinal(n) {
+  if (n % 100 >= 11 && n % 100 <= 13) return "th";
+  return { 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th";
+}
+
 function plural(n, one, many) {
   return n + " " + (n === 1 ? one : many);
 }
@@ -78,11 +86,18 @@ function availabilityLine(book) {
   const holds = "The library holds " + plural(stock, "copy", "copies") + ".";
 
   if (canBorrow > 0) {
+    // onShelf and canBorrow differ whenever retention is holding one back, so
+    // the sentence has to carry both numbers. Printing only "4 on the shelf"
+    // when 3 may leave sends somebody to the desk expecting the fourth.
+    const retained = heldBack || canBorrow < onShelf;
     return {
       tone: "ok",
       head: "You can borrow this today.",
       body: holds + " " + plural(onShelf, "copy is", "copies are") + " on the shelf"
-          + (heldBack ? ", and one of those stays here for reading in the library." : "."),
+          + (retained
+              ? ", and " + plural(canBorrow, "copy", "copies") + " may leave the building: "
+                + "the last one always stays here so it is never out of reach."
+              : "."),
     };
   }
 
