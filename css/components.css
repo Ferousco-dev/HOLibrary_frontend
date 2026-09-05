@@ -332,3 +332,13 @@
 .pushoffer__text b { display: block; color: var(--indigo); font-size: var(--text-base); }
 .pushoffer__text span { font-size: var(--text-sm); color: var(--ink-muted); }
 .pushoffer__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.panel th,
+.panel td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: var(--border);
+}
