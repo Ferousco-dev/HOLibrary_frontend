@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Layout — the page frame every screen shares.
+   Layout, the page frame every screen shares.
 
    Structure, top to bottom, exactly as a university site is built:
 
@@ -125,10 +125,11 @@
 /* Below ~400px the crest, the full library name and the "Menu" button no
    longer fit on one line: the name is flex: none by design (it must not
    wrap awkwardly), so the row overflows and pushes the button off-screen
-   instead of shrinking. The name is still available to a screen reader
-   inside .brand's accessible name (the <img> alt text plus the visible
-   text node); visually hiding the text here removes only the *visual*
-   duplicate, not the information. */
+   instead of shrinking. Hiding the name visually keeps it in the accessible
+   name of .brand, so a screen reader still reads the library's name; only
+   the visual duplicate of the crest goes. These declarations are the same
+   ones .sr-only carries in base.css, repeated because the class cannot be
+   added and removed from the markup at a breakpoint. */
 @media (max-width: 400px) {
   .brand__name {
     position: absolute; width: 1px; height: 1px;
