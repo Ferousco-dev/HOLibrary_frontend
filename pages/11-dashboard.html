@@ -1,27 +1,10 @@
 
 <!DOCTYPE html>
-<!--
-  ===========================================================================
-  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
-
-      cp pages/_template.html pages/05-my-loans.html
-
-  Change only the four marked spots:
-      1. <title>
-      2. aria-current="page" on this screen's nav link, removed from the rest
-      3. the breadcrumb trail
-      4. everything inside <main>
-
-  The header and footer are identical on every page. If one of them needs to
-  change, that is a pull request, not a local edit: eleven pages have to match.
-  ===========================================================================
--->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 1. CHANGE THIS -->
   <title>Dashboard | Hezekiah Oluwasanmi Library</title>
   <meta name="description" content="Administrator dashboard showing collection data and recent activity.">
   <link rel="stylesheet" href="../css/tokens.css">
@@ -74,77 +57,87 @@
 </div>
 
 <main id="main" class="shell page">
-      <div class="page__head">
-        <h1>Dashboard</h1>
-        <p class="page__lead">Overview of the library collection and recent activity.</p>
-      </div>
 
-      <section aria-labelledby="statistics-heading">
-        <h2 class="panel__title" id="statistics-heading">Collection statistics</h2>
-        <div class="stats">
-          <article class="stat">
-            <p class="stat__label">Total Books</p>
-            <p class="stat__value">3000</p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Available Books</p>
-            <p class="stat__value">1750</p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Currently Borrowed</p>
-            <p class="stat__value">250</p>
-          </article>
-          <article class="stat">
-            <p class="stat__label">Overdue</p>
-            <p class="stat__value">75</p>
-          </article>
-        </div>
-      </section>
+  <!-- Outcomes are announced here for screen reader users. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
-      <section class="panel" aria-labelledby="activity-heading">
-        <h2 class="panel__title" id="activity-heading">Recent Activity</h2>
-        <div class="table-wrap">
-          <table class="table">
-            <caption>Recent library activity</caption>
-            <thead>
-              <tr>
-                <th scope="col">Activity</th>
-                <th scope="col">User</th>
-                <th scope="col">Date/Time</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Ada Okafor issued HOL/2019/00412 to SWE/2025/001.</td>
-                <td>Ada Okafor</td>
-                <td><time datetime="2026-09-04T10:42">4 Sep 2026, 10:42</time></td>
-              </tr>
-              <tr>
-                <td>Oresajo Oluwaferanmi returned HOL/2016/01887.</td>
-                <td>Oreajo Oluwaferanmi</td>
-                <td><time datetime="2026-09-04T09:18">4 Sep 2026, 09:18</time></td>
-              </tr>
-              <tr>
-                <td>Fatima Bello renewed HOL/2021/00734 for SEN/2024/118.</td>
-                <td>Fatima Bello</td>
-                <td><time datetime="2026-09-04T08:56">4 Sep 2026, 08:56</time></td>
-              </tr>
-              <tr>
-                <td>Daniel Adeyemi added HOL/2026/00291 to the collection.</td>
-                <td>Daniel Adeyemi</td>
-                <td><time datetime="2026-09-03T16:27">3 Sep 2026, 16:27</time></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+  <div class="page__head">
+    <h1>Dashboard</h1>
+    <p class="page__lead">Where the collection stands today, and what the desk has done most recently.</p>
+  </div>
 
-      <section class="notice notice--bad" aria-labelledby="access-denied-heading" hidden>
-        <h2 class="notice__head" id="access-denied-heading">Administrator Access Required</h2>
-        <p class="notice__body">This dashboard is available to administrators only.</p>
-        <p><a class="btn btn--secondary" href="../index.html">Return to Catalogue</a></p>
-      </section>
-    </main>
+  <!-- DUMMY DATA. These are the real collection figures as of the last
+       import, standing in until GET /reports is wired up. -->
+  <section class="panel" aria-labelledby="statistics-heading">
+    <h2 class="panel__title" id="statistics-heading">The collection today</h2>
+    <div class="stats">
+      <article class="stat">
+        <p class="stat__label">Titles catalogued</p>
+        <p class="stat__value">223</p>
+      </article>
+      <article class="stat">
+        <p class="stat__label">Physical copies</p>
+        <p class="stat__value">892</p>
+      </article>
+      <article class="stat">
+        <p class="stat__label">Out on loan</p>
+        <p class="stat__value">86</p>
+      </article>
+      <article class="stat">
+        <p class="stat__label">Overdue</p>
+        <p class="stat__value">7</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="activity-heading">
+    <h2 class="panel__title" id="activity-heading">Recent activity</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <caption>The last four actions taken at the circulation desk</caption>
+        <thead>
+          <tr>
+            <th scope="col">Staff member</th>
+            <th scope="col">Action</th>
+            <th scope="col">When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ada Okafor</td>
+            <td>Issued HOL/2019/00412 to SWE/2025/001.</td>
+            <td><time datetime="2026-09-04T10:42">4 Sep 2026, 10:42</time></td>
+          </tr>
+          <tr>
+            <td>Oresajo Oluwaferanmi</td>
+            <td>Returned HOL/2016/01887.</td>
+            <td><time datetime="2026-09-04T09:18">4 Sep 2026, 09:18</time></td>
+          </tr>
+          <tr>
+            <td>Fatima Bello</td>
+            <td>Renewed HOL/2021/00734 for SEN/2024/118.</td>
+            <td><time datetime="2026-09-04T08:56">4 Sep 2026, 08:56</time></td>
+          </tr>
+          <tr>
+            <td>Daniel Adeyemi</td>
+            <td>Added HOL/2026/00291 to the collection.</td>
+            <td><time datetime="2026-09-03T16:27">3 Sep 2026, 16:27</time></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Shown instead of everything above when a signed-in member who is not
+       staff reaches this URL. The server refuses the data either way; this
+       is only so the refusal reads as a sentence rather than an empty page. -->
+  <section class="notice notice--bad" aria-labelledby="access-denied-heading" hidden>
+    <h2 class="notice__head" id="access-denied-heading">This page is for library staff</h2>
+    <p class="notice__body">Your account does not have the permission this page needs.</p>
+    <p><a class="btn btn--secondary" href="../index.html">Back to the catalogue</a></p>
+  </section>
+
+</main>
 
 <footer class="sitefoot">
   <div class="sitefoot__inner">
