@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
+
+      cp pages/_template.html pages/05-my-loans.html
+
+  Change only the four marked spots:
+      1. <title>
+      2. aria-current="page" on this screen's nav link, removed from the rest
+      3. the breadcrumb trail
+      4. everything inside <main>
+
+  The header and footer are identical on every page. If one of them needs to
+  change, that is a pull request, not a local edit: eleven pages have to match.
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 1. CHANGE THIS -->
+  <title>Saved Titles | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="One sentence describing this page.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <!-- 3. CHANGE THIS -->
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Saved Titles</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <!-- 4. CHANGE EVERYTHING BELOW ---------------------------------------- -->
+
+  <div class="page__head">
+    <h1>Saved Titles</h1>
+    <p class="page__lead">Books you’ve bookmarked to borrow later. Remove items or navigate pages below.</p>
+  </div>
+
+  <!-- Outcomes are announced here for screen reader users, who get no visual
+       cue that anything happened. It is visually hidden on purpose. Write to
+       it with announce("Loan recorded."), never innerHTML. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+
+<!-- Saved Titles Section -->
+  <section id="saved-titles" class="panel" aria-labelledby="saved-titles-heading">
+  <header class="page__head">
+    <h2 id="saved-titles-heading">Saved Titles</h2>
+  </header>
+
+  <!-- Empty state -->
+  <div id="empty-message" class="empty" hidden>
+    <p class="sr-only">No saved titles</p>
+    <p>You haven’t saved any books yet.</p>
+    <p class="hint">Browse the catalogue and click “Save” on any title to add it here.</p>
+  </div>
+
+  <!-- Loading state (optional) -->
+  <div id="loading" class="loading" role="status" aria-live="polite" hidden>
+    <div class="loader" aria-hidden="true"></div>
+    <p>Loading saved titles…</p>
+  </div>
+
+  <!-- Results list -->
+  <ul id="saved-books-list" class="results" role="list" aria-live="polite"></ul>
+
+  <!-- Pager -->
+  <nav id="saved-pager" class="pager" aria-label="Saved titles pagination" hidden>
+    <ul id="pager-list" class="pager__list"></ul>
+    <p id="pager-count" class="pager__count" aria-hidden="true"></p>
+  </nav>
+
+  <!-- Live region for announcements (visually hidden) -->
+  <div id="live-region" class="liveregion" aria-live="polite" aria-atomic="true"></div>
+  </section>
+  <!-- ------------------------------------------------------------------- -->
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<!-- Your page's own script goes here. -->
+<script src="../js/12-saved-titles.js"></script>
+
+</body>
+</html>
