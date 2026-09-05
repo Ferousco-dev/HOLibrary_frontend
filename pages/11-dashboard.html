@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
+
+      cp pages/_template.html pages/05-my-loans.html
+
+  Change only the four marked spots:
+      1. <title>
+      2. aria-current="page" on this screen's nav link, removed from the rest
+      3. the breadcrumb trail
+      4. everything inside <main>
+
+  The header and footer are identical on every page. If one of them needs to
+  change, that is a pull request, not a local edit: eleven pages have to match.
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 1. CHANGE THIS -->
+  <title>Dashboard | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Administrator dashboard showing collection data and recent activity.">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Dashboard</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+      <div class="page__head">
+        <h1>Dashboard</h1>
+        <p class="page__lead">Overview of the library collection and recent activity.</p>
+      </div>
+
+      <section aria-labelledby="statistics-heading">
+        <h2 class="panel__title" id="statistics-heading">Collection statistics</h2>
+        <div class="stats">
+          <article class="stat">
+            <p class="stat__label">Total Books</p>
+            <p class="stat__value">3000</p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Available Books</p>
+            <p class="stat__value">1750</p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Currently Borrowed</p>
+            <p class="stat__value">250</p>
+          </article>
+          <article class="stat">
+            <p class="stat__label">Overdue</p>
+            <p class="stat__value">75</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="activity-heading">
+        <h2 class="panel__title" id="activity-heading">Recent Activity</h2>
+        <div class="table-wrap">
+          <table class="table">
+            <caption>Recent library activity</caption>
+            <thead>
+              <tr>
+                <th scope="col">Activity</th>
+                <th scope="col">User</th>
+                <th scope="col">Date/Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ada Okafor issued HOL/2019/00412 to SWE/2025/001.</td>
+                <td>Ada Okafor</td>
+                <td><time datetime="2026-09-04T10:42">4 Sep 2026, 10:42</time></td>
+              </tr>
+              <tr>
+                <td>Oresajo Oluwaferanmi returned HOL/2016/01887.</td>
+                <td>Oreajo Oluwaferanmi</td>
+                <td><time datetime="2026-09-04T09:18">4 Sep 2026, 09:18</time></td>
+              </tr>
+              <tr>
+                <td>Fatima Bello renewed HOL/2021/00734 for SEN/2024/118.</td>
+                <td>Fatima Bello</td>
+                <td><time datetime="2026-09-04T08:56">4 Sep 2026, 08:56</time></td>
+              </tr>
+              <tr>
+                <td>Daniel Adeyemi added HOL/2026/00291 to the collection.</td>
+                <td>Daniel Adeyemi</td>
+                <td><time datetime="2026-09-03T16:27">3 Sep 2026, 16:27</time></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="notice notice--bad" aria-labelledby="access-denied-heading" hidden>
+        <h2 class="notice__head" id="access-denied-heading">Administrator Access Required</h2>
+        <p class="notice__body">This dashboard is available to administrators only.</p>
+        <p><a class="btn btn--secondary" href="../index.html">Return to Catalogue</a></p>
+      </section>
+    </main>
+
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<!-- Your page's own script goes here. -->
+
+</body>
+</html>
