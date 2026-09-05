@@ -241,12 +241,6 @@ const DUMMY_BOOKS = {
   }
 };
 
-/* Design-phase helper only: lets a reviewer preview all three reserve
-   states before 04-signin.html and real sign-in exist. Delete this together
-   with the mock branch in reserveTitle() once sign-in is wired up;
-   api.isSignedIn() alone will then decide the state. */
-let DEMO_SIGNED_IN = false;
-
 /* --------------------------------------------------------------------- */
 
 function getRequestedId() {
@@ -521,7 +515,7 @@ function reservePanel(book) {
   lead.textContent = "You can reserve a title when signed in. The server will still re-check eligibility, queue position and copy availability before accepting the request.";
   frag.appendChild(lead);
 
-  const signedIn = api.isSignedIn() || DEMO_SIGNED_IN;
+  const signedIn = api.isSignedIn();
   const copiesOnShelf = book.borrowable > 0;
 
   // Reference, display and restricted volumes never circulate, so there is no

@@ -17,7 +17,6 @@
   margin-bottom: var(--space-4);
 }
 .panel__title { margin-top: 0; }
-.panel--tight { padding: var(--space-4); }
 
 /* --- buttons ------------------------------------------------------------ */
 .btn {
@@ -34,7 +33,6 @@
 .btn--primary:hover { background: var(--blue-dark); color: var(--on-dark); }
 .btn--secondary { background: var(--surface); color: var(--indigo); border-color: var(--rule-strong); }
 .btn--secondary:hover { background: var(--wash); }
-.btn--danger { background: var(--bad); color: var(--on-dark); }
 
 /* A disabled button must still say WHY. Pair it with .hint, never leave a
    dead control with no explanation. */
@@ -64,9 +62,6 @@
 
 /* A validation failure. Must say what to do, not just that something is wrong. */
 .field__error { font-size: var(--text-sm); color: var(--bad); font-weight: 600; margin: var(--space-2) 0 0; }
-
-.formrow { display: flex; gap: var(--space-3); align-items: flex-end; flex-wrap: wrap; }
-.formrow .field { flex: 1 1 220px; margin-bottom: 0; }
 
 /* --- tables -------------------------------------------------------------
    For tabular data only, never for layout (SEN106: tables describe
@@ -154,10 +149,6 @@
   clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* A field that should not stretch with its row: a submit button beside an
-   input. Prevents the button growing to fill the flex line. */
-.field--fixed { flex: 0 0 auto; }
-
 /* --- book covers --------------------------------------------------------
    The call number sits behind the image and shows through when there is no
    cover, which for us is most of the time. Both states fill the same box, so
@@ -225,7 +216,6 @@
 .pager__link[aria-disabled="true"] {
   color: var(--ink-muted); background: var(--wash); pointer-events: none;
 }
-.pager__count { font-size: var(--text-sm); color: var(--ink-muted); margin: var(--space-3) 0 0; }
 
 /* --- loader -------------------------------------------------------------
    A book opening. Shown while a search is in flight, so the wait has
