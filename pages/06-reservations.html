@@ -28,6 +28,20 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .layout__two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      align-items: start;
+    }
+
+    @media (min-width: 700px) {
+      .layout__two-col {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
