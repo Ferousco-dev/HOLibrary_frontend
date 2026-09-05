@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Title details | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="See a title's details, its physical copies and whether you can borrow one.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page" id="crumb-title">Title details</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <!-- Outcomes are announced here for screen reader users. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div id="content">
+    <!-- Filled in by script below: loading, not-found, or the loaded title. -->
+    <div class="loading">
+      <div class="loader" role="status" aria-label="Loading title"></div>
+      <p>Loading this title&hellip;</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+/* -----------------------------------------------------------------------
+   03-book.html — one title in detail.
+
+   PHASE NOTE FOR WHOEVER INTEGRATES THIS LATER:
+   This screen is built against realistic DUMMY DATA, not the live API, per
+   the current project phase (design first; the project lead wires the real
+   endpoints in afterwards). Every field on a dummy book below uses the exact
+   PascalCase / snake_case names the documented API returns (see the
+   handover's field-name table and https://api.library.appmd.dev/docs), so
+   swapping in real data should not require touching the rendering code.
+   Two spots are the only ones that need to change:
+
+     1. loadBook(id)   -> replace the DUMMY_BOOKS lookup with
+                          `const result = await api.get("/books/" + id);`
+                          and use `result.data`.
+     2. reserveTitle() -> replace the setTimeout mock with
+                          `const result = await api.post("/reservations",
+                          { book_id: book.ID });` and read the real queue
+                          position from the response.
+
+   Nothing else here needs to change: the copies table, the not-found state
+   and the three reserve states are already written against the real shapes.
+   ------------------------------------------------------------------------ */
+
+const content = document.getElementById("content");
+const crumb = document.getElementById("crumb-title");
+
+/* ---- dummy data, shaped exactly like GET /books/{id} would return ----- */
+
+const DUMMY_BOOKS = {
+  "b03ba2f3-75c6-4d77-ba78-b388202b61d0": {
+    ID: "b03ba2f3-75c6-4d77-ba78-b388202b61d0",
+    Title: "Structural Analysis",
+    Subtitle: null,
+    Authors: ["R. C. Hibbeler"],
+    Publisher: "Pearson",
+    PublishedYear: 2017,
+    ISBN13: "9780134610674",
+    ISBN10: "0134610679",
+    CallNumber: "TA 645",
+    LCCClass: "TA645",
+    Subjects: ["Structural engineering", "Statics", "Analysis of determinate and indeterminate structures"],
+    Description: "A core text on the analysis of determinate and indeterminate structures for civil and structural engineering students.",
+    wing: "North",
+    borrowable: 2,
+    Availability: { total_copies: 5, available: 3 },
+    Copies: [
+      { AccessionNumber: "ACC-TA645-1183", Status: "available", Location: "North Wing, Shelf TA-14", Retained: false },
+      { AccessionNumber: "ACC-TA645-1184", Status: "available", Location: "North Wing, Shelf TA-14", Retained: false },
+      { AccessionNumber: "ACC-TA645-1185", Status: "available", Location: "North Wing, Shelf TA-14", Retained: true },
+      { AccessionNumber: "ACC-TA645-1039", Status: "on_loan",   Location: "Checked out", DueAt: "2026-09-12T15:30:00Z" },
+      { AccessionNumber: "ACC-TA645-0998", Status: "reserved",  Location: "Hold shelf, Circulation Desk" }
+    ]
+  },
+
+  "5f21a9c4-2b6e-4e3a-9a63-1c7e2d9b0e11": {
+    ID: "5f21a9c4-2b6e-4e3a-9a63-1c7e2d9b0e11",
+    Title: "Electrical Engineering",
+    Subtitle: "Principles and Practice for the Undergraduate Curriculum, With a Second Line of Subtitle to Test How Long Titles Wrap",
+    Authors: ["Steven E. Schwarz", "William G. Oldham"],
+    Publisher: "Prentice Hall",
+    PublishedYear: 2019,
+    ISBN13: null,
+    ISBN10: null,
+    CallNumber: "TK145",
+    LCCClass: "TK145",
+    Subjects: ["Electrical engineering"],
+    Description: "An undergraduate introduction to electrical engineering fundamentals.",
+    wing: "North",
+    borrowable: 0,
+    Availability: { total_copies: 1, available: 0 },
+    Copies: [
+      { AccessionNumber: "ACC-TK145-0231", Status: "on_loan", Location: "Checked out", DueAt: "2026-09-06T10:00:00Z" }
+    ]
+  },
+
+  "9e4d0c77-8a51-4f0d-8b06-3a2c5f7e6d02": {
+    ID: "9e4d0c77-8a51-4f0d-8b06-3a2c5f7e6d02",
+    Title: "Introduction to Algorithms",
+    Subtitle: null,
+    Authors: ["Thomas H. Cormen", "Charles E. Leiserson", "Ronald L. Rivest", "Clifford Stein"],
+    Publisher: "MIT Press",
+    PublishedYear: 2009,
+    ISBN13: "9780262033848",
+    ISBN10: null,
+    CallNumber: "QA76.6",
+    LCCClass: "QA76.6",
+    Subjects: ["Algorithms", "Computer programming"],
+    Description: "A comprehensive text on algorithms, widely used in undergraduate and graduate courses.",
+    wing: "South",
+    borrowable: 0,
+    Availability: { total_copies: 3, available: 0 },
+    Copies: [
+      { AccessionNumber: "ACC-QA766-0410", Status: "lost", Location: "\u2014" },
+      { AccessionNumber: "ACC-QA766-0411", Status: "withdrawn", Location: "\u2014" },
+      { AccessionNumber: "ACC-QA766-0412", Status: "on_loan", Location: "Checked out", DueAt: "2026-09-20T09:00:00Z" }
+    ]
+  }
+};
+
+/* Design-phase helper only: lets a reviewer preview all three reserve
+   states before 04-signin.html and real sign-in exist. Delete this together
+   with the mock branch in reserveTitle() once sign-in is wired up;
+   api.isSignedIn() alone will then decide the state. */
+let DEMO_SIGNED_IN = false;
+
+/* --------------------------------------------------------------------- */
+
+function getRequestedId() {
+  return new URLSearchParams(window.location.search).get("id");
+}
+
+async function loadBook(id) {
+  // Artificial delay so the loading state is actually visible while
+  // testing, standing in for real network latency.
+  await new Promise(function (resolve) { setTimeout(resolve, 350); });
+
+  const book = DUMMY_BOOKS[id];
+  if (!book) {
+    throw new api.ApiError(404, {
+      message: "That title could not be found. It may have been removed from the catalogue."
+    });
+  }
+  return book;
+}
+
+(async function init() {
+  const id = getRequestedId();
+
+  if (!id) {
+    renderNotFound("No title was specified.");
+    return;
+  }
+
+  try {
+    const book = await loadBook(id);
+    renderBook(book);
+  } catch (err) {
+    renderNotFound(err.message);
+  }
+})();
+
+function renderNotFound(reason) {
+  document.title = "Title not found | Hezekiah Oluwasanmi Library";
+  crumb.textContent = "Title not found";
+
+  content.innerHTML = "";
+  const panel = document.createElement("div");
+  panel.className = "panel empty";
+
+  const p1 = document.createElement("p");
+  const strong = document.createElement("strong");
+  strong.textContent = reason || "This title could not be found.";
+  p1.appendChild(strong);
+
+  const p2 = document.createElement("p");
+  p2.className = "hint";
+  const link = document.createElement("a");
+  link.href = "../index.html";
+  link.textContent = "Back to the catalogue";
+  p2.appendChild(link);
+
+  panel.append(p1, p2);
+  content.appendChild(panel);
+  announce("Title not found.");
+}
+
+function renderBook(book) {
+  document.title = book.Title + " | Hezekiah Oluwasanmi Library";
+  crumb.textContent = book.Title;
+
+  content.innerHTML = "";
+
+  const split = document.createElement("div");
+  split.className = "split";
+
+  const main = document.createElement("section");
+  main.setAttribute("aria-labelledby", "book-heading");
+  main.appendChild(titlePanel(book));
+
+  const aside = document.createElement("aside");
+  aside.className = "split__aside panel";
+  aside.setAttribute("aria-labelledby", "reserve-heading");
+  aside.appendChild(reservePanel(book));
+
+  split.append(main, aside);
+  content.appendChild(split);
+
+  announce(book.Title + " loaded.");
+}
+
+/* ---- the title, its cover, and the copies table ----------------------- */
+
+function titlePanel(book) {
+  const panel = document.createElement("div");
+  panel.className = "panel";
+
+  const back = document.createElement("a");
+  back.href = "../index.html";
+  back.textContent = "Back to results";
+  panel.appendChild(back);
+
+  const body = document.createElement("div");
+  body.className = "result__body";
+  body.appendChild(coverElement(book, "detail"));
+
+  const text = document.createElement("div");
+  text.className = "result__text";
+
+  const h1 = document.createElement("h1");
+  h1.id = "book-heading";
+  h1.textContent = book.Title;
+  text.appendChild(h1);
+
+  if (book.Subtitle) {
+    const sub = document.createElement("p");
+    sub.className = "hint";
+    sub.textContent = book.Subtitle;
+    text.appendChild(sub);
+  }
+
+  if (book.Authors && book.Authors.length) {
+    const authors = document.createElement("p");
+    authors.textContent = book.Authors.join(", ");
+    text.appendChild(authors);
+  }
+
+  body.appendChild(text);
+  panel.appendChild(body);
+
+  panel.appendChild(factGrid(book));
+
+  const state = availabilityLine(book);
+  const notice = document.createElement("div");
+  notice.className = "notice notice--" + state.tone;
+  const head = document.createElement("p");
+  head.className = "notice__head";
+  head.textContent = state.head;
+  const noticeBody = document.createElement("p");
+  noticeBody.className = "notice__body";
+  noticeBody.textContent = state.body;
+  notice.append(head, noticeBody);
+  panel.appendChild(notice);
+
+  panel.appendChild(copiesTable(book));
+
+  return panel;
+}
+
+function factGrid(book) {
+  const grid = document.createElement("dl");
+  grid.className = "dl";
+
+  function fact(term, value) {
+    if (!value) return;
+    const dt = document.createElement("dt");
+    dt.textContent = term;
+    const dd = document.createElement("dd");
+    dd.textContent = value;
+    grid.append(dt, dd);
+  }
+
+  fact("Publisher", book.Publisher + (book.PublishedYear ? " (" + book.PublishedYear + ")" : ""));
+  fact("ISBN", book.ISBN13 || book.ISBN10 || "Not recorded");
+  fact("Call number", book.CallNumber);
+  fact("Wing", book.wing && book.wing !== "Unknown" ? book.wing + " Wing" : null);
+  if (book.Subjects && book.Subjects.length) fact("Subjects", book.Subjects.join("; "));
+
+  return grid;
+}
+
+/* Maps the server's copy status to the words and the tone the design system
+   already defines. Colour is never the only signal (WCAG 1.4.1): the word is
+   always shown too. */
+function copyStatus(status) {
+  switch (status) {
+    case "available": return { tone: "ok",   text: "Available" };
+    case "on_loan":   return { tone: "bad",  text: "On loan" };
+    case "reserved":  return { tone: "warn", text: "Reserved" };
+    case "lost":      return { tone: "none", text: "Lost" };
+    case "withdrawn": return { tone: "none", text: "Withdrawn" };
+    default:          return { tone: "none", text: status || "Unknown" };
+  }
+}
+
+function copyNote(copy) {
+  if (copy.Status === "available") {
+    return copy.Retained
+      ? "Available to read in the library only; it is the final copy that stays"
+      : "Borrowable today";
+  }
+  if (copy.Status === "on_loan") {
+    return copy.DueAt ? "Due back " + formatDateTime(copy.DueAt) : "Checked out";
+  }
+  if (copy.Status === "reserved") return "Queued for the next eligible member";
+  return "Not available to borrow";
+}
+
+function copiesTable(book) {
+  const wrap = document.createElement("div");
+  wrap.className = "table-wrap";
+
+  const table = document.createElement("table");
+  table.className = "table";
+
+  const caption = document.createElement("caption");
+  caption.textContent = "Physical copies of " + book.Title;
+  table.appendChild(caption);
+
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  ["Accession number", "Status", "Location", "Note"].forEach(function (label) {
+    const th = document.createElement("th");
+    th.scope = "col";
+    th.textContent = label;
+    headRow.appendChild(th);
+  });
+  thead.appendChild(headRow);
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  const copies = book.Copies || [];
+
+  if (copies.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 4;
+    cell.textContent = "No physical copies are recorded for this title.";
+    row.appendChild(cell);
+    tbody.appendChild(row);
+  } else {
+    copies.forEach(function (copy) {
+      const row = document.createElement("tr");
+
+      const accCell = document.createElement("td");
+      const accCode = document.createElement("span");
+      accCode.className = "accession";
+      accCode.textContent = copy.AccessionNumber;
+      accCell.appendChild(accCode);
+
+      const statusCell = document.createElement("td");
+      const st = copyStatus(copy.Status);
+      const badge = document.createElement("span");
+      badge.className = "status status--" + st.tone;
+      badge.textContent = st.text;
+      statusCell.appendChild(badge);
+
+      const locCell = document.createElement("td");
+      locCell.textContent = copy.Location || "\u2014";
+
+      const noteCell = document.createElement("td");
+      noteCell.textContent = copyNote(copy);
+
+      row.append(accCell, statusCell, locCell, noteCell);
+      tbody.appendChild(row);
+    });
+  }
+
+  table.appendChild(tbody);
+  wrap.appendChild(table);
+  return wrap;
+}
+
+/* ---- the reserve panel, in its three signed-in / availability states -- */
+
+function reservePanel(book) {
+  const frag = document.createDocumentFragment();
+
+  const h2 = document.createElement("h2");
+  h2.id = "reserve-heading";
+  h2.className = "panel__title";
+  h2.textContent = "Reserve this title";
+  frag.appendChild(h2);
+
+  const lead = document.createElement("p");
+  lead.textContent = "You can reserve a title when signed in. The server will still re-check eligibility, queue position and copy availability before accepting the request.";
+  frag.appendChild(lead);
+
+  const signedIn = api.isSignedIn() || DEMO_SIGNED_IN;
+  const canBorrow = book.borrowable > 0;
+
+  const actionRow = document.createElement("p");
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn btn--primary";
+  btn.textContent = "Reserve title";
+  actionRow.appendChild(btn);
+
+  const resultBox = document.createElement("div");
+  resultBox.setAttribute("aria-live", "polite");
+
+  if (!signedIn) {
+    btn.disabled = true;
+    btn.setAttribute("aria-disabled", "true");
+
+    const signInLink = document.createElement("a");
+    signInLink.href = "04-signin.html";
+    signInLink.textContent = "Sign in first";
+    actionRow.append(document.createTextNode(" "), signInLink);
+
+    const explain = document.createElement("p");
+    explain.className = "hint";
+    const strong = document.createElement("strong");
+    strong.textContent = "Why the button is disabled: ";
+    explain.appendChild(strong);
+    explain.appendChild(document.createTextNode(
+      "visitors are not signed in, so the system cannot place the reservation against a member account."
+    ));
+    frag.append(actionRow, explain);
+  } else if (canBorrow) {
+    btn.disabled = true;
+    btn.setAttribute("aria-disabled", "true");
+
+    const reasonLine = document.createElement("p");
+    reasonLine.className = "hint";
+    reasonLine.textContent = "Copies are already on the shelf, so there is nothing to reserve right now.";
+    frag.append(actionRow, reasonLine);
+  } else {
+    btn.addEventListener("click", function () { reserveTitle(book, btn, resultBox); });
+    frag.append(actionRow, resultBox);
+  }
+
+  const explainer = document.createElement("div");
+  const h3 = document.createElement("h3");
+  h3.textContent = "What this page makes clear";
+  const ul = document.createElement("ul");
+  [
+    "The title record carries bibliographic details only.",
+    "Location and availability belong to each physical copy.",
+    "An available copy can still be in-library only when it is the last one free."
+  ].forEach(function (line) {
+    const li = document.createElement("li");
+    li.textContent = line;
+    ul.appendChild(li);
+  });
+  explainer.append(h3, ul);
+  frag.appendChild(explainer);
+
+  return frag;
+}
+
+/* PHASE NOTE: replace the body of this function with a real call —
+     const result = await api.post("/reservations", { book_id: book.ID });
+     const position = result.data.queue_position;
+   — once reservations are wired to the live API. The enabled/disabled
+   logic in reservePanel() above does not need to change. */
+async function reserveTitle(book, btn, resultBox) {
+  btn.disabled = true;
+  btn.textContent = "Reserving\u2026";
+  announce("Placing your reservation.");
+
+  await new Promise(function (resolve) { setTimeout(resolve, 500); });
+
+  const position = 2; // stand-in queue position for the design phase
+  resultBox.innerHTML = "";
+  const notice = document.createElement("div");
+  notice.className = "notice notice--ok";
+  const head = document.createElement("p");
+  head.className = "notice__head";
+  head.textContent = "You are " + position + (position === 1 ? "st" : "nd") + " in the queue.";
+  const body = document.createElement("p");
+  body.className = "notice__body";
+  body.textContent = "We will tell you as soon as a copy of \u201c" + book.Title + "\u201d is ready for you.";
+  notice.append(head, body);
+  resultBox.appendChild(notice);
+
+  btn.remove();
+  announce("You are " + position + (position === 1 ? "st" : "nd") + " in the queue for " + book.Title + ".");
+}
+</script>
+
+</body>
+</html>
