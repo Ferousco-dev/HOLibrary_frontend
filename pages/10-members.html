@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Members | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Search the member roll, register a reader, or suspend an account.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html" aria-current="page">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Members</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <div class="page__head">
+    <h1>Members</h1>
+    <p class="page__lead">Look someone up, register a new reader, or suspend an account.</p>
+  </div>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <section class="panel" aria-labelledby="find-heading">
+    <h2 class="panel__title" id="find-heading">Find a member</h2>
+    <form id="search-form" novalidate role="search">
+      <div class="field">
+        <label class="field__label" for="q">Name, matriculation number or email</label>
+        <input class="field__input" type="search" id="q" name="q"
+               autocomplete="off" placeholder="SEN/2025/001">
+      </div>
+      <p><button class="btn btn--primary" type="submit">Search the roll</button></p>
+    </form>
+  </section>
+
+  <div id="results"></div>
+
+  <section class="panel" aria-labelledby="register-heading">
+    <h2 class="panel__title" id="register-heading">Register a member</h2>
+    <p>The password is generated here and shown once. Write it down for them: it is
+      not stored in a form anyone can read back, and they must change it at first sign-in.</p>
+
+    <form id="register-form" novalidate>
+      <div class="field">
+        <label class="field__label" for="identifier">Matriculation or staff number</label>
+        <input class="field__input" type="text" id="identifier" name="identifier" required
+               autocomplete="off" autocapitalize="characters" placeholder="SEN/2025/001">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="email">Email address</label>
+        <input class="field__input" type="email" id="email" name="email" required
+               autocomplete="off" placeholder="name@oauife.edu.ng">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="first-name">First name</label>
+        <input class="field__input" type="text" id="first-name" name="first-name" required
+               autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="last-name">Last name</label>
+        <input class="field__input" type="text" id="last-name" name="last-name" required
+               autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="category">Category</label>
+        <select class="field__input" id="category" name="category" required>
+          <option value="undergraduate">Undergraduate, 2 books for 14 days</option>
+          <option value="postgraduate">Postgraduate, 4 books for 21 days</option>
+          <option value="staff">Staff, 6 books for 28 days</option>
+        </select>
+        <p class="hint">This sets how many books they may hold and for how long.</p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="department">Department</label>
+        <input class="field__input" type="text" id="department" name="department"
+               autocomplete="off" placeholder="Software Engineering">
+      </div>
+
+      <p><button class="btn btn--primary" type="submit" id="register-btn">Register</button></p>
+    </form>
+
+    <div id="register-result"></div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+/* The member roll: search it, add to it, suspend an account.
+
+   Everything here is refused by the server for anyone who is not staff. The
+   page hides nothing on that basis, because hiding a control is tidiness and
+   never security, and a librarian who reaches a page they may not use should
+   be told so in a sentence rather than shown a blank. */
+
+const searchForm = document.getElementById("search-form");
+const queryInput = document.getElementById("q");
+const results = document.getElementById("results");
+
+const registerForm = document.getElementById("register-form");
+const registerBtn = document.getElementById("register-btn");
+const registerResult = document.getElementById("register-result");
+
+const STATUS = {
+  active:    { tone: "ok",   text: "Active" },
+  suspended: { tone: "bad",  text: "Suspended" },
+  inactive:  { tone: "none", text: "Inactive" },
+};
+
+/* A member's row. The action offered is the opposite of where they are:
+   there is no point offering to suspend somebody already suspended. */
+function memberRow(member) {
+  const state = STATUS[member.status] || { tone: "none", text: member.status };
+  const suspending = member.status === "active";
+
+  return el("tr", {}, [
+    el("td", {}, [
+      member.full_name,
+      el("p", { className: "hint" }, member.email || ""),
+    ]),
+    el("td", {}, el("span", { className: "accession" }, member.identifier)),
+    el("td", {}, member.category || member.role || ""),
+    el("td", {}, el("span", { className: "status status--" + state.tone }, state.text)),
+    el("td", {}, el("button", {
+      type: "button",
+      className: "btn btn--secondary",
+      // Every row's button reads the same two words, so the name goes in the
+      // accessible label or a screen reader cannot tell the rows apart.
+      "aria-label": (suspending ? "Suspend " : "Reactivate ") + member.full_name,
+      onClick: function (event) {
+        setStatus(member, suspending ? "suspended" : "active", event.currentTarget);
+      },
+    }, suspending ? "Suspend" : "Reactivate")),
+  ]);
+}
+
+async function setStatus(member, status, button) {
+  const verb = status === "suspended" ? "Suspending" : "Reactivating";
+  button.disabled = true;
+  button.textContent = verb + "…";
+
+  try {
+    await api.patch("/members/" + encodeURIComponent(member.id) + "/status", { status: status });
+    announce(member.full_name + " is now " + status + ".");
+    // Re-read: the row's own state and the action it offers both changed.
+    search(queryInput.value.trim());
+  } catch (err) {
+    button.disabled = false;
+    button.textContent = status === "suspended" ? "Suspend" : "Reactivate";
+    announce(err.message);
+  }
+}
+
+function search(q) {
+  return load({
+    into: results,
+    label: "Searching the member roll",
+    needsSignIn: "search the member roll",
+    empty: "No member matches that.",
+    fetch: () => api.get("/members?q=" + encodeURIComponent(q) + "&per_page=25"),
+    announce: (r) => plural((r.data || []).length, "member", "members") + " found.",
+    render: function (result) {
+      const rows = result.data || [];
+      if (rows.length === 0) return null;
+
+      return el("section", { className: "panel", "aria-labelledby": "results-heading" }, [
+        el("h2", { className: "panel__title", id: "results-heading" },
+          plural(rows.length, "member", "members")),
+        el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+          el("caption", {}, "Members matching your search"),
+          el("thead", {}, el("tr", {}, [
+            el("th", { scope: "col" }, "Name"),
+            el("th", { scope: "col" }, "Number"),
+            el("th", { scope: "col" }, "Category"),
+            el("th", { scope: "col" }, "Status"),
+            el("th", { scope: "col" }, "Action"),
+          ])),
+          el("tbody", {}, rows.map(memberRow)),
+        ])),
+      ]);
+    },
+  });
+}
+
+searchForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  search(queryInput.value.trim());
+});
+
+validate.attach(registerForm);
+
+registerForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (!validate.form(registerForm)) return;
+
+  registerBtn.disabled = true;
+  registerBtn.textContent = "Registering…";
+  replace(registerResult);
+
+  const value = (id) => document.getElementById(id).value.trim();
+
+  try {
+    const reply = (await api.post("/members", {
+      identifier: value("identifier"),
+      email: value("email"),
+      first_name: value("first-name"),
+      last_name: value("last-name"),
+      category: value("category"),
+      department: value("department"),
+    })).data;
+
+    /* Shown once, on screen, and nowhere else. It is not written to the log,
+       not emailed, and not kept in a field the next person at this terminal
+       could read back. The account is created already required to change it,
+       so the printed value stops working the moment it is used. */
+    replace(registerResult, el("div", { className: "notice notice--ok" }, [
+      el("p", { className: "notice__head" }, reply.member.full_name + " is registered."),
+      el("p", { className: "notice__body" }, [
+        "Give them this password now. It will not be shown again: ",
+        el("strong", { className: "accession" }, reply.temporary_password),
+      ]),
+      el("p", { className: "notice__body" },
+        "They must change it the first time they sign in."),
+    ]));
+    announce(reply.member.full_name + " registered. The temporary password is on screen.");
+
+    registerForm.reset();
+    document.getElementById("identifier").focus();
+  } catch (err) {
+    // Duplicate identifier, duplicate email, a role this account may not
+    // create. The server names which, so it says it rather than the page.
+    replace(registerResult, el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "Not registered."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    announce(err.message);
+  } finally {
+    registerBtn.disabled = false;
+    registerBtn.textContent = "Register";
+  }
+});
+
+// A page opened at ?q=... runs that search, so a link to one member works.
+const opening = new URLSearchParams(location.search).get("q");
+if (opening) {
+  queryInput.value = opening;
+  search(opening);
+}
+</script>
+
+</body>
+</html>
