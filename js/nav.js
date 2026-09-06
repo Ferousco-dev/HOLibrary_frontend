@@ -54,6 +54,7 @@ function buildNav(list) {
     items.push({ file: "08-desk-issue.html", text: "Issue a copy" });
     items.push({ file: "09-desk-return.html", text: "Receive a return" });
     items.push({ file: "10-members.html", text: "Members" });
+    items.push({ file: "14-overdue.html", text: "Overdue books" });
   }
 
   if (api.isAdmin()) {

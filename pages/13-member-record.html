@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Member record | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="A member's account and their full borrowing record, for library staff at the desk.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li><a href="10-members.html">Members</a></li>
+      <li aria-current="page" id="crumb-name">Member record</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <div class="page__head">
+    <h1>Member record</h1>
+    <p class="page__lead">What this member has out now, and everything they have
+      borrowed before. The first question asked at the desk.</p>
+  </div>
+
+  <!-- Outcomes are announced here for screen reader users. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div id="content"></div>
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="wings.html">Wings and shelving</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="borrowing.html">How borrowing works</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+/* 13-member-record.html, one member and their whole borrowing record.
+
+   GET /members/{id} answers { data: { member, history } }. history is a
+   sibling of member, not a field on it, and it holds every loan the member has
+   ever had: what is still out is the subset with no returned_at, exactly as the
+   member's own history page tells them apart.
+
+   Librarian only. The server refuses this to anyone else, so the page hides
+   nothing on that basis: a member who reaches it is shown the refusal in a
+   sentence rather than a blank. Which loans are overdue is decided by
+   dueState() from the clock, never read from a stored flag. */
+
+const content = document.getElementById("content");
+const crumb = document.getElementById("crumb-name");
+
+function requestedId() {
+  return new URLSearchParams(location.search).get("id");
+}
+
+const STATUS = {
+  active:    { tone: "ok",   text: "Active" },
+  suspended: { tone: "bad",  text: "Suspended" },
+  inactive:  { tone: "none", text: "Inactive" },
+};
+
+(function init() {
+  const id = requestedId();
+
+  if (!id) {
+    replace(content, messageState(
+      "No member was specified. Open a record from the members list.", null, [
+      el("p", { className: "hint" }, el("a", { href: "10-members.html" }, "Search the member roll")),
+    ]));
+    announce("No member was specified.");
+    return;
+  }
+
+  load({
+    into: content,
+    label: "Loading this member",
+    needsSignIn: "see a member's record",
+    fetch: () => api.get("/members/" + encodeURIComponent(id)),
+    render: function (result) {
+      const record = result.data || result;
+      const member = record.member || record;
+      const history = record.history || [];
+
+      document.title = member.full_name + " | Hezekiah Oluwasanmi Library";
+      crumb.textContent = member.full_name;
+
+      // A returned loan carries a returned_at; an open one does not. That single
+      // field is the whole difference between "has out now" and "has had".
+      const open = history.filter(function (l) { return !l.returned_at; });
+      const past = history.filter(function (l) { return l.returned_at; });
+
+      announce(member.full_name + " has " + open.length + " book(s) out.");
+
+      return [
+        memberPanel(member, open),
+        currentPanel(member, open),
+        historyPanel(past),
+      ];
+    },
+  });
+})();
+
+/* Who this is, with the one figure the desk wants first, how many books they
+   have out, read straight off the open loans. */
+function memberPanel(member, open) {
+  const state = STATUS[member.status] || { tone: "none", text: member.status };
+
+  const facts = el("dl", { className: "dl" }, []);
+  function fact(term, value) {
+    if (!value) return;
+    facts.append(el("dt", {}, term), el("dd", {}, value));
+  }
+  fact("Number", member.identifier);
+  fact("Email", member.email);
+  fact("Category", member.category || member.role || "");
+  fact("Department", member.department);
+  fact("Faculty", member.faculty);
+  fact("Level", member.level);
+
+  return el("section", { className: "panel", "aria-labelledby": "member-heading" }, [
+    el("div", { className: "recordhead" }, [
+      el("div", {}, [
+        el("h2", { className: "panel__title", id: "member-heading" }, member.full_name),
+        el("p", {}, el("span", { className: "status status--" + state.tone }, state.text)),
+      ]),
+      el("p", { className: "recordhead__count" }, [
+        el("span", { className: "recordhead__number" }, String(open.length)),
+        " " + (open.length === 1 ? "book out" : "books out"),
+      ]),
+    ]),
+    facts,
+    // Suspension lives on the members list, which owns the confirm step and the
+    // roll it sits in. A record opened at the desk links back to it rather than
+    // carrying a second copy of the same control.
+    el("p", { className: "result__actions" },
+      el("a", { href: "10-members.html?q=" + encodeURIComponent(member.identifier) },
+        "Manage this member")),
+  ]);
+}
+
+/* What is out now, the reason the desk opened this record. Overdue rows are
+   coloured and counted by dueState(), so the words and the colour agree. */
+function currentPanel(member, open) {
+  if (open.length === 0) {
+    return el("section", { className: "panel" }, [
+      el("h2", { className: "panel__title" }, "Out now"),
+      el("p", {}, "Nothing. This member has no books out."),
+    ]);
+  }
+
+  return el("section", { className: "panel", "aria-labelledby": "current-heading" }, [
+    el("h2", { className: "panel__title", id: "current-heading" },
+      plural(open.length, "book", "books") + " out now"),
+    el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+      el("caption", {}, "Books " + member.full_name + " currently holds"),
+      el("thead", {}, el("tr", {}, [
+        el("th", { scope: "col" }, "Title"),
+        el("th", { scope: "col" }, "Accession"),
+        el("th", { scope: "col" }, "Borrowed"),
+        el("th", { scope: "col" }, "Due"),
+        el("th", { scope: "col" }, "State"),
+      ])),
+      el("tbody", {}, open.map(function (loan) {
+        const due = dueState(loan.due_at);
+        return el("tr", {}, [
+          el("td", {}, loan.book_title),
+          el("td", {}, el("span", { className: "accession" }, loan.accession_number)),
+          el("td", {}, el("time", { datetime: loan.borrowed_at }, formatDate(loan.borrowed_at))),
+          el("td", {}, el("time", { datetime: loan.due_at }, formatDate(loan.due_at))),
+          el("td", {}, el("span", { className: "status status--" + due.tone }, due.text)),
+        ]);
+      })),
+    ])),
+  ]);
+}
+
+/* Everything returned, newest first. The record is never deleted on return, so
+   this is the full history the server keeps. */
+function historyPanel(past) {
+  if (past.length === 0) {
+    return el("section", { className: "panel" }, [
+      el("h2", { className: "panel__title" }, "Past loans"),
+      el("p", {}, "None yet."),
+    ]);
+  }
+
+  return el("section", { className: "panel", "aria-labelledby": "history-heading" }, [
+    el("h2", { className: "panel__title", id: "history-heading" },
+      plural(past.length, "past loan", "past loans")),
+    el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+      el("caption", {}, "Everything this member has borrowed and returned"),
+      el("thead", {}, el("tr", {}, [
+        el("th", { scope: "col" }, "Title"),
+        el("th", { scope: "col" }, "Accession"),
+        el("th", { scope: "col" }, "Borrowed"),
+        el("th", { scope: "col" }, "Returned"),
+      ])),
+      el("tbody", {}, past.map(function (loan) {
+        return el("tr", {}, [
+          el("td", {}, loan.book_title),
+          el("td", {}, el("span", { className: "accession" }, loan.accession_number)),
+          el("td", {}, el("time", { datetime: loan.borrowed_at }, formatDate(loan.borrowed_at))),
+          el("td", {}, el("time", { datetime: loan.returned_at }, formatDate(loan.returned_at))),
+        ]);
+      })),
+    ])),
+  ]);
+}
+</script>
+
+</body>
+</html>

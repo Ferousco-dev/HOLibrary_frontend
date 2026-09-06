@@ -185,6 +185,21 @@ function reservationRow(r) {
 }
 
 async function cancelReservation(reservation, button) {
+  // Cancelling gives up a place in the queue with no way back to it, so it is
+  // confirmed first. A reader waiting behind others loses that wait entirely.
+  const sure = await confirmAction({
+    title: "Cancel this reservation?",
+    body: "You will give up your place in the queue for \u201c" + reservation.book_title
+      + "\u201d. Joining again later starts at the back.",
+    confirm: "Cancel reservation",
+    cancel: "Keep my place",
+    tone: "bad",
+  });
+  if (!sure) {
+    button.focus();
+    return;
+  }
+
   button.disabled = true;
   button.textContent = "Cancelling\u2026";
   announce("Cancelling your reservation for " + reservation.book_title + ".");
@@ -267,17 +282,6 @@ function showHistory() {
 showReservations();
 showHistory();
 </script>
- <script>
-  document.querySelectorAll('.btn--ghost').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      const confirmed = confirm('Cancel this rservation? you will lose your place in the queue.');
-      if (confirmed) {
-        btn.closest('tr').remove();
-        document.getElementById('live').textContent = 'Reservation Cancelled.';
-      }
-    });
-  });
- </script>
 
 </body>
 </html>

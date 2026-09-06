@@ -33,6 +33,11 @@
 .btn--primary:hover { background: var(--blue-dark); color: var(--on-dark); }
 .btn--secondary { background: var(--surface); color: var(--indigo); border-color: var(--rule-strong); }
 .btn--secondary:hover { background: var(--wash); }
+/* For the confirming half of an action with no undo: suspending a member,
+   cancelling a reservation. Red so the weight of it is visible before the
+   click, not discovered after. */
+.btn--danger { background: var(--bad); color: var(--on-dark); }
+.btn--danger:hover { background: var(--bad); filter: brightness(0.92); color: var(--on-dark); }
 
 /* A disabled button must still say WHY. Pair it with .hint, never leave a
    dead control with no explanation. */
@@ -162,6 +167,31 @@
 .notice--warn .notice__head { color: var(--warn); }
 .notice--bad  { background: var(--bad-wash);  border-color: var(--bad-line); }
 .notice--bad  .notice__head { color: var(--bad); }
+
+/* --- member record header ----------------------------------------------
+   The name on the left, the one figure the desk wants first, how many books
+   are out, set large on the right. It stacks on a narrow screen. */
+.recordhead { display: flex; justify-content: space-between; align-items: flex-start;
+  gap: var(--space-4); flex-wrap: wrap; }
+.recordhead__count { margin: 0; font-size: var(--text-sm); color: var(--ink-muted); text-align: right; }
+.recordhead__number { display: block; font-family: var(--font-head);
+  font-size: var(--text-3xl); font-weight: 700; color: var(--indigo); line-height: 1; }
+
+/* --- confirmation dialog ------------------------------------------------
+   Shown before an action that cannot be undone. A native <dialog>, so the
+   browser owns the focus trap, the Escape key and the return of focus; the
+   styling here is only the panel and its backdrop. Built by confirmAction()
+   in ui.js, never written into a page by hand. */
+.confirm {
+  max-width: 30rem; width: calc(100% - var(--space-6));
+  border: var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-5); background: var(--surface); color: var(--ink);
+  box-shadow: 0 16px 40px rgba(26, 26, 46, 0.24);
+}
+.confirm::backdrop { background: rgba(26, 26, 46, 0.45); }
+.confirm__title { margin: 0 0 var(--space-3); font-size: var(--text-xl); }
+.confirm__body { margin: 0 0 var(--space-5); color: var(--ink-muted); }
+.confirm__actions { display: flex; gap: var(--space-3); justify-content: flex-end; flex-wrap: wrap; }
 
 /* --- result list -------------------------------------------------------- */
 .results { list-style: none; margin: 0; padding: 0; }

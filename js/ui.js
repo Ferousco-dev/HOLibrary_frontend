@@ -68,11 +68,26 @@ function messageState(text, tone, extra) {
     [el("p", {}, text)].concat(extra || []));
 }
 
+/* The path to the sign-in screen, carrying where the reader is now so they are
+   returned here once signed in rather than dumped on the catalogue.
+
+   next is a root-relative path (location.pathname keeps the /pages/ prefix and
+   the query string), which is the only shape 04-signin.html will accept: it
+   rejects anything that could point at another host, because a sign-in page is
+   exactly where an open redirect would be aimed. A page at the site root has no
+   ../ to climb, so the prefix is chosen from where this script is running. */
+function signInHref() {
+  const inPages = location.pathname.indexOf("/pages/") !== -1;
+  const base = inPages ? "04-signin.html" : "pages/04-signin.html";
+  const here = location.pathname + location.search;
+  return base + "?next=" + encodeURIComponent(here);
+}
+
 /* Every /me screen needs the same signed-out state, and each was writing its
    own. what completes the sentence "Sign in to ...". */
 function signedOutState(what) {
   return messageState("Sign in to " + what + ".", null, [
-    el("p", { className: "hint" }, el("a", { href: "04-signin.html" }, "Sign in")),
+    el("p", { className: "hint" }, el("a", { href: signInHref() }, "Sign in")),
   ]);
 }
 
@@ -126,4 +141,68 @@ async function load(spec) {
     replace(into, messageState(err.message, "bad"));
     announce(err.message);
   }
+}
+
+/* Ask before an action that cannot be taken back.
+
+   Suspending a member and cancelling a reservation are both one click with no
+   undo, so each pauses here first. A native <dialog> is used on purpose: the
+   browser traps focus inside it, closes it on Escape, and returns focus to
+   whatever opened it, all of which a hand-built overlay gets wrong first.
+
+     const yes = await confirmAction({
+       title: "Suspend this member?",
+       body: "They will not be able to sign in or borrow until reactivated.",
+       confirm: "Suspend",
+       tone: "bad",          // colours the confirm button; omit for a plain one
+     });
+     if (!yes) return;
+
+   The promise resolves true only if the reader chooses the confirming action,
+   and false for Cancel, Escape or a click on the backdrop, so a caller can
+   treat every other outcome as "do nothing". */
+function confirmAction(spec) {
+  return new Promise(function (resolve) {
+    const dialog = el("dialog", { className: "confirm" }, [
+      el("h2", { className: "confirm__title" }, spec.title),
+      spec.body ? el("p", { className: "confirm__body" }, spec.body) : null,
+      el("div", { className: "confirm__actions" }, [
+        el("button", {
+          type: "button",
+          className: "btn btn--secondary",
+          onClick: function () { close(false); },
+        }, spec.cancel || "Keep it"),
+        el("button", {
+          type: "button",
+          className: "btn " + (spec.tone === "bad" ? "btn--danger" : "btn--primary"),
+          onClick: function () { close(true); },
+        }, spec.confirm || "Confirm"),
+      ]),
+    ]);
+
+    let settled = false;
+    function close(answer) {
+      if (settled) return;
+      settled = true;
+      resolve(answer);
+      if (dialog.open) dialog.close();
+      dialog.remove();
+    }
+
+    // A click on the backdrop lands on the dialog element itself rather than on
+    // anything inside it. Treat that as "no", the safe default for an action
+    // with no undo.
+    dialog.addEventListener("click", function (event) {
+      if (event.target === dialog) close(false);
+    });
+    // Escape fires the dialog's cancel event; resolve false so the promise is
+    // never left hanging.
+    dialog.addEventListener("cancel", function () { close(false); });
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
+    // The confirming action is the one that matters, but focus opens on Cancel
+    // so a stray Enter keypress does not carry out the very thing being guarded.
+    dialog.querySelector(".btn--secondary").focus();
+  });
 }

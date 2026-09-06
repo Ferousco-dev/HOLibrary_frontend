@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Overdue books | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Every book that is out past its due date, for library staff.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Overdue books</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <div class="page__head">
+    <h1>Overdue books</h1>
+    <p class="page__lead">Every book still out past its due date, the longest
+      overdue first. There are no renewals: an overdue book has to come back.</p>
+  </div>
+
+  <!-- Outcomes are announced here for screen reader users. -->
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div id="content"></div>
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="wings.html">Wings and shelving</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="borrowing.html">How borrowing works</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+/* 14-overdue.html, every loan out past its due date.
+
+   GET /loans?overdue=true is librarian only, and overdue implies open: a
+   returned book is never overdue. The endpoint has existed all along and
+   nothing called it, so no member of staff could see the list at a glance.
+
+   days_overdue comes from the server, computed from the clock on read, never
+   stored. The rows arrive longest overdue first because the server orders them
+   that way; the page does not re-sort and so cannot disagree with the pager. */
+
+const content = document.getElementById("content");
+const PER_PAGE = 25;
+
+function overdueRow(loan) {
+  const days = loan.days_overdue || 0;
+
+  return el("tr", {}, [
+    el("td", {},
+      // The member links through to their whole record: an overdue book is
+      // usually the start of a conversation about their account.
+      loan.user_id
+        ? el("a", { href: "13-member-record.html?id=" + encodeURIComponent(loan.user_id) },
+            loan.member_name)
+        : loan.member_name),
+    el("td", {}, loan.book_title),
+    el("td", {}, el("span", { className: "accession" }, loan.accession_number)),
+    el("td", {}, el("time", { datetime: loan.due_at }, formatDate(loan.due_at))),
+    el("td", { className: "num" },
+      el("span", { className: "status status--bad" },
+        days === 1 ? "1 day" : days + " days")),
+  ]);
+}
+
+function show(page) {
+  page = page || 1;
+  return load({
+    into: content,
+    label: "Loading overdue books",
+    needsSignIn: "see the overdue list",
+    empty: "Nothing is overdue. Every book that is out is still within its loan period.",
+    fetch: () => api.get("/loans?overdue=true&page=" + page + "&per_page=" + PER_PAGE),
+    announce: (r) => plural((r.meta && r.meta.total) || (r.data || []).length,
+      "book is", "books are") + " overdue.",
+    render: function (result) {
+      const rows = result.data || [];
+      if (rows.length === 0) return null;
+
+      const total = (result.meta && result.meta.total) || rows.length;
+      const pages = Math.max(1, Math.ceil(total / PER_PAGE));
+
+      const panel = el("section", { className: "panel", "aria-labelledby": "overdue-heading" }, [
+        el("h2", { className: "panel__title", id: "overdue-heading" },
+          plural(total, "book", "books") + " overdue"),
+        el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+          el("caption", {}, "Books out past their due date, longest overdue first"),
+          el("thead", {}, el("tr", {}, [
+            el("th", { scope: "col" }, "Member"),
+            el("th", { scope: "col" }, "Title"),
+            el("th", { scope: "col" }, "Accession"),
+            el("th", { scope: "col" }, "Was due"),
+            el("th", { scope: "col", className: "num" }, "Overdue by"),
+          ])),
+          el("tbody", {}, rows.map(overdueRow)),
+        ])),
+      ]);
+
+      if (pages <= 1) return panel;
+      return [panel, pager(page, pages, total)];
+    },
+  });
+}
+
+/* Real links, so a page of the overdue list has its own address and the back
+   button works through it. */
+function pager(page, pages, total) {
+  const items = [];
+  for (let n = 1; n <= pages; n++) {
+    items.push(el("li", {}, el("a", {
+      className: "pager__link",
+      href: "?page=" + n,
+      "aria-current": n === page ? "page" : null,
+      "aria-label": "Page " + n + " of " + pages,
+      onClick: function (event) {
+        event.preventDefault();
+        history.pushState({ page: n }, "", "?page=" + n);
+        show(n);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      },
+    }, String(n))));
+  }
+
+  return el("nav", { className: "pager", "aria-label": "Overdue list pages" }, [
+    el("ul", { className: "pager__list" }, items),
+    el("p", { className: "pager__count" }, plural(total, "book", "books") + " overdue in all."),
+  ]);
+}
+
+window.addEventListener("popstate", function () {
+  show(Number(new URLSearchParams(location.search).get("page")) || 1);
+});
+
+show(Number(new URLSearchParams(location.search).get("page")) || 1);
+</script>
+
+</body>
+</html>

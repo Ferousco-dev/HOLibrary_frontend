@@ -288,7 +288,10 @@ function memberRow(member) {
 
   return el("tr", {}, [
     el("td", {}, [
-      member.full_name,
+      // The name opens the full record: what they have out is the first thing
+      // asked at the desk, and the roll itself does not carry it.
+      el("a", { href: "13-member-record.html?id=" + encodeURIComponent(member.id) },
+        member.full_name),
       el("p", { className: "hint" }, member.email || ""),
     ]),
     el("td", {}, el("span", { className: "accession" }, member.identifier)),
@@ -308,6 +311,24 @@ function memberRow(member) {
 }
 
 async function setStatus(member, status, button) {
+  // Suspending locks someone out of signing in and borrowing, so it is
+  // confirmed first. Reactivating only restores what suspension took away, so
+  // it is left as one click: there is nothing to lose by it.
+  if (status === "suspended") {
+    const sure = await confirmAction({
+      title: "Suspend " + member.full_name + "?",
+      body: "They will not be able to sign in or borrow until an account is "
+        + "reactivated. Books they already hold stay on their record.",
+      confirm: "Suspend",
+      cancel: "Leave active",
+      tone: "bad",
+    });
+    if (!sure) {
+      button.focus();
+      return;
+    }
+  }
+
   const verb = status === "suspended" ? "Suspending" : "Reactivating";
   button.disabled = true;
   button.textContent = verb + "…";

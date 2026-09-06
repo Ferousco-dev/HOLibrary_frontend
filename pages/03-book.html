@@ -158,7 +158,39 @@ function getRequestedId() {
   try {
     const result = await api.get("/books/" + encodeURIComponent(id));
     const record = result.data || result;
-    renderBook(record.book, record.copies || []);
+    const book   = record.book;
+    const copies = record.copies || [];
+
+    let myLoan  = null;
+    let isSaved = false;
+
+    if (api.isSignedIn()) {
+      // A Set makes the copy_id lookup O(1) regardless of how many copies the
+      // title has, which matters for popular items with many physical volumes.
+      const copyIds = new Set(copies.map(function (c) { return c.ID; }));
+
+      // Both requests are allowed to fail without taking the page down: a
+      // 401 here just means the session expired between page load and render,
+      // and the reserve panel already handles the signed-out state gracefully.
+      const [loansRes, bookmarksRes] = await Promise.allSettled([
+        api.get("/me/loans"),
+        api.get("/me/bookmarks?per_page=100"),
+      ]);
+
+      if (loansRes.status === "fulfilled") {
+        const loans = loansRes.value.data || [];
+        myLoan = loans.find(function (l) { return copyIds.has(l.copy_id); }) || null;
+      }
+
+      if (bookmarksRes.status === "fulfilled") {
+        const bms = bookmarksRes.value.data || [];
+        // bm.book is present when the endpoint embeds the full Book object;
+        // fall back to bm itself if the shape changes to a flat record.
+        isSaved = bms.some(function (bm) { return (bm.book || bm).ID === book.ID; });
+      }
+    }
+
+    renderBook(book, copies, myLoan, isSaved);
   } catch (err) {
     renderNotFound(err.status === 404
       ? "That title could not be found. It may have been removed from the catalogue."
@@ -191,7 +223,7 @@ function renderNotFound(reason) {
   announce("Title not found.");
 }
 
-function renderBook(book, copies) {
+function renderBook(book, copies, myLoan, isSaved) {
   document.title = book.Title + " | Hezekiah Oluwasanmi Library";
   crumb.textContent = book.Title;
 
@@ -207,7 +239,7 @@ function renderBook(book, copies) {
   const aside = document.createElement("aside");
   aside.className = "split__aside panel";
   aside.setAttribute("aria-labelledby", "reserve-heading");
-  aside.appendChild(reservePanel(book));
+  aside.appendChild(reservePanel(book, myLoan, isSaved));
 
   split.append(main, aside);
   content.appendChild(split);
@@ -395,16 +427,41 @@ function copiesTable(book, copies) {
   return wrap;
 }
 
-/* ---- the reserve panel, in its three signed-in / availability states -- */
+/* ---- the reserve panel, covering signed-in, loan, availability, and save states -- */
 
-function reservePanel(book) {
+function reservePanel(book, myLoan, isSaved) {
   const frag = document.createDocumentFragment();
 
   const h2 = document.createElement("h2");
   h2.id = "reserve-heading";
   h2.className = "panel__title";
-  h2.textContent = "Reserve this title";
+  h2.textContent = "Reserve or save this title";
   frag.appendChild(h2);
+
+  // Show the loan notice before the lead so the reader sees their current
+  // situation before being asked to take any action.
+  if (myLoan) {
+    const due = dueState(myLoan.due_at);
+    const loanNotice = document.createElement("div");
+    loanNotice.className = "notice notice--" + due.tone;
+
+    const loanHead = document.createElement("p");
+    loanHead.className = "notice__head";
+    loanHead.textContent = "You have a copy of this out.";
+
+    const loanBody = document.createElement("p");
+    loanBody.className = "notice__body";
+    // Build with DOM nodes so accession_number is never injected as markup.
+    const accSpan = document.createElement("span");
+    accSpan.className = "accession";
+    accSpan.textContent = myLoan.accession_number;
+    loanBody.appendChild(document.createTextNode("Accession "));
+    loanBody.appendChild(accSpan);
+    loanBody.appendChild(document.createTextNode(". " + due.text + "."));
+
+    loanNotice.append(loanHead, loanBody);
+    frag.appendChild(loanNotice);
+  }
 
   const lead = document.createElement("p");
   lead.textContent = "You can reserve a title when signed in. The server will still re-check eligibility, queue position and copy availability before accepting the request.";
@@ -444,8 +501,10 @@ function reservePanel(book) {
     btn.disabled = true;
     btn.setAttribute("aria-disabled", "true");
 
+    // signInHref() encodes the current URL as ?next= so the user returns here
+    // after signing in rather than landing on the sign-in page's default.
     const signInLink = document.createElement("a");
-    signInLink.href = "04-signin.html";
+    signInLink.href = signInHref();
     signInLink.textContent = "Sign in first";
     actionRow.append(document.createTextNode(" "), signInLink);
 
@@ -458,6 +517,16 @@ function reservePanel(book) {
       "visitors are not signed in, so the system cannot place the reservation against a member account."
     ));
     frag.append(actionRow, explain);
+  } else if (signedIn && myLoan) {
+    // A member cannot reserve a second copy while they already have one out:
+    // the queue exists for members who do not currently hold the title.
+    btn.disabled = true;
+    btn.setAttribute("aria-disabled", "true");
+
+    const reasonLine = document.createElement("p");
+    reasonLine.className = "hint";
+    reasonLine.textContent = "Return your copy before joining the queue for another.";
+    frag.append(actionRow, reasonLine);
   } else if (copiesOnShelf) {
     btn.disabled = true;
     btn.setAttribute("aria-disabled", "true");
@@ -469,6 +538,11 @@ function reservePanel(book) {
   } else {
     btn.addEventListener("click", function () { reserveTitle(book, btn, resultBox); });
     frag.append(actionRow, resultBox);
+  }
+
+  // Only signed-in members can save titles; the endpoint requires a session.
+  if (signedIn) {
+    frag.appendChild(saveToggle(book, isSaved));
   }
 
   return frag;
@@ -509,6 +583,51 @@ async function reserveTitle(book, btn, resultBox) {
     btn.textContent = "Reserve title";
     announce(err.message);
   }
+}
+
+/* POST /bookmarks is idempotent: saving twice succeeds and changes nothing.
+   A member with more than 100 saved titles might see "Save" when already saved
+   because the per_page=100 cap did not return their bookmark, but clicking is
+   harmless: the server accepts the duplicate and the button state corrects itself. */
+function saveToggle(book, isSaved) {
+  const wrap = document.createElement("p");
+  wrap.className = "result__actions";
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn btn--secondary";
+  btn.textContent = isSaved ? "Saved to your list" : "Save this title";
+
+  // Local variable tracks the live state so the click handler does not have to
+  // read the button label, which is fragile under future text changes.
+  let saved = isSaved;
+
+  btn.addEventListener("click", async function () {
+    const prev = btn.textContent;
+    btn.disabled = true;
+
+    try {
+      if (saved) {
+        await api.del("/bookmarks/" + encodeURIComponent(book.ID));
+        saved = false;
+        btn.textContent = "Save this title";
+        announce(book.Title + " removed from your saved titles.");
+      } else {
+        await api.post("/bookmarks", { book_id: book.ID });
+        saved = true;
+        btn.textContent = "Saved to your list";
+        announce(book.Title + " added to your saved titles.");
+      }
+    } catch (err) {
+      btn.textContent = prev;
+      announce(err.message);
+    }
+
+    btn.disabled = false;
+  });
+
+  wrap.appendChild(btn);
+  return wrap;
 }
 </script>
 
