@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  TEMPLATE -- copy this file to start a screen. Do not edit it in place.
+
+      cp pages/_template.html pages/05-my-loans.html
+
+  Change only the four marked spots:
+      1. <title>
+      2. aria-current="page" on this screen's nav link, removed from the rest
+      3. the breadcrumb trail
+      4. everything inside <main>
+
+  The header and footer are identical on every page. If one of them needs to
+  change, that is a pull request, not a local edit: eleven pages have to match.
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 1. CHANGE THIS -->
+  <title>Return Desk | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="One sentence describing this page.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    /* Reservation alert styling (internal CSS for this page) */
+    .reservation-waiting {
+      background: linear-gradient(90deg, #fffdf5, #fff8ea);
+      border-left: 4px solid #ffb300;
+      padding: 0.9rem 1rem;
+      margin-top: 0.75rem;
+      border-radius: 6px;
+      color: #3b2b00;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+      font-size: 0.98rem;
+    }
+    .reservation-waiting p { margin: 0.25rem 0; }
+    .reservation-waiting strong { color: #2b1f00; }
+    .reservation-waiting p:first-child { font-weight:700; margin-bottom:0.35rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reservation-waiting { transition: none; }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .reservation-waiting {
+        background: linear-gradient(90deg, #2b271f, #211b14);
+        border-left-color: #ffbf47;
+        color: #fff8dc;
+        box-shadow: none;
+      }
+    }
+    /* Replace inline styles with classes */
+    .return-form { padding: 3rem; }
+    .return-input { margin-bottom: 10px; border-radius: 5px; padding: 10px; width: 100%; border: 1px solid grey; box-sizing: border-box; }
+    .return-close { background-color: #0066cc; color: #fff; border: none; padding: 0.5rem 0.75rem; border-radius: 4px; }
+    /* Layout: place the form on the left and result on the right */
+    .return-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 1rem;
+    }
+    .return-row .panel { background: var(--surface, #fff); padding: 1rem; border-radius: 6px; }
+    .return-row .panel:first-of-type { flex: 1 1 55%; }
+    .return-row #result-panel { flex: 0 0 40%; }
+
+    @media (max-width: 720px) {
+      .return-row { flex-direction: column; }
+      .return-row #result-panel { flex-basis: auto; }
+    }
+    .fine-amount {color: red; font-weight: bold;}
+  </style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <!-- 3. CHANGE THIS -->
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Receive a return</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+
+  <div class="page__head">
+    <h1>Return a copy</h1>
+    <p class="page__lead">
+      Scan or type the accession number of the copy being handed back.
+    </p>
+  </div>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+<!-- FORM -->
+<div class="return-row">
+  <section class="panel">
+  <h2 class="panel__title">Receive a returned copy</h2>
+  <div class="return-form">
+    <label for="accession">Accession number</label>
+    <input
+      type="text"
+      id="accession"
+      name="accession"
+      placeholder="e.g. HOL/2019/00412"
+      autocomplete="off"
+      class="return-input">
+    <button type="button" class="btn return-close" id="return-btn">Close Return</button>
+  </div>
+  </section>
+
+
+  <section class="panel" id="result-panel">
+  <h2 class="panel__title">Return result</h2>
+  <p><strong>Title:</strong> Things Fall Apart</p>
+  <p><strong>Borrower:</strong> SWE/2025/001 — Chidi Okeke</p>
+  <p><strong>Returned:</strong> 5 Sep 2026, 3:45 pm</p>
+  <p><strong>Due date was:</strong> 1 Sep 2026, 11:59 pm</p>
+  <p><strong>Overdue by:</strong> 3 days, 15 hours</p>
+  <p><strong>Fine:</strong><span class="fine-amount">₦450.00</span></p>
+
+  <div class="reservation-waiting" aria-live="polite">
+    <p><strong>⚠ RESERVATION WAITING - DO NOT SHELVE</strong></p>
+    <p>Reserved by: <strong>ENG/2024/0087 — Amaka Nwosu</strong>.</p>
+    <p>Place this copy behind the desk — immediatly.</p>
+  </div>
+  </section>
+</div>
+  <!-- ------------------------------------------------------------------- -->
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<!-- Your page's own script goes here. -->
+
+</body>
+</html>
