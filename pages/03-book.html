@@ -427,7 +427,10 @@ function copiesTable(book, copies) {
   return wrap;
 }
 
-/* ---- the reserve panel, covering signed-in, loan, availability, and save states -- */
+/* ---- the borrow, reserve and save panel ---------------------------------
+   Loans are issued by a librarian against the physical volume and member card.
+   A title page must therefore make an available shelf copy actionable without
+   pretending a visitor can create an unverified self-checkout online. */
 
 function reservePanel(book, myLoan, isSaved) {
   const frag = document.createDocumentFragment();
@@ -435,7 +438,7 @@ function reservePanel(book, myLoan, isSaved) {
   const h2 = document.createElement("h2");
   h2.id = "reserve-heading";
   h2.className = "panel__title";
-  h2.textContent = "Reserve or save this title";
+  h2.textContent = "Borrow, reserve or save this title";
   frag.appendChild(h2);
 
   // Show the loan notice before the lead so the reader sees their current
@@ -463,10 +466,6 @@ function reservePanel(book, myLoan, isSaved) {
     frag.appendChild(loanNotice);
   }
 
-  const lead = document.createElement("p");
-  lead.textContent = "You can reserve a title when signed in. The server will still re-check eligibility, queue position and copy availability before accepting the request.";
-  frag.appendChild(lead);
-
   const signedIn = api.isSignedIn();
   const copiesOnShelf = book.borrowable > 0;
 
@@ -477,6 +476,30 @@ function reservePanel(book, myLoan, isSaved) {
   const avail = book.Availability || {};
   const neverCirculates = avail.total_copies > 0
     && avail.not_for_loan === avail.total_copies;
+
+  if (copiesOnShelf) {
+    const lead = document.createElement("p");
+    lead.textContent = "An eligible copy is on the shelf now. Pick up any available copy listed below and take it with your library card to the circulation desk.";
+
+    const actionRow = document.createElement("p");
+    const directions = document.createElement("a");
+    directions.className = "btn btn--primary";
+    directions.href = "borrowing.html";
+    directions.textContent = "Borrow from the shelf";
+    actionRow.appendChild(directions);
+
+    const explain = document.createElement("p");
+    explain.className = "hint";
+    explain.textContent = "A librarian checks your account, scans the physical copy and sets the due date. You do not need to reserve a copy that is already available.";
+    frag.append(lead, actionRow, explain);
+
+    if (signedIn) frag.appendChild(saveToggle(book, isSaved));
+    return frag;
+  }
+
+  const lead = document.createElement("p");
+  lead.textContent = "You can reserve a title when signed in. The server will still re-check eligibility and queue position before accepting the request.";
+  frag.appendChild(lead);
 
   const actionRow = document.createElement("p");
   const btn = document.createElement("button");
@@ -526,14 +549,6 @@ function reservePanel(book, myLoan, isSaved) {
     const reasonLine = document.createElement("p");
     reasonLine.className = "hint";
     reasonLine.textContent = "Return your copy before joining the queue for another.";
-    frag.append(actionRow, reasonLine);
-  } else if (copiesOnShelf) {
-    btn.disabled = true;
-    btn.setAttribute("aria-disabled", "true");
-
-    const reasonLine = document.createElement("p");
-    reasonLine.className = "hint";
-    reasonLine.textContent = "Copies are already on the shelf, so there is nothing to reserve right now.";
     frag.append(actionRow, reasonLine);
   } else {
     btn.addEventListener("click", function () { reserveTitle(book, btn, resultBox); });
