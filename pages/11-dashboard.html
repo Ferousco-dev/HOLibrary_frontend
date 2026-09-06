@@ -192,7 +192,11 @@ load({
       statCard("Physical copies", d.copies || 0),
       statCard("Members", d.members || 0),
       statCard("Out on loan", d.active_loans || 0),
-      statCard("Overdue", d.overdue || 0),
+      el("article", { className: "stat" }, [
+        el("p", { className: "stat__value" }, (d.overdue || 0).toLocaleString()),
+        el("p", { className: "stat__label" },
+          el("a", { href: "14-overdue.html" }, "Overdue")),
+      ]),
     ]));
 
     const trail = result.audit.value && result.audit.value.data;
