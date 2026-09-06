@@ -410,7 +410,7 @@ registerForm.addEventListener("submit", async function (event) {
     replace(registerResult, el("div", { className: "notice notice--ok" }, [
       el("p", { className: "notice__head" }, reply.member.full_name + " is registered."),
       el("p", { className: "notice__body" }, [
-        "Give them this password now. It will not be shown again: ",
+        "A Mail has been sent to them to set their password ",
         el("strong", { className: "accession" }, reply.temporary_password),
       ]),
       el("p", { className: "notice__body" },
