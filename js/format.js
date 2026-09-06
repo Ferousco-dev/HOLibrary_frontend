@@ -174,7 +174,9 @@ function coverElement(book, size) {
   if (!book.ISBN13) return box;
 
   const img = document.createElement("img");
-  img.loading = "lazy";
+  // The detail cover is the main visual in the first viewport, so fetch it
+  // straight away. Catalogue rows continue to load their covers on demand.
+  img.loading = size === "detail" ? "eager" : "lazy";
   // Decorative: the title is the heading immediately beside it, so giving the
   // cover its own alt text would make a screen reader announce the book
   // twice. WCAG 1.1.1 permits alt="" for exactly this case.
@@ -183,7 +185,10 @@ function coverElement(book, size) {
   img.addEventListener("error", function () { img.remove(); });
   img.src = "https://covers.openlibrary.org/b/isbn/"
           + encodeURIComponent(book.ISBN13) + "-"
-          + (size === "detail" ? "L" : "M") + ".jpg?default=false";
+          // Open Library's large variant redirects through an archive image
+          // host that some browsers reject. The medium image is a direct,
+          // sharp enough response for this 200px-wide layout.
+          + "M.jpg?default=false";
   box.appendChild(img);
 
   return box;
