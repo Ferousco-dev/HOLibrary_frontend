@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign in | Hezekiah Oluwasanmi Library</title>
+  <meta
+    name="description"
+    content="Sign in to your Hezekiah Oluwasanmi Library account."
+  >
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- keep identical to template ============== -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+
+    <a class="brand" href="../index.html">
+      <img
+        class="brand__crest"
+        src="../assets/oau-logo.png"
+        alt="Obafemi Awolowo University crest"
+      >
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+
+      <button
+        class="navtoggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >
+        <span class="navtoggle__bars" aria-hidden="true">
+          <span></span>
+        </span>
+        Menu
+      </button>
+
+      <ul class="mainnav__list" id="primary-nav" hidden>
+
+        <li>
+          <a class="mainnav__link" href="../index.html">
+            Search the catalogue
+          </a>
+        </li>
+
+        <li aria-hidden="true">
+          <div class="mainnav__sep"></div>
+        </li>
+
+        <li class="mainnav__label">Your account</li>
+
+        <li>
+          <a
+            class="mainnav__link"
+            href="04-signin.html"
+            aria-current="page"
+          >
+            Sign in
+          </a>
+        </li>
+
+        <li>
+          <a class="mainnav__link" href="05-my-loans.html">
+            Books you have out
+          </a>
+        </li>
+
+        <li>
+          <a class="mainnav__link" href="06-reservations.html">
+            Reservations
+          </a>
+        </li>
+
+        <li aria-hidden="true">
+          <div class="mainnav__sep"></div>
+        </li>
+
+        <li class="mainnav__label">Library staff</li>
+
+        <li>
+          <a class="mainnav__link" href="08-desk-issue.html">
+            Circulation desk
+          </a>
+        </li>
+
+        <li>
+          <a class="mainnav__link" href="10-members.html">
+            Members
+          </a>
+        </li>
+
+        <li aria-hidden="true">
+          <div class="mainnav__sep"></div>
+        </li>
+
+        <li>
+          <a
+            class="mainnav__link"
+            href="https://oauife.edu.ng"
+          >
+            Obafemi Awolowo University
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ====================== END HEADER ==================================== -->
+
+
+<div class="shell">
+
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li>
+        <a href="../index.html">Catalogue</a>
+      </li>
+      <li aria-current="page">Sign in</li>
+    </ol>
+  </nav>
+
+</div>
+
+
+<main id="main" class="shell shell--narrow page">
+
+  <div class="page__head">
+    <h1>Sign in</h1>
+
+    <p class="page__lead">
+      Sign in to your library account.
+    </p>
+  </div>
+
+
+  <section class="panel" aria-labelledby="signin-heading">
+
+    <h2 class="panel__title" id="signin-heading">
+      Library account
+    </h2>
+
+    <form id="signin-form" novalidate>
+
+      <div class="field">
+
+        <label for="login">
+          Matric or staff number
+        </label>
+
+        <input
+          class="input"
+          type="text"
+          id="login"
+          name="login"
+          autocomplete="username"
+          placeholder="Enter your matric or staff number"
+          required
+          aria-describedby="login-error"
+        >
+
+        <p
+          class="field__error"
+          id="login-error"
+          aria-live="polite"
+        ></p>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          class="input"
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          placeholder="Enter your password"
+          required
+          aria-describedby="password-error"
+        >
+
+        <p
+          class="field__error"
+          id="password-error"
+          aria-live="polite"
+        ></p>
+
+        <p class="hint">
+          <a href="#">Forgot password?</a>
+        </p>
+
+      </div>
+
+
+      <button
+        class="btn btn--primary"
+        type="submit"
+      >
+        Sign in
+      </button>
+
+      <p
+        class="hint"
+        id="form-message"
+        aria-live="polite"
+      ></p>
+
+    </form>
+
+  </section>
+
+</main>
+
+
+<!-- ================= FOOTER -- keep identical to template ============== -->
+<footer class="sitefoot">
+
+  <div class="sitefoot__inner">
+
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li>
+          <a href="../index.html">Search the catalogue</a>
+        </li>
+        <li>
+          <a href="06-reservations.html">Reservations</a>
+        </li>
+        <li>
+          <a href="#">Opening hours</a>
+        </li>
+        <li>
+          <a href="#">Wings and floors</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li>
+          <a href="04-signin.html">Sign in</a>
+        </li>
+        <li>
+          <a href="05-my-loans.html">Books you have out</a>
+        </li>
+        <li>
+          <a href="07-change-password.html">
+            Change your password
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li>
+          <a href="#">How borrowing works</a>
+        </li>
+        <li>
+          <a href="#">Fines and renewals</a>
+        </li>
+        <li>
+          <a href="#">Accessibility statement</a>
+        </li>
+        <li>
+          <a href="privacy.html">Privacy</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="sitefoot__base">
+    <span>
+      &copy; 2026 Obafemi Awolowo University.
+      Built by Group 4, SEN 106 / SEN 216.
+    </span>
+
+    <span>
+      Catalogue and circulation only.
+      This library does not lend digital texts.
+    </span>
+  </div>
+
+</footer>
+
+
+<!-- ====================== SCRIPTS ======================================= -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/nav.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+
+<script src="../js/push.js"></script>
+
+
+<script>
+  const form = document.getElementById("signin-form");
+  const login = document.getElementById("login");
+  const password = document.getElementById("password");
+
+  const loginError = document.getElementById("login-error");
+  const passwordError = document.getElementById("password-error");
+  const formMessage = document.getElementById("form-message");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    loginError.textContent = "";
+    passwordError.textContent = "";
+    formMessage.textContent = "";
+
+    let isValid = true;
+
+    if (!login.value.trim()) {
+      loginError.textContent =
+        "Please enter your matric or staff number.";
+      isValid = false;
+    }
+
+    if (!password.value) {
+      passwordError.textContent =
+        "Please enter your password.";
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    formMessage.textContent =
+      "Sign-in details are valid.";
+  });
+</script>
+
+</body>
+</html>
