@@ -58,7 +58,11 @@ const api = (function () {
 
   async function request(method, path, payload, retrying) {
     const headers = { "Accept": "application/json" };
-    if (payload !== undefined) headers["Content-Type"] = "application/json";
+    // A FormData body is sent as it is. Setting Content-Type by hand here
+    // would omit the multipart boundary the browser generates, and the server
+    // would be unable to find where one part ends and the next begins.
+    const isUpload = typeof FormData !== "undefined" && payload instanceof FormData;
+    if (payload !== undefined && !isUpload) headers["Content-Type"] = "application/json";
     if (accessToken) headers["Authorization"] = "Bearer " + accessToken;
 
     let response;
@@ -66,7 +70,9 @@ const api = (function () {
       response = await fetch(HOL.API + path, {
         method,
         headers,
-        body: payload === undefined ? undefined : JSON.stringify(payload),
+        body: payload === undefined ? undefined
+            : isUpload ? payload
+            : JSON.stringify(payload),
       });
     } catch (networkFailure) {
       // fetch() rejects only when the request never completed: no connection,
@@ -141,6 +147,17 @@ const api = (function () {
     // removed. Unusual for the verb, but it is what the contract says:
     // https://api.library.appmd.dev/docs
     del:  (path, payload) => request("DELETE", path, payload),
+
+    /* Uploads one file as multipart/form-data.
+
+       Kept separate from post() so a caller cannot pass a File by accident and
+       have it quietly JSON-stringified into "{}", which is what used to
+       happen to anything that was not a plain object. */
+    upload(path, file, field) {
+      const form = new FormData();
+      form.append(field || "file", file, file.name);
+      return request("POST", path, form);
+    },
 
     // The field is "login", not "identifier". It carries a matric or staff
     // number such as SWE/2025/001, never an email address.

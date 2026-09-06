@@ -83,10 +83,67 @@
 
   <div id="results"></div>
 
+  <section class="panel" aria-labelledby="import-heading">
+    <h2 class="panel__title" id="import-heading">Import a roll</h2>
+    <p>A whole class at once, from a spreadsheet. Export it as CSV from Excel or
+      Google Sheets, then bring it here. The file is checked and shown to you before
+      a single account is created.</p>
+
+    <h3>The columns it needs</h3>
+    <p>The first line must name the columns. Order does not matter, and
+      <code>student_id</code>, <code>matric_no</code> and <code>identifier</code> all mean
+      the same thing.</p>
+
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Every row after the first is one member</caption>
+        <thead>
+          <tr>
+            <th scope="col">student_id</th>
+            <th scope="col">first_name</th>
+            <th scope="col">last_name</th>
+            <th scope="col">email</th>
+            <th scope="col">department</th>
+            <th scope="col">level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>SEN/2025/001</td>
+            <td>Feranmi</td>
+            <td>Oresajo</td>
+            <td>feranmi@oauife.edu.ng</td>
+            <td>Software Engineering</td>
+            <td>200</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="result__actions">
+      <button class="btn btn--secondary" type="button" id="template-btn">Download a blank template</button>
+    </p>
+
+    <form id="import-form" novalidate>
+      <div class="field">
+        <label class="field__label" for="csv">Your CSV file</label>
+        <input class="field__input" type="file" id="csv" name="csv"
+               accept=".csv,text/csv" required
+               data-error="Choose a CSV file exported from your spreadsheet.">
+        <p class="hint">Up to 8 MB. Everyone in the file is registered as a member;
+          a spreadsheet can never create staff.</p>
+      </div>
+      <p><button class="btn btn--primary" type="submit" id="import-btn">Check the file</button></p>
+    </form>
+
+    <div id="import-result"></div>
+  </section>
+
   <section class="panel" aria-labelledby="register-heading">
-    <h2 class="panel__title" id="register-heading">Register a member</h2>
-    <p>The password is generated here and shown once. Write it down for them: it is
-      not stored in a form anyone can read back, and they must change it at first sign-in.</p>
+    <h2 class="panel__title" id="register-heading">Register one member</h2>
+    <p>For a single reader at the desk. The password is generated here and shown once.
+      Write it down for them: it is not stored in a form anyone can read back, and they
+      must change it at first sign-in.</p>
 
     <form id="register-form" novalidate>
       <div class="field">
@@ -348,6 +405,169 @@ registerForm.addEventListener("submit", async function (event) {
     registerBtn.textContent = "Register";
   }
 });
+
+/* ---- importing a roll -------------------------------------------------
+
+   Two posts, never one. The first sends dry_run=true: the server parses the
+   whole file, reports every row by line number, and writes nothing. Only when
+   the librarian has seen that does the same file go again for real.
+
+   A thousand students is exactly why this exists, and exactly why it cannot
+   be one click. A wrong column, a stray header row, last term's file picked
+   by mistake: all of them are cheap to find in a preview and expensive to
+   find afterwards, because there is no undo for eight hundred accounts. */
+
+const importForm = document.getElementById("import-form");
+const csvInput = document.getElementById("csv");
+const importBtn = document.getElementById("import-btn");
+const importResult = document.getElementById("import-result");
+
+const ROW_TONE = {
+  created:   "ok",
+  valid:     "ok",
+  duplicate: "warn",
+  invalid:   "bad",
+};
+
+/* A blank file with the right header. Handing someone the shape is more
+   reliable than describing it and hoping their column names match. */
+document.getElementById("template-btn").addEventListener("click", function () {
+  const csv = "student_id,first_name,last_name,email,department,level\n"
+            + "SEN/2025/001,Feranmi,Oresajo,feranmi@oauife.edu.ng,Software Engineering,200\n";
+  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  const link = el("a", { href: url, download: "holibrary-member-roll-template.csv" });
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  announce("Template downloaded.");
+});
+
+importForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (!validate.form(importForm)) return;
+  const file = csvInput.files[0];
+  if (!file) return;
+  runImport(file, true);
+});
+
+async function runImport(file, dryRun) {
+  importBtn.disabled = true;
+  importBtn.textContent = dryRun ? "Checking…" : "Registering…";
+  replace(importResult, loadingState(dryRun ? "Checking the file" : "Registering everyone"));
+
+  try {
+    const result = (await api.upload(
+      "/members/import?dry_run=" + (dryRun ? "true" : "false"), file)).data;
+    replace(importResult, summary(result, file));
+    announce(dryRun
+      ? result.valid + " of " + result.total_rows + " rows can be registered."
+      : result.created + " members registered.");
+  } catch (err) {
+    replace(importResult, el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "The file could not be read."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    announce(err.message);
+  } finally {
+    importBtn.disabled = false;
+    importBtn.textContent = "Check the file";
+  }
+}
+
+function summary(result, file) {
+  const parts = [];
+
+  parts.push(el("div", { className: "stats" }, [
+    ["Rows in the file", result.total_rows],
+    [result.dry_run ? "Ready to register" : "Registered",
+      result.dry_run ? result.valid : result.created],
+    ["Already on the roll", result.duplicate],
+    ["Cannot be used", result.invalid],
+  ].map(function ([label, value]) {
+    return el("article", { className: "stat" }, [
+      el("p", { className: "stat__value" }, Number(value || 0).toLocaleString()),
+      el("p", { className: "stat__label" }, label),
+    ]);
+  })));
+
+  // Duplicates are not failures. Re-importing last session's roll is routine,
+  // and the server detects them both inside the file and against the database.
+  if (result.duplicate) {
+    parts.push(el("p", { className: "hint" },
+      plural(result.duplicate, "row is", "rows are") + " already registered and will be "
+      + "left alone. Importing the same roll twice is safe."));
+  }
+
+  const problems = (result.rows || []).filter(function (r) { return r.status === "invalid"; });
+  const made = (result.rows || []).filter(function (r) { return r.temporary_password; });
+
+  if (problems.length) {
+    parts.push(el("h3", {}, plural(problems.length, "row", "rows") + " to fix"));
+    parts.push(rowTable(problems, false));
+  }
+
+  if (result.dry_run) {
+    if (result.valid === 0) {
+      parts.push(el("div", { className: "notice notice--bad" }, [
+        el("p", { className: "notice__head" }, "Nothing here can be registered yet."),
+        el("p", { className: "notice__body" },
+          "Fix the rows above in your spreadsheet, export it again and bring it back."),
+      ]));
+    } else {
+      parts.push(el("div", { className: "notice notice--warn" }, [
+        el("p", { className: "notice__head" }, "Nothing has been created yet."),
+        el("p", { className: "notice__body" },
+          "This was a check. Registering will create "
+          + plural(result.valid, "account", "accounts")
+          + (problems.length ? " and skip the rows above" : "") + "."),
+      ]));
+      parts.push(el("p", { className: "result__actions" }, el("button", {
+        type: "button",
+        className: "btn btn--primary",
+        onClick: function () { runImport(file, false); },
+      }, "Register " + plural(result.valid, "member", "members"))));
+    }
+  } else {
+    parts.push(el("div", { className: "notice notice--ok" }, [
+      el("p", { className: "notice__head" },
+        plural(result.created, "member", "members") + " registered."),
+      el("p", { className: "notice__body" },
+        made.length
+          ? "Each one has a temporary password below. This list is shown once: print "
+            + "this page or copy it now, because it cannot be retrieved afterwards."
+          : "Nothing new was created."),
+    ]));
+    if (made.length) parts.push(rowTable(made, true));
+  }
+
+  return el("section", { className: "panel" },
+    [el("h3", { className: "panel__title" },
+      result.dry_run ? "What this file would do" : "What was done")].concat(parts));
+}
+
+function rowTable(rows, withPasswords) {
+  return el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+    el("caption", {}, withPasswords
+      ? "Give each member their password. It is not shown again."
+      : "Line numbers refer to the file you uploaded."),
+    el("thead", {}, el("tr", {}, [
+      el("th", { scope: "col" }, "Line"),
+      el("th", { scope: "col" }, "Number"),
+      el("th", { scope: "col" }, withPasswords ? "Temporary password" : "What is wrong"),
+    ])),
+    el("tbody", {}, rows.map(function (row) {
+      const tone = ROW_TONE[row.status] || "none";
+      return el("tr", {}, [
+        el("td", {}, String(row.line)),
+        el("td", {}, el("span", { className: "accession" }, row.identifier || "—")),
+        el("td", {}, withPasswords
+          ? el("strong", { className: "accession" }, row.temporary_password)
+          : el("span", { className: "status status--" + tone }, row.detail || row.status)),
+      ]);
+    })),
+  ]));
+}
 
 // A page opened at ?q=... runs that search, so a link to one member works.
 const opening = new URLSearchParams(location.search).get("q");
