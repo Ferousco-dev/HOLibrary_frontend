@@ -28,55 +28,6 @@
   <link rel="stylesheet" href="../css/base.css">
   <link rel="stylesheet" href="../css/layout.css">
   <link rel="stylesheet" href="../css/components.css">
-  <style>
-    /* Reservation alert styling (internal CSS for this page) */
-    .reservation-waiting {
-      background: linear-gradient(90deg, #fffdf5, #fff8ea);
-      border-left: 4px solid #ffb300;
-      padding: 0.9rem 1rem;
-      margin-top: 0.75rem;
-      border-radius: 6px;
-      color: #3b2b00;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.04);
-      font-size: 0.98rem;
-    }
-    .reservation-waiting p { margin: 0.25rem 0; }
-    .reservation-waiting strong { color: #2b1f00; }
-    .reservation-waiting p:first-child { font-weight:700; margin-bottom:0.35rem; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reservation-waiting { transition: none; }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .reservation-waiting {
-        background: linear-gradient(90deg, #2b271f, #211b14);
-        border-left-color: #ffbf47;
-        color: #fff8dc;
-        box-shadow: none;
-      }
-    }
-    /* Replace inline styles with classes */
-    .return-form { padding: 3rem; }
-    .return-input { margin-bottom: 10px; border-radius: 5px; padding: 10px; width: 100%; border: 1px solid grey; box-sizing: border-box; }
-    .return-close { background-color: #0066cc; color: #fff; border: none; padding: 0.5rem 0.75rem; border-radius: 4px; }
-    /* Layout: place the form on the left and result on the right */
-    .return-row {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      margin-top: 1rem;
-    }
-    .return-row .panel { background: var(--surface, #fff); padding: 1rem; border-radius: 6px; }
-    .return-row .panel:first-of-type { flex: 1 1 55%; }
-    .return-row #result-panel { flex: 0 0 40%; }
-
-    @media (max-width: 720px) {
-      .return-row { flex-direction: column; }
-      .return-row #result-panel { flex-basis: auto; }
-    }
-    .fine-amount {color: red; font-weight: bold;}
-  </style>
 </head>
 <body>
 
@@ -130,49 +81,32 @@
 <main id="main" class="shell page">
 
   <div class="page__head">
-    <h1>Return a copy</h1>
-    <p class="page__lead">
-      Scan or type the accession number of the copy being handed back.
-    </p>
+    <h1>Receive a return</h1>
+    <p class="page__lead">Scan or type the accession number on the copy being handed back.</p>
   </div>
 
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
-<!-- FORM -->
-<div class="return-row">
-  <section class="panel">
-  <h2 class="panel__title">Receive a returned copy</h2>
-  <div class="return-form">
-    <label for="accession">Accession number</label>
-    <input
-      type="text"
-      id="accession"
-      name="accession"
-      placeholder="e.g. HOL/2019/00412"
-      autocomplete="off"
-      class="return-input">
-    <button type="button" class="btn return-close" id="return-btn">Close Return</button>
+  <div class="split">
+    <section class="panel" aria-labelledby="find-heading">
+      <h2 class="panel__title" id="find-heading">The copy in your hand</h2>
+
+      <!-- A real form, so a barcode scanner's trailing Enter submits it. Desk
+           staff do not reach for the mouse between books. -->
+      <form id="return-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="accession">Accession number</label>
+          <input class="field__input" type="text" id="accession" name="accession"
+                 required autocomplete="off" autocapitalize="characters"
+                 spellcheck="false" placeholder="HOL-748211">
+          <p class="hint" id="accession-hint">The number printed on this volume, not the call number.</p>
+        </div>
+        <p><button class="btn btn--primary" type="submit" id="find-btn">Find this copy</button></p>
+      </form>
+    </section>
+
+    <aside class="split__aside" id="result" aria-label="What this copy is"></aside>
   </div>
-  </section>
-
-
-  <section class="panel" id="result-panel">
-  <h2 class="panel__title">Return result</h2>
-  <p><strong>Title:</strong> Things Fall Apart</p>
-  <p><strong>Borrower:</strong> SWE/2025/001 — Chidi Okeke</p>
-  <p><strong>Returned:</strong> 5 Sep 2026, 3:45 pm</p>
-  <p><strong>Due date was:</strong> 1 Sep 2026, 11:59 pm</p>
-  <p><strong>Overdue by:</strong> 3 days, 15 hours</p>
-  <p><strong>Fine:</strong><span class="fine-amount">₦450.00</span></p>
-
-  <div class="reservation-waiting" aria-live="polite">
-    <p><strong>⚠ RESERVATION WAITING - DO NOT SHELVE</strong></p>
-    <p>Reserved by: <strong>ENG/2024/0087 — Amaka Nwosu</strong>.</p>
-    <p>Place this copy behind the desk — immediatly.</p>
-  </div>
-  </section>
-</div>
-  <!-- ------------------------------------------------------------------- -->
 
 </main>
 
@@ -227,12 +161,148 @@
 <script src="../js/format.js"></script>
 <script src="../js/validate.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
-<!-- Your page's own script goes here. -->
+<script>
+/* Receiving a return is two steps, and they are deliberately separate.
+
+   The desk types one accession number. GET /copies/lookup answers what that
+   volume is and who has it, and only then does the screen offer to close the
+   loan. Recording a return the moment a number is typed would mean a typo
+   returns somebody else's book, and a return cannot be undone.
+
+   POST /loans/{id}/return needs the loan's id, which is why the lookup comes
+   first: the desk has a barcode, not a loan id. */
+
+const form = document.getElementById("return-form");
+const input = document.getElementById("accession");
+const findBtn = document.getElementById("find-btn");
+const result = document.getElementById("result");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (!validate.form(form)) return;
+  lookUp(input.value.trim());
+});
+
+async function lookUp(accession) {
+  findBtn.disabled = true;
+  replace(result, loadingState("Looking up " + accession));
+
+  try {
+    const found = (await api.get("/copies/lookup?accession="
+      + encodeURIComponent(accession))).data;
+    replace(result, found.loan ? returnable(found) : notOut(found));
+  } catch (err) {
+    replace(result, el("div", { className: "panel notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "Nothing to receive."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    announce(err.message);
+  } finally {
+    findBtn.disabled = false;
+  }
+}
+
+/* A copy nobody has out. Not an error: it happens when a book is handed in
+   twice, or shelved and brought back by a reader who thought it was theirs. */
+function notOut(found) {
+  announce(found.book_title + " is not out on loan.");
+  return el("div", { className: "panel" }, [
+    el("h2", { className: "panel__title" }, found.book_title),
+    el("p", { className: "result__meta" }, [
+      el("span", { className: "accession" }, found.copy.AccessionNumber),
+      " \u00b7 " + found.call_number,
+    ]),
+    el("div", { className: "notice notice--warn" }, [
+      el("p", { className: "notice__head" }, "This copy is not out on loan."),
+      el("p", { className: "notice__body" },
+        "Its status is \u201c" + found.copy.Status + "\u201d, so there is no loan to close. "
+        + "Put it back on the shelf, or check the number if a reader is waiting."),
+    ]),
+  ]);
+}
+
+function returnable(found) {
+  const loan = found.loan;
+  const overdue = loan.is_overdue;
+
+  announce(found.book_title + ", held by " + loan.member_name
+    + (overdue ? ", overdue by " + plural(loan.days_overdue, "day", "days") : "") + ".");
+
+  const confirm = el("button", {
+    type: "button",
+    className: "btn btn--primary",
+    onClick: function (event) { closeLoan(found, event.currentTarget); },
+  }, "Record the return");
+
+  return el("div", { className: "panel" }, [
+    el("h2", { className: "panel__title" }, found.book_title),
+    el("p", { className: "result__meta" }, [
+      el("span", { className: "accession" }, found.copy.AccessionNumber),
+      " \u00b7 " + found.call_number,
+    ]),
+
+    el("dl", { className: "dl" }, [
+      el("dt", {}, "Held by"), el("dd", {}, loan.member_name),
+      el("dt", {}, "Taken out"), el("dd", {},
+        el("time", { datetime: loan.borrowed_at }, formatDate(loan.borrowed_at))),
+      el("dt", {}, "Due back"), el("dd", {},
+        el("time", { datetime: loan.due_at }, formatDate(loan.due_at))),
+    ]),
+
+    // Overdue is worth saying plainly. It carries no charge: this library
+    // records no fines anywhere in the system, and inventing a figure on
+    // screen would be the interface making up policy.
+    overdue
+      ? el("div", { className: "notice notice--warn" }, [
+          el("p", { className: "notice__head" },
+            "Overdue by " + plural(loan.days_overdue, "day", "days") + "."),
+          el("p", { className: "notice__body" },
+            "Receive it as normal. The lateness stays on the loan's record."),
+        ])
+      : null,
+
+    el("p", { className: "result__actions" }, confirm),
+  ]);
+}
+
+async function closeLoan(found, button) {
+  button.disabled = true;
+  button.textContent = "Recording\u2026";
+
+  try {
+    await api.post("/loans/" + encodeURIComponent(found.loan.id) + "/return");
+    replace(result, el("div", { className: "panel" }, [
+      el("div", { className: "notice notice--ok" }, [
+        el("p", { className: "notice__head" }, "Returned: " + found.book_title),
+        el("p", { className: "notice__body" },
+          found.copy.AccessionNumber + " is back on the shelf. Next copy."),
+      ]),
+    ]));
+    announce(found.book_title + " returned. Ready for the next copy.");
+
+    // Cleared and focused, because the next book is already in the other hand.
+    form.reset();
+    input.focus();
+  } catch (err) {
+    button.disabled = false;
+    button.textContent = "Record the return";
+    announce(err.message);
+    result.appendChild(el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "Not recorded."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+  }
+}
+
+validate.attach(form);
+input.focus();
+</script>
 
 </body>
 </html>
