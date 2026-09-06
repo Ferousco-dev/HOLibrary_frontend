@@ -183,13 +183,18 @@ function coverElement(book, size) {
   img.alt = "";
   img.addEventListener("load", function () { box.classList.add("is-loaded"); });
   img.addEventListener("error", function () { img.remove(); });
-  img.src = "https://covers.openlibrary.org/b/isbn/"
-          + encodeURIComponent(book.ISBN13) + "-"
-          // Open Library's large variant redirects through an archive image
-          // host that some browsers reject. The medium image is a direct,
-          // sharp enough response for this 200px-wide layout.
-          + "M.jpg?default=false";
   box.appendChild(img);
+
+  const source = "https://covers.openlibrary.org/b/isbn/"
+    + encodeURIComponent(book.ISBN13)
+    // Open Library's large variant redirects through an archive image host
+    // that some browsers reject. The medium image is sharp enough here.
+    + "-M.jpg?default=false";
+
+  // The caller appends the cover box to the page immediately after this
+  // function returns. Waiting one frame ensures the browser starts the image
+  // request from an attached element, including for lazy catalogue covers.
+  requestAnimationFrame(function () { img.src = source; });
 
   return box;
 }
