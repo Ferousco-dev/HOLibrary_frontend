@@ -143,6 +143,54 @@
       finds <em>Structural Analysis</em>.
     </p>
 
+    <details class="hero__filters" id="filter-details">
+      <summary class="hero__filter-toggle">Filter and browse</summary>
+      <div class="hero__filter-body">
+        <div class="hero__filter-row">
+          <div class="field">
+            <label for="filter-class">Wing or subject section</label>
+            <select class="select" id="filter-class">
+              <option value="">All sections</option>
+              <optgroup label="South Wing (classes A to J)">
+                <option value="A">A - General works</option>
+                <option value="B">B - Philosophy and religion</option>
+                <option value="C">C - Auxiliary sciences</option>
+                <option value="D">D - World history</option>
+                <option value="E">E - American history</option>
+                <option value="F">F - Local history</option>
+                <option value="G">G - Geography and anthropology</option>
+                <option value="H">H - Social sciences</option>
+                <option value="J">J - Political science</option>
+              </optgroup>
+              <optgroup label="North Wing (classes K to Z)">
+                <option value="K">K - Law</option>
+                <option value="L">L - Education</option>
+                <option value="M">M - Music</option>
+                <option value="N">N - Fine arts</option>
+                <option value="P">P - Languages and literature</option>
+                <option value="Q">Q - Science</option>
+                <option value="R">R - Medicine</option>
+                <option value="S">S - Agriculture</option>
+                <option value="T">T - Technology</option>
+                <option value="U">U - Military science</option>
+                <option value="V">V - Naval science</option>
+                <option value="Z">Z - Library science</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-subject">Subject</label>
+            <input class="input" type="text" id="filter-subject" placeholder="e.g. thermodynamics">
+          </div>
+          <label class="hero__check" for="filter-available">
+            <input type="checkbox" id="filter-available">
+            Available to borrow right now
+          </label>
+        </div>
+        <p><button type="button" id="browse-btn" class="btn btn--secondary">Browse</button></p>
+      </div>
+    </details>
+
     <div class="hero__stats">
       <p class="hero__stat"><b>223</b><span>titles catalogued</span></p>
       <p class="hero__stat"><b>892</b><span>physical copies</span></p>
@@ -258,6 +306,23 @@ const results = document.getElementById("results");
 // Check the field as the reader leaves it, and report the reason next to it.
 validate.attach(form);
 
+function collectFilters() {
+  return {
+    cls: document.getElementById("filter-class").value,
+    subject: (document.getElementById("filter-subject").value || "").trim(),
+    available: document.getElementById("filter-available").checked,
+  };
+}
+
+function restoreFilters(filters) {
+  document.getElementById("filter-class").value = filters.cls || "";
+  document.getElementById("filter-subject").value = filters.subject || "";
+  document.getElementById("filter-available").checked = Boolean(filters.available);
+  if (filters.cls || filters.subject || filters.available) {
+    document.getElementById("filter-details").open = true;
+  }
+}
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -275,14 +340,23 @@ form.addEventListener("submit", function (event) {
   go(query, 1);
 });
 
+document.getElementById("browse-btn").addEventListener("click", function () {
+  const q = input.value.trim();
+  go(q, 1);
+});
+
 /* Puts the search in the address bar, then runs it. A results page is then a
    real page: shareable, bookmarkable, and reachable with the back button. */
-function go(query, page) {
+function go(query, page, filters) {
+  filters = filters || collectFilters();
   const url = new URL(window.location);
-  url.searchParams.set("q", query);
+  if (query) { url.searchParams.set("q", query); } else { url.searchParams.delete("q"); }
+  if (filters.cls) { url.searchParams.set("class", filters.cls); } else { url.searchParams.delete("class"); }
+  if (filters.subject) { url.searchParams.set("subject", filters.subject); } else { url.searchParams.delete("subject"); }
+  if (filters.available) { url.searchParams.set("available", "1"); } else { url.searchParams.delete("available"); }
   if (page > 1) { url.searchParams.set("page", page); } else { url.searchParams.delete("page"); }
-  history.pushState({ q: query, page: page }, "", url);
-  runSearch(query, page);
+  history.pushState({ q: query, page: page, filters: filters }, "", url);
+  runSearch(query, page, filters);
 }
 
 // The back and forward buttons should move between searches, not out of the
@@ -290,23 +364,39 @@ function go(query, page) {
 window.addEventListener("popstate", function () {
   const params = new URLSearchParams(window.location.search);
   const q = params.get("q") || "";
+  const filters = {
+    cls: params.get("class") || "",
+    subject: params.get("subject") || "",
+    available: params.get("available") === "1",
+  };
   input.value = q;
-  if (q) runSearch(q, Number(params.get("page")) || 1);
+  restoreFilters(filters);
+  if (q || filters.cls || filters.subject || filters.available) {
+    runSearch(q, Number(params.get("page")) || 1, filters);
+  }
 });
 
 const PER_PAGE = 10;
 
-async function runSearch(query, page) {
+async function runSearch(query, page, filters) {
   page = page || 1;
+  filters = filters || { cls: "", subject: "", available: false };
+
+  const params = new URLSearchParams();
+  if (query) params.set("q", query);
+  if (filters.cls) params.set("class", filters.cls);
+  if (filters.subject) params.set("subject", filters.subject);
+  if (filters.available) params.set("available", "true");
+  params.set("page", page);
+  params.set("per_page", PER_PAGE);
 
   results.innerHTML = "";
   results.appendChild(loading());
   announce("Searching.");
 
   try {
-    const result = await api.get("/books?q=" + encodeURIComponent(query)
-      + "&page=" + page + "&per_page=" + PER_PAGE);
-    render(result, query, page);
+    const result = await api.get("/books?" + params.toString());
+    render(result, query, page, filters);
   } catch (err) {
     results.innerHTML = "";
     const panel = message(err.message);
@@ -316,20 +406,62 @@ async function runSearch(query, page) {
   }
 }
 
-// A page opened at ?q=... runs that search straight away, so a shared link
-// lands on results rather than an empty box.
+// A page opened at ?q=... or with filter params runs that search straight
+// away, so a shared link lands on results rather than an empty box.
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const q = params.get("q");
-  if (q) { input.value = q; runSearch(q, Number(params.get("page")) || 1); }
+  const q = params.get("q") || "";
+  const filters = {
+    cls: params.get("class") || "",
+    subject: params.get("subject") || "",
+    available: params.get("available") === "1",
+  };
+  if (q) input.value = q;
+  restoreFilters(filters);
+  if (q || filters.cls || filters.subject || filters.available) {
+    runSearch(q, Number(params.get("page")) || 1, filters);
+  }
 })();
 
-function render(result, query, page) {
+function render(result, query, page, filters) {
   const items = result.data || [];
   results.innerHTML = "";
 
   if (items.length === 0) {
-    const empty = message("No titles match “" + query + "”.");
+    const filtersActive = filters && (filters.cls || filters.subject || filters.available);
+    const empty = document.createElement("div");
+    empty.className = "panel empty";
+
+    if (query) {
+      const main = document.createElement("p");
+      main.textContent = "No titles match \u201c" + query + "\u201d.";
+      empty.appendChild(main);
+
+      const hint = document.createElement("p");
+      hint.className = "hint";
+      if (filtersActive) {
+        hint.appendChild(document.createTextNode("Try removing some filters, or "));
+        const clearLink = document.createElement("a");
+        clearLink.href = "#";
+        clearLink.textContent = "search without filters";
+        // Clearing filters without clearing the query lets the reader see
+        // whether the filters were the reason for the empty result.
+        clearLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          go(query, 1, { cls: "", subject: "", available: false });
+        });
+        hint.appendChild(clearLink);
+        hint.appendChild(document.createTextNode("."));
+      } else {
+        hint.textContent = "Check your spelling, try fewer words, or use the filters above to browse by subject or wing.";
+      }
+      empty.appendChild(hint);
+    } else {
+      const main = document.createElement("p");
+      main.textContent = "No titles match those filters.";
+      empty.appendChild(main);
+    }
+
     results.appendChild(empty);
     announce("No results found.");
     return;
@@ -354,7 +486,7 @@ function render(result, query, page) {
   items.forEach(function (book) { list.appendChild(resultItem(book)); });
   results.appendChild(list);
 
-  if (pages > 1) results.appendChild(pager(query, page, pages));
+  if (pages > 1) results.appendChild(pager(query, page, pages, filters));
 }
 
 /* Page links.
@@ -362,7 +494,7 @@ function render(result, query, page) {
    Real <a> elements with real hrefs, so a reader can middle-click a page, and
    so the links still work if the script fails. The click handler only exists
    to avoid a full reload; it is an enhancement, not the mechanism. */
-function pager(query, page, pages) {
+function pager(query, page, pages, filters) {
   const nav = document.createElement("nav");
   nav.className = "pager";
   nav.setAttribute("aria-label", "Search result pages");
@@ -370,18 +502,30 @@ function pager(query, page, pages) {
   const list = document.createElement("ul");
   list.className = "pager__list";
 
+  // Build a URL string for a given page number, including any active filters,
+  // so that middle-clicking a page link opens the right filtered results.
+  function pageHref(n) {
+    const u = new URL(window.location.href);
+    if (query) { u.searchParams.set("q", query); } else { u.searchParams.delete("q"); }
+    if (filters && filters.cls) { u.searchParams.set("class", filters.cls); } else { u.searchParams.delete("class"); }
+    if (filters && filters.subject) { u.searchParams.set("subject", filters.subject); } else { u.searchParams.delete("subject"); }
+    if (filters && filters.available) { u.searchParams.set("available", "1"); } else { u.searchParams.delete("available"); }
+    if (n > 1) { u.searchParams.set("page", n); } else { u.searchParams.delete("page"); }
+    return u.pathname + u.search;
+  }
+
   function link(n, text, current) {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.className = "pager__link";
     a.textContent = text;
-    a.href = "?q=" + encodeURIComponent(query) + (n > 1 ? "&page=" + n : "");
+    a.href = pageHref(n);
     if (current) a.setAttribute("aria-current", "page");
     // Spell the destination out: "3" alone tells a screen reader nothing.
     a.setAttribute("aria-label", current ? "Page " + n + ", current page" : "Page " + n);
     a.addEventListener("click", function (e) {
       e.preventDefault();
-      go(query, n);
+      go(query, n, filters);
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
     li.appendChild(a);
