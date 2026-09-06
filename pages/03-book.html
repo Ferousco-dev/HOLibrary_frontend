@@ -484,8 +484,10 @@ function reservePanel(book, myLoan, isSaved) {
     const actionRow = document.createElement("p");
     const directions = document.createElement("a");
     directions.className = "btn btn--primary";
-    directions.href = "borrowing.html";
-    directions.textContent = "Borrow from the shelf";
+    directions.href = "borrowing.html?book=" + encodeURIComponent(book.ID)
+      + "&title=" + encodeURIComponent(book.Title)
+      + "&call=" + encodeURIComponent(book.CallNumber || "");
+    directions.textContent = "Start borrowing";
     actionRow.appendChild(directions);
 
     const explain = document.createElement("p");
