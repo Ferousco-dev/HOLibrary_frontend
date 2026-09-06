@@ -9,10 +9,121 @@
    so a screen reader can never be told "collapsed" while the menu is open.
    ========================================================================== */
 
+/* ---- what the menu contains -------------------------------------------
+
+   The header is copied into thirteen files, so a menu written in the markup
+   is thirteen menus that have to be kept identical by hand. It is built here
+   instead, once, from the session.
+
+   This decides what is DRAWN and nothing else. A reader who edits
+   sessionStorage to call themselves an administrator gets a longer menu and
+   exactly the same refusals from the server, because every route is checked
+   there. Hiding a link is tidiness: it keeps a member from walking into a
+   page that will only turn them away. It is not the rule.
+
+   With scripting off the static markup stays as it is, which shows a member
+   staff links they cannot use. They are links to pages that refuse them, not
+   a way in. */
+
+function buildNav(list) {
+  const inPages = location.pathname.indexOf("/pages/") !== -1;
+  const here = location.pathname.split("/").pop() || "index.html";
+
+  const to = function (file) {
+    if (file === "index.html") return inPages ? "../index.html" : "index.html";
+    return inPages ? file : "pages/" + file;
+  };
+
+  const signedIn = api.isSignedIn();
+  const items = [];
+
+  items.push({ file: "index.html", text: "Search the catalogue" });
+
+  items.push({ label: "Your account" });
+  if (signedIn) {
+    items.push({ file: "05-my-loans.html", text: "Books you have out" });
+    items.push({ file: "06-reservations.html", text: "Reservations" });
+    items.push({ file: "12-saved-titles.html", text: "Saved titles" });
+    items.push({ file: "07-change-password.html", text: "Change your password" });
+  } else {
+    items.push({ file: "04-signin.html", text: "Sign in" });
+  }
+
+  if (api.isStaff()) {
+    items.push({ label: "Library staff" });
+    items.push({ file: "08-desk-issue.html", text: "Issue a copy" });
+    items.push({ file: "09-desk-return.html", text: "Receive a return" });
+    items.push({ file: "10-members.html", text: "Members" });
+  }
+
+  if (api.isAdmin()) {
+    items.push({ label: "Administration" });
+    items.push({ file: "11-dashboard.html", text: "Dashboard" });
+  }
+
+  if (signedIn) {
+    items.push({ label: null });   // a rule with no heading, before signing out
+    items.push({ action: "signout", text: "Sign out" });
+  }
+
+  items.push({ label: null });
+  items.push({ href: "https://oauife.edu.ng", text: "Obafemi Awolowo University" });
+
+  list.innerHTML = "";
+
+  items.forEach(function (item) {
+    const li = document.createElement("li");
+
+    if (item.label !== undefined) {
+      // A separator, with or without a heading above the group it opens.
+      const rule = document.createElement("li");
+      rule.setAttribute("aria-hidden", "true");
+      const bar = document.createElement("div");
+      bar.className = "mainnav__sep";
+      rule.appendChild(bar);
+      list.appendChild(rule);
+
+      if (item.label === null) return;
+      li.className = "mainnav__label";
+      li.textContent = item.label;
+      list.appendChild(li);
+      return;
+    }
+
+    if (item.action === "signout") {
+      // A button, not a link: signing out changes something, and a link that
+      // changes something is a link a browser may follow on its own.
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "mainnav__link mainnav__link--button";
+      button.textContent = item.text;
+      button.addEventListener("click", async function () {
+        button.disabled = true;
+        button.textContent = "Signing out…";
+        await api.logout();
+        location.href = to("index.html");
+      });
+      li.appendChild(button);
+      list.appendChild(li);
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.className = "mainnav__link";
+    link.href = item.href || to(item.file);
+    link.textContent = item.text;
+    if (item.file === here) link.setAttribute("aria-current", "page");
+    li.appendChild(link);
+    list.appendChild(li);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const toggle = document.querySelector(".navtoggle");
   const list = document.getElementById("primary-nav");
   if (!toggle || !list) return;
+
+  buildNav(list);
 
   function setOpen(open) {
     list.hidden = !open;

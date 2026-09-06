@@ -27,12 +27,30 @@ const api = (function () {
   function setSession(tokens) {
     accessToken = tokens.access_token || null;
     if (tokens.refresh_token) sessionStorage.setItem("hol.refresh", tokens.refresh_token);
+    if (tokens.user) {
+      try { sessionStorage.setItem("hol.who", JSON.stringify(tokens.user)); } catch (e) { /* private mode */ }
+    }
   }
   function clearSession() {
     accessToken = null;
     sessionStorage.removeItem("hol.refresh");
+    sessionStorage.removeItem("hol.who");
   }
   function refreshToken() { return sessionStorage.getItem("hol.refresh"); }
+
+  /* Who is signed in, for deciding what to draw.
+
+     Kept because the access token lives in memory only: after a reload the
+     refresh token proves there is a session but says nothing about whose.
+
+     This is presentation and nothing else. Anyone can edit sessionStorage and
+     call themselves an administrator, and it would change what this menu
+     shows and not one thing they are allowed to do. Every route is checked
+     again by the server, which is where the answer actually lives. */
+  function who() {
+    try { return JSON.parse(sessionStorage.getItem("hol.who")) || null; }
+    catch (e) { return null; }
+  }
 
   /* --- errors ----------------------------------------------------------
      The API answers a failure with a JSON body carrying a message written
@@ -169,7 +187,28 @@ const api = (function () {
       return session;   // { access_token, refresh_token, expires_in,
                         //   must_change_password, user }
     },
-    logout() { clearSession(); },
+    who,
+    isStaff() {
+      const u = who();
+      return Boolean(u && (u.role === "librarian" || u.role === "admin"));
+    },
+    isAdmin() { return (who() || {}).role === "admin"; },
+
+    /* Sign out on the server as well as here.
+
+       Clearing the browser alone leaves the refresh token valid for whoever
+       has a copy of it, which is the opposite of what somebody signing out on
+       a shared library terminal is asking for. The request is allowed to fail
+       quietly: the local session goes either way, and a reader who cannot
+       reach the network still expects the screen to sign them out. */
+    async logout() {
+      const token = refreshToken();
+      if (token) {
+        try { await request("POST", "/auth/logout", { refresh_token: token }); }
+        catch (e) { /* signing out locally is not conditional on the network */ }
+      }
+      clearSession();
+    },
     isSignedIn() { return Boolean(accessToken || refreshToken()); },
   };
 })();

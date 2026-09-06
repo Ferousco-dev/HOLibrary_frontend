@@ -106,6 +106,12 @@
   color: var(--ink); text-decoration: none; border-radius: var(--radius);
 }
 .mainnav__link:hover { background: var(--wash); color: var(--indigo); }
+/* Sign out is a button, because it changes something. It has to sit in the
+   menu as though it were one of the links beside it. */
+.mainnav__link--button {
+  width: 100%; text-align: left; font-family: inherit;
+  background: none; border: 0; cursor: pointer;
+}
 .mainnav__link[aria-current="page"] { color: var(--indigo); background: var(--indigo-wash); }
 
 /* A rule between groups of links: the catalogue, then your account, then the
