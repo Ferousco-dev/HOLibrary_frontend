@@ -93,6 +93,32 @@
 /* Keeps the button its own width instead of stretching to fill the line. */
 .field--fixed { flex: 0 0 auto; }
 
+/* A file chooser worth the space it takes.
+
+   A bare <input type="file"> is a small grey button and a filename, which
+   tells nobody what is wanted or that a file can be dropped on it. The input
+   itself stays in the page, focusable and reachable by keyboard: it is only
+   made invisible, and the label is what is drawn. Clicking the label operates
+   the input, which is what a label is for, so nothing here needs script. */
+.dropzone {
+  display: block; position: relative;
+  padding: var(--space-6) var(--space-5);
+  border: 2px dashed var(--rule-strong); border-radius: var(--radius-lg);
+  background: var(--wash); text-align: center; cursor: pointer;
+}
+.dropzone:hover { border-color: var(--blue); background: var(--surface); }
+/* :focus-within, because the focus is on the hidden input, not on the label a
+   sighted keyboard user is being shown. */
+.dropzone:focus-within { border-color: var(--blue); background: var(--surface); }
+.dropzone--over { border-color: var(--blue); background: var(--surface); }
+.dropzone__input {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0;
+}
+.dropzone__lead { display: block; font-weight: 600; color: var(--indigo); margin: 0; }
+.dropzone__hint { display: block; font-size: var(--text-sm); color: var(--ink-muted); margin: var(--space-2) 0 0; }
+.dropzone__file { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--ink); }
+
 /* --- tables -------------------------------------------------------------
    For tabular data only, never for layout (SEN106: tables describe
    relationships). Always give a <caption> and scope on every <th>. */

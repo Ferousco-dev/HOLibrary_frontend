@@ -130,12 +130,17 @@
 
     <form id="import-form" novalidate>
       <div class="field">
-        <label for="csv">Your CSV file</label>
-        <input class="input" type="file" id="csv" name="csv"
-               accept=".csv,text/csv" required
-               data-error="Choose a CSV file exported from your spreadsheet.">
-        <p class="hint">Up to 8 MB. Everyone in the file is registered as a member;
-          a spreadsheet can never create staff.</p>
+        <!-- The input sits inside the label, so no "for" is needed and a click
+             anywhere in the box opens the picker. Spans rather than paragraphs
+             because a label may only contain phrasing content. -->
+        <label class="dropzone" id="dropzone">
+          <input class="dropzone__input" type="file" id="csv" name="csv"
+                 accept=".csv,text/csv" required
+                 data-error="Choose a CSV file exported from your spreadsheet.">
+          <span class="dropzone__lead" id="dropzone-lead">Choose a CSV file, or drop one here</span>
+          <span class="dropzone__hint">Up to 8 MB. Everyone in the file is registered as a
+            member; a spreadsheet can never create staff.</span>
+        </label>
       </div>
       <p><button class="btn btn--primary" type="submit" id="import-btn">Check the file</button></p>
     </form>
@@ -206,8 +211,7 @@
       <ul>
         <li><a href="../index.html">Search the catalogue</a></li>
         <li><a href="06-reservations.html">Reservations</a></li>
-        <li><a href="#">Opening hours</a></li>
-        <li><a href="#">Wings and floors</a></li>
+        <li><a href="wings.html">Wings and shelving</a></li>
       </ul>
     </div>
     <div>
@@ -221,8 +225,8 @@
     <div>
       <h2>Help</h2>
       <ul>
-        <li><a href="#">How borrowing works</a></li>
-        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="borrowing.html">How borrowing works</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
         <li><a href="privacy.html">Privacy</a></li>
       </ul>
     </div>
@@ -444,6 +448,48 @@ document.getElementById("template-btn").addEventListener("click", function () {
   link.remove();
   URL.revokeObjectURL(url);
   announce("Template downloaded.");
+});
+
+/* Drag and drop, on top of a chooser that already worked.
+
+   The input keeps the file, so everything downstream is unchanged and the
+   form still works with no pointer at all: the label is focusable through the
+   input inside it and Enter opens the picker. */
+const dropzone = document.getElementById("dropzone");
+const dropzoneLead = document.getElementById("dropzone-lead");
+
+function describeChoice() {
+  const file = csvInput.files[0];
+  if (!file) {
+    dropzoneLead.textContent = "Choose a CSV file, or drop one here";
+    return;
+  }
+  replace(dropzoneLead, el("span", { className: "dropzone__file" }, file.name),
+    document.createTextNode(" \u00b7 " + Math.max(1, Math.round(file.size / 1024)) + " KB"));
+}
+
+csvInput.addEventListener("change", describeChoice);
+
+["dragenter", "dragover"].forEach(function (name) {
+  dropzone.addEventListener(name, function (event) {
+    // Without preventDefault the browser navigates away to open the file, and
+    // the page is gone.
+    event.preventDefault();
+    dropzone.classList.add("dropzone--over");
+  });
+});
+
+["dragleave", "drop"].forEach(function (name) {
+  dropzone.addEventListener(name, function () { dropzone.classList.remove("dropzone--over"); });
+});
+
+dropzone.addEventListener("drop", function (event) {
+  event.preventDefault();
+  const dropped = event.dataTransfer && event.dataTransfer.files;
+  if (!dropped || !dropped.length) return;
+  csvInput.files = dropped;   // the input stays the single source of the file
+  describeChoice();
+  announce(dropped[0].name + " ready to check.");
 });
 
 importForm.addEventListener("submit", function (event) {
