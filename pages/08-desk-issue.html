@@ -1,190 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Issue a Copy — HOLibrary</title>
-<link rel="stylesheet" href="../css/tokens.css">
-<link rel="stylesheet" href="../css/base.css">
-<link rel="stylesheet" href="../css/layout.css">
-<link rel="stylesheet" href="../css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Issue a copy | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Record a copy leaving the library with a member.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
 </head>
 <body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
 
-<header class="site-header">
-  <a class="brand" href="../index.html">
-    <img src="../assets/crest.png" alt="Hezekiah Oluwasanmi Library" width="28" height="28">
-    <span>Hezekiah Oluwasanmi Library</span>
-  </a>
-  <nav aria-label="Staff menu">
-    <ul class="site-nav">
-      <li><a href="../index.html">Catalogue</a></li>
-      <li><a href="10-members.html">Members</a></li>
-      <li><a href="08-desk-issue.html" aria-current="page">Issue a copy</a></li>
-      <li><a href="09-desk-return.html">Receive a return</a></li>
-    </ul>
-  </nav>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html" aria-current="page">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
 
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="../index.html">Home</a> &rsaquo;
-  <a href="10-members.html">Circulation desk</a> &rsaquo;
-  <span aria-current="page">Issue a copy</span>
-</nav>
 
-<main id="main-content">
-  <h1>Issue a copy</h1>
-  <p>Enter the copy in your hand, then the member borrowing it.</p>
+<!-- ====================== end header ==================================== -->
 
-  <form class="panel" id="issue-form" novalidate>
-    <div class="field">
-      <label for="accession-number">Accession number</label>
-      <input
-        type="text"
-        id="accession-number"
-        name="accession-number"
-        autocomplete="off"
-        inputmode="text"
-        required
-        autofocus>
-      <span class="hint">The number on the copy you are holding, not the call number.</span>
-    </div>
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Issue a copy</li>
+    </ol>
+  </nav>
+</div>
 
-    <div class="field">
-      <label for="member-number">Member number</label>
-      <input
-        type="text"
-        id="member-number"
-        name="member-number"
-        autocomplete="off"
-        inputmode="text"
-        required>
-      <span class="hint">Matric number or staff number.</span>
-    </div>
+<main id="main" class="shell page">
 
-    <button type="submit" class="btn btn-primary" id="issue-submit">
-      Issue copy
-    </button>
-  </form>
+  <div class="page__head">
+    <h1>Issue a copy</h1>
+    <p class="page__lead">The copy in your hand first, then the member taking it.</p>
+  </div>
 
-  <div id="issue-result" aria-live="polite"></div>
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div class="split">
+    <section class="panel" aria-labelledby="issue-heading">
+      <h2 class="panel__title" id="issue-heading">At the desk</h2>
+
+      <!-- A real form: a barcode scanner ends with Enter, and staff should
+           never have to reach for the mouse between books. -->
+      <form id="issue-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="accession">Accession number</label>
+          <input class="field__input" type="text" id="accession" name="accession"
+                 required autocomplete="off" autocapitalize="characters"
+                 spellcheck="false" placeholder="HOL-748211">
+          <p class="hint">The number on the copy you are holding, not the call number.</p>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="member">Member number</label>
+          <input class="field__input" type="text" id="member" name="member"
+                 required autocomplete="off" autocapitalize="characters"
+                 spellcheck="false" placeholder="SEN/2025/001">
+          <p class="hint">Matriculation number or staff number.</p>
+        </div>
+
+        <p><button class="btn btn--primary" type="submit" id="check-btn">Check both</button></p>
+      </form>
+    </section>
+
+    <aside class="split__aside" id="result" aria-label="What will be issued"></aside>
+  </div>
+
 </main>
 
-<footer class="site-footer">
-  <p>Hezekiah Oluwasanmi Library, Obafemi Awolowo University</p>
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
 </footer>
 
-<script type="module">
-  import { api } from "../js/api.js";
-  import { formatDateTime } from "../js/format.js";
 
-  const form = document.getElementById("issue-form");
-  const submitBtn = document.getElementById("issue-submit");
-  const resultBox = document.getElementById("issue-result");
-  const accessionInput = document.getElementById("accession-number");
-  const memberInput = document.getElementById("member-number");
+<!-- ====================== end footer ==================================== -->
 
-  function clearResult() {
-    resultBox.textContent = "";
-  }
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
 
-  function showLoading() {
-    clearResult();
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Issuing...";
-    const loading = document.createElement("p");
-    loading.className = "notice";
-    const spinner = document.createElement("span");
-    spinner.className = "loader";
-    spinner.setAttribute("aria-hidden", "true");
-    loading.appendChild(spinner);
-    loading.appendChild(document.createTextNode("Checking with the server..."));
-    resultBox.appendChild(loading);
-  }
+<script>
+/* Issuing is checked, shown, and only then recorded.
 
-  function resetSubmitButton() {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Issue copy";
-  }
+   The desk holds a book and a student card. Neither is an id, so both are
+   resolved first: GET /copies/lookup for the volume, GET /members?q= for the
+   person. What each one turned out to be is put on screen before anything is
+   written, because a mistyped digit would otherwise lend a book to a
+   stranger, and the loan is real the moment it is recorded.
 
-  function showSuccess(loan) {
-    clearResult();
-    const panel = document.createElement("div");
-    panel.className = "notice notice-success";
-    panel.setAttribute("role", "status");
+   The server checks all of it again on POST /loans. Nothing shown here is a
+   permission: the borrowing limit, the copy's availability and last-copy
+   retention are decided there, and its refusal is what the reader sees. */
 
-    const heading = document.createElement("p");
-    heading.textContent = "Copy issued.";
-    panel.appendChild(heading);
+const form = document.getElementById("issue-form");
+const accessionInput = document.getElementById("accession");
+const memberInput = document.getElementById("member");
+const checkBtn = document.getElementById("check-btn");
+const result = document.getElementById("result");
 
-    const table = document.createElement("table");
-    table.className = "result-table";
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (!validate.form(form)) return;
+  check(accessionInput.value.trim(), memberInput.value.trim());
+});
 
-    const rows = [
-      ["Title", loan.book_title || loan.title || "\u2014"],
-      ["Accession number", loan.accession_number || accessionInput.value],
-      ["Issued to", loan.member_name ? loan.member_name + " (" + (loan.member_number || memberInput.value) + ")" : memberInput.value],
-      ["Due back", loan.due_date ? formatDateTime(loan.due_date) : "\u2014"],
-    ];
-    rows.forEach(([label, value]) => {
-      const tr = document.createElement("tr");
-      const th = document.createElement("th");
-      th.scope = "row";
-      th.textContent = label;
-      const td = document.createElement("td");
-      td.textContent = value;
-      tr.appendChild(th);
-      tr.appendChild(td);
-      table.appendChild(tr);
-    });
-    panel.appendChild(table);
-    resultBox.appendChild(panel);
+/* The member roll is searched by free text, so an exact identifier can still
+   come back beside near matches. Only an exact one is accepted: issuing to
+   "the first person who looked similar" is how the wrong student gets a book
+   on their record. */
+function exactMember(rows, typed) {
+  const wanted = typed.toUpperCase();
+  return rows.find(function (m) {
+    return String(m.identifier || "").toUpperCase() === wanted;
+  }) || null;
+}
 
-    const again = document.createElement("button");
-    again.type = "button";
-    again.className = "btn btn-secondary";
-    again.textContent = "Issue another copy";
-    again.addEventListener("click", () => {
-      form.reset();
-      clearResult();
-      accessionInput.focus();
-    });
-    resultBox.appendChild(again);
-  }
+async function check(accession, memberNumber) {
+  checkBtn.disabled = true;
+  replace(result, loadingState("Checking the copy and the member"));
 
-  function showRefusal(message) {
-    clearResult();
-    const panel = document.createElement("div");
-    panel.className = "notice notice-error";
-    panel.setAttribute("role", "alert");
-    // Server's own sentence. Never reworded — the librarian and the
-    // member at the counter are both reading this.
-    panel.textContent = message;
-    resultBox.appendChild(panel);
-  }
+  try {
+    // Both at once: they do not depend on each other, and the desk is a queue.
+    const [copyReply, memberReply] = await Promise.all([
+      api.get("/copies/lookup?accession=" + encodeURIComponent(accession)),
+      api.get("/members?q=" + encodeURIComponent(memberNumber)),
+    ]);
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
+    const found = copyReply.data;
+    const member = exactMember(memberReply.data || [], memberNumber);
 
-    showLoading();
-    try {
-      // NOTE: confirm exact request field names against
-      // https://api.library.appmd.dev/docs (POST /loans) before
-      // opening the pull request — the handover doc names the
-      // operation but not its request body shape.
-      const loan = await api.post("/loans", {
-        accession_number: accessionInput.value.trim(),
-        member_number: memberInput.value.trim(),
-      });
-      showSuccess(loan);
-    } catch (err) {
-      showRefusal(err.message);
-    } finally {
-      resetSubmitButton();
+    if (!member) {
+      replace(result, refusal("No member has the number " + memberNumber + ".",
+        "Check the card. The number is on it exactly as it must be typed."));
+      return;
     }
-  });
+    if (found.loan) {
+      replace(result, refusal("That copy is already out.",
+        "It is with " + found.loan.member_name + " until "
+        + formatDate(found.loan.due_at) + ". It has to be received back first."));
+      return;
+    }
+    if (found.copy.Status !== "available") {
+      replace(result, refusal("That copy is not on the shelf.",
+        "Its status is “" + found.copy.Status + "”, so it cannot be issued."));
+      return;
+    }
+
+    replace(result, confirmation(found, member));
+  } catch (err) {
+    replace(result, refusal("Nothing was issued.", err.message));
+  } finally {
+    checkBtn.disabled = false;
+  }
+}
+
+function refusal(head, body) {
+  announce(head + " " + body);
+  return el("div", { className: "panel notice notice--bad" }, [
+    el("p", { className: "notice__head" }, head),
+    el("p", { className: "notice__body" }, body),
+  ]);
+}
+
+function confirmation(found, member) {
+  announce("Ready to issue " + found.book_title + " to " + member.full_name + ".");
+
+  return el("div", { className: "panel" }, [
+    el("h2", { className: "panel__title" }, "Check this, then issue"),
+
+    el("dl", { className: "dl" }, [
+      el("dt", {}, "Book"), el("dd", {}, found.book_title),
+      el("dt", {}, "Copy"), el("dd", {},
+        el("span", { className: "accession" }, found.copy.AccessionNumber)),
+      el("dt", {}, "Member"), el("dd", {}, member.full_name),
+      el("dt", {}, "Number"), el("dd", {}, member.identifier),
+    ]),
+
+    // The loan period comes from the member's category and is decided by the
+    // server, so no date is promised here that the server has not set.
+    el("p", { className: "hint" },
+      "The due date is set from the member's category when the loan is recorded."),
+
+    el("p", { className: "result__actions" }, el("button", {
+      type: "button",
+      className: "btn btn--primary",
+      onClick: function (event) { issue(found, member, event.currentTarget); },
+    }, "Issue this copy")),
+  ]);
+}
+
+async function issue(found, member, button) {
+  button.disabled = true;
+  button.textContent = "Issuing…";
+
+  try {
+    const loan = (await api.post("/loans", {
+      copy_id: found.copy.ID,
+      member_id: member.id,
+    })).data;
+
+    replace(result, el("div", { className: "panel" }, [
+      el("div", { className: "notice notice--ok" }, [
+        el("p", { className: "notice__head" }, "Issued to " + member.full_name),
+        el("p", { className: "notice__body" }, [
+          found.book_title + " is due back ",
+          el("time", { datetime: loan.due_at }, formatDate(loan.due_at)),
+          ".",
+        ]),
+      ]),
+    ]));
+    announce(found.book_title + " issued to " + member.full_name
+      + ", due " + formatDate(loan.due_at) + ".");
+
+    form.reset();
+    accessionInput.focus();
+  } catch (err) {
+    // The refusals worth reading are the server's: a member at their limit,
+    // a suspended account, the last circulating copy being retained.
+    button.disabled = false;
+    button.textContent = "Issue this copy";
+    result.appendChild(el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "Not issued."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    announce(err.message);
+  }
+}
+
+validate.attach(form);
+accessionInput.focus();
 </script>
+
 </body>
 </html>
