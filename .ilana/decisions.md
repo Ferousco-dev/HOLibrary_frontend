@@ -7,6 +7,18 @@ Prefix with your own letter so three people can write at once:
 
 ---
 
+### DEC-005 — Dashboard administration is API-authorized and audit-visible
+
+**Chose:** expose administrative actions only where the server provides a protected endpoint, and make the dashboard explain any unavailable capability.
+**Rejected:** client-only admin creation or role changes that appear to succeed without a server-backed record.
+**Why:** library members and staff are affected by account permissions. The browser may improve the workflow but cannot be the authority for access changes or the audit record.
+
+### DEC-006 — Operational control center is the dashboard scope
+
+**Chose:** make the dashboard show collection pressure, recent operations, privileged management routes, and the state of administrator management.
+**Rejected:** a decorative reporting page with isolated numbers.
+**Why:** the stakeholder asked for the administrator to oversee the whole service. Every module must therefore lead to a concrete operation or describe the next action.
+
 ### DEC-004 — Navigation behind one menu at every width
 
 **Chose:** a single dropdown, open by a button, on every screen size.

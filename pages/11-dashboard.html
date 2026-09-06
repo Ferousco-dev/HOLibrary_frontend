@@ -61,9 +61,12 @@
   <!-- Outcomes are announced here for screen reader users. -->
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
-  <div class="page__head">
-    <h1>Dashboard</h1>
-    <p class="page__lead">Where the collection stands today, and what the desk has done most recently.</p>
+  <div class="dashboard-head">
+    <div class="page__head">
+      <h1>Library control centre</h1>
+      <p class="page__lead">See today’s operations, take the next action, and keep staff access accountable.</p>
+    </div>
+    <p class="dashboard-head__state">Administrator access</p>
   </div>
 
   <div id="content"></div>
@@ -116,6 +119,7 @@
 
 <script src="../js/config.js"></script>
 <script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
 <script src="../js/api.js"></script>
 <script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
@@ -124,8 +128,8 @@
 <script src="../js/push.js"></script>
 
 <script>
-/* The dashboard is one GET. Everything below is how its five numbers and the
-   recent activity are drawn, not how they are obtained. */
+/* The dashboard brings protected operational information and actions together.
+   The server remains the authority for every number and every account change. */
 
 const content = document.getElementById("content");
 
@@ -140,6 +144,102 @@ function panel(titleText, body) {
   const id = titleText.toLowerCase().replace(/[^a-z]+/g, "-");
   return el("section", { className: "panel", "aria-labelledby": id },
     [el("h2", { className: "panel__title", id: id }, titleText)].concat(body));
+}
+
+function operation(href, title, description) {
+  return el("a", { className: "operation", href: href }, [
+    el("span", { className: "operation__title" }, title),
+    el("span", { className: "operation__text" }, description),
+  ]);
+}
+
+function operationsPanel() {
+  return panel("Run the library", el("div", { className: "operations" }, [
+    operation("08-desk-issue.html", "Issue or receive books", "Open the circulation desk."),
+    operation("10-members.html", "Member records", "Find, register, suspend or reactivate an account."),
+    operation("14-overdue.html", "Overdue follow-up", "Review accounts that need attention."),
+    operation("06-reservations.html", "Reservations", "Check what readers are waiting for."),
+  ]));
+}
+
+function adminPanel() {
+  const form = el("form", { id: "admin-form", className: "admin-form", noValidate: true }, [
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-identifier" }, "Staff number"),
+      el("input", { className: "input", id: "admin-identifier", name: "identifier", type: "text", required: true,
+        autocomplete: "off", autocapitalize: "characters", placeholder: "LIB/2026/001" }),
+    ]),
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-email" }, "Email address"),
+      el("input", { className: "input", id: "admin-email", name: "email", type: "email", required: true,
+        autocomplete: "off", placeholder: "name@oauife.edu.ng" }),
+    ]),
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-first-name" }, "First name"),
+      el("input", { className: "input", id: "admin-first-name", name: "first-name", type: "text", required: true, autocomplete: "off" }),
+    ]),
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-last-name" }, "Last name"),
+      el("input", { className: "input", id: "admin-last-name", name: "last-name", type: "text", required: true, autocomplete: "off" }),
+    ]),
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-role" }, "Access level"),
+      el("select", { className: "select", id: "admin-role", name: "role" }, [
+        el("option", { value: "librarian" }, "Librarian"),
+        el("option", { value: "admin" }, "Administrator"),
+      ]),
+    ]),
+    el("div", { className: "field" }, [
+      el("label", { htmlFor: "admin-department" }, "Department"),
+      el("input", { className: "input", id: "admin-department", name: "department", type: "text", autocomplete: "off", placeholder: "Library Services" }),
+    ]),
+    el("div", { className: "admin-form__actions" }, [
+      el("p", { className: "hint" }, "The account is created by the library server and recorded in its audit trail. The temporary password is shown once."),
+      el("button", { className: "btn btn--primary", type: "submit", id: "admin-submit" }, "Create staff account"),
+    ]),
+  ]);
+  const result = el("div", { id: "admin-result" });
+  form.addEventListener("submit", function (event) { createAdmin(event, form, result); });
+  validate.attach(form);
+  return panel("Add library staff", [
+    el("p", { className: "hint" }, "Create a librarian or administrator after verifying their identity at the desk."),
+    form, result,
+  ]);
+}
+
+async function createAdmin(event, form, result) {
+  event.preventDefault();
+  if (!validate.form(form)) return;
+  const button = document.getElementById("admin-submit");
+  const value = (id) => document.getElementById(id).value.trim();
+  button.disabled = true;
+  button.textContent = "Creating…";
+  replace(result);
+  try {
+    const reply = (await api.post("/members", {
+      identifier: value("admin-identifier"), email: value("admin-email"),
+      first_name: value("admin-first-name"), last_name: value("admin-last-name"),
+      role: value("admin-role"), department: value("admin-department"),
+    })).data;
+    const member = reply.member || {};
+    replace(result, el("div", { className: "notice notice--ok" }, [
+      el("p", { className: "notice__head" }, (member.full_name || "Staff account") + " is ready."),
+      el("p", { className: "notice__body" }, ["Give them this temporary password now. It will not be shown again: ",
+        el("strong", { className: "accession" }, reply.temporary_password || "Issued by the server")]),
+      el("p", { className: "notice__body" }, "They must change it at first sign-in."),
+    ]));
+    form.reset();
+    announce("Staff account created. The temporary password is on screen.");
+  } catch (err) {
+    replace(result, el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "Account not created."),
+      el("p", { className: "notice__body" }, err.message),
+    ]));
+    announce(err.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Create staff account";
+  }
 }
 
 /* Turns COPY_MARKED_LOST into "Copy marked lost". The server stores the verb
@@ -187,7 +287,7 @@ load({
   announce: (r) => "Dashboard loaded. " + (r.counts.data.books || 0) + " titles catalogued.",
   render: function (result) {
     const d = result.counts.data || {};
-    const counts = panel("The collection today", el("div", { className: "stats" }, [
+    const counts = panel("Library at a glance", el("div", { className: "stats" }, [
       statCard("Titles catalogued", d.books || 0),
       statCard("Physical copies", d.copies || 0),
       statCard("Members", d.members || 0),
@@ -211,7 +311,7 @@ load({
       activity = panel("Recent activity", activityTable(trail));
     }
 
-    return [counts, activity];
+    return [counts, operationsPanel(), el("div", { className: "dashboard-grid" }, [activity, adminPanel()])];
   },
 });
 </script>

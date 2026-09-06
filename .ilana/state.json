@@ -1,0 +1,14 @@
+{
+  "ilana_version": "1.0.0",
+  "project": "holibrary-admin-dashboard",
+  "mode": "FLEET",
+  "phase": "05",
+  "gate": "G4",
+  "agent": "verifier",
+  "process_style": "hybrid",
+  "rigour": 3,
+  "open": ["CR-001", "TC-001", "TC-002", "TC-003", "TC-004", "TC-005"],
+  "overrides": [],
+  "counters": { "REQ": 0, "NFR": 0, "DOM": 0, "DES": 0, "UI": 0, "TC": 0, "DEF": 0, "CR": 1 },
+  "attempts": { "G0": 1, "G1": 1, "G2": 1, "G3": 1, "G4": 1 }
+}

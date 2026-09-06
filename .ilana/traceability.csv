@@ -1,0 +1,12 @@
+req_id,requirement,type,priority,source,design_id,module,test_ids,result,status
+REQ-001,Operational counts,functional,must,stakeholder request 2026-09-06,DES-001,pages/11-dashboard.html,TC-001,not run,specified
+REQ-002,Readable audit activity,functional,must,stakeholder request 2026-09-06,DES-002,pages/11-dashboard.html,TC-002,not run,specified
+REQ-003,Operational shortcuts,functional,must,stakeholder request 2026-09-06,DES-003,pages/11-dashboard.html,TC-003,not run,specified
+REQ-004,Create privileged staff account,functional,must,stakeholder request 2026-09-06,DES-004,pages/11-dashboard.html,TC-004,not run,specified
+REQ-005,Show temporary password once,functional,must,existing member workflow,DES-004,pages/11-dashboard.html,TC-004,not run,specified
+REQ-006,Local error recovery,functional,must,existing UI conventions,DES-005,pages/11-dashboard.html,TC-004,not run,specified
+REQ-007,Server-authorized admin actions,functional,must,ETH-001,DES-004,pages/11-dashboard.html,TC-004,not run,specified
+NFR-001,Authenticated API client,non-functional,must,ETH-001,DES-005,pages/11-dashboard.html,TC-004,not run,specified
+NFR-002,Keyboard reachable controls,non-functional,must,UI skill,DES-003,pages/11-dashboard.html,TC-003,not run,specified
+NFR-003,390px responsive layout,non-functional,must,UI skill,DES-003,css/components.css,TC-005,not run,specified
+DOM-001,Minimum necessary operational data,domain,must,ETH-002,DES-002,pages/11-dashboard.html,TC-002,not run,specified
