@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Register and update physical library copies.">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="siteheader"><div class="siteheader__inner"><a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a><nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden><li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li></ul></nav></div></header>
+<div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">Inventory</li></ol></nav></div>
+<main id="main" class="shell page"><div class="page__head"><h1>Inventory</h1><p class="page__lead">Register physical volumes and keep their loan policy and condition current.</p></div><p class="liveregion" id="live" aria-live="polite" role="status"></p><div class="split"><section class="panel" aria-labelledby="register-heading"><h2 class="panel__title" id="register-heading">Register a physical copy</h2><p class="hint">Use the book ID from its catalogue record and the unique accession number on the volume.</p><form id="register-form" novalidate><div class="field"><label for="book-id">Book ID</label><input class="input" id="book-id" required autocomplete="off"></div><div class="field"><label for="accession">Accession number</label><input class="input" id="accession" required autocomplete="off" placeholder="HOL-748211"></div><div class="field"><label for="register-policy">Loan policy</label><select class="select" id="register-policy"><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="register-btn">Register copy</button></form><div id="register-result"></div></section><section class="panel" aria-labelledby="update-heading"><h2 class="panel__title" id="update-heading">Update a copy</h2><p class="hint">Status changes follow the server's circulation rules. A copy on loan cannot be made available here.</p><form id="update-form" novalidate><div class="field"><label for="copy-id">Copy ID</label><input class="input" id="copy-id" required autocomplete="off"></div><div class="field"><label for="copy-status">Status</label><select class="select" id="copy-status"><option value="">Leave unchanged</option><option value="available">Available</option><option value="on_loan">On loan</option><option value="lost">Lost</option><option value="damaged">Damaged</option><option value="withdrawn">Withdrawn</option></select></div><div class="field"><label for="update-policy">Loan policy</label><select class="select" id="update-policy"><option value="">Leave unchanged</option><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="update-btn">Save changes</button></form><div id="update-result"></div></section></div></main>
+<footer class="sitefoot"><div class="sitefoot__inner"><div><h2>The Library</h2><ul><li><a href="../index.html">Search the catalogue</a></li><li><a href="06-reservations.html">Reservations</a></li><li><a href="wings.html">Wings and shelving</a></li></ul></div><div><h2>Your account</h2><ul><li><a href="15-profile.html">Profile</a></li><li><a href="05-my-loans.html">Books you have out</a></li><li><a href="07-change-password.html">Change your password</a></li></ul></div><div><h2>Help</h2><ul><li><a href="borrowing.html">How borrowing works</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div><div><h2>Visit</h2><ul><li>Hezekiah Oluwasanmi Library</li><li>Obafemi Awolowo University</li><li>Ile-Ife, Osun State</li></ul></div></div><div class="sitefoot__base"><span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span><span>Catalogue and circulation only. This library does not lend digital texts.</span></div></footer>
+<script src="../js/config.js"></script><script src="../js/format.js"></script><script src="../js/validate.js"></script><script src="../js/api.js"></script><script src="../js/ui.js"></script><script src="../js/nav.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script><script src="../js/push.js"></script>
+<script>
+function inventoryValue(id) { return document.getElementById(id).value.trim(); }
+function inventoryNotice(target, title, body, tone) { replace(target, el("div", { className: "notice notice--" + tone }, [el("p", { className: "notice__head" }, title), el("p", { className: "notice__body" }, body)])); }
+
+document.getElementById("register-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const bookId = inventoryValue("book-id");
+  const accession = inventoryValue("accession");
+  if (!bookId || !accession) { inventoryNotice(document.getElementById("register-result"), "Book ID and accession number are required", "Complete both fields before registering a copy.", "warn"); return; }
+  const button = document.getElementById("register-btn");
+  button.disabled = true; button.textContent = "Registering…";
+  try { const copy = (await api.post("/books/" + encodeURIComponent(bookId) + "/copies", { accession_number: accession, loan_policy: document.getElementById("register-policy").value })).data; inventoryNotice(document.getElementById("register-result"), "Copy registered", copy.accession_number || "The physical copy is now in inventory.", "ok"); this.reset(); announce("Physical copy registered."); }
+  catch (err) { inventoryNotice(document.getElementById("register-result"), "Copy not registered", err.message, "bad"); announce(err.message); }
+  finally { button.disabled = false; button.textContent = "Register copy"; }
+});
+
+document.getElementById("update-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const copyId = inventoryValue("copy-id");
+  const status = document.getElementById("copy-status").value;
+  const policy = document.getElementById("update-policy").value;
+  if (!copyId || (!status && !policy)) { inventoryNotice(document.getElementById("update-result"), "Choose a change", "Enter a copy ID and select a status or loan policy.", "warn"); return; }
+  const payload = {};
+  if (status) payload.status = status;
+  if (policy) payload.loan_policy = policy;
+  const button = document.getElementById("update-btn");
+  button.disabled = true; button.textContent = "Saving…";
+  try { await api.patch("/copies/" + encodeURIComponent(copyId), payload); inventoryNotice(document.getElementById("update-result"), "Copy updated", "The copy's inventory details have been saved.", "ok"); announce("Copy updated."); }
+  catch (err) { inventoryNotice(document.getElementById("update-result"), "Copy not updated", err.message, "bad"); announce(err.message); }
+  finally { button.disabled = false; button.textContent = "Save changes"; }
+});
+</script>
+</body>
+</html>

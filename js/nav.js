@@ -35,89 +35,100 @@ function buildNav(list) {
   };
 
   const signedIn = api.isSignedIn();
-  const items = [];
+  list.innerHTML = "";
 
-  items.push({ file: "index.html", text: "Search the catalogue" });
-
-  items.push({ label: "Your account" });
-  if (signedIn) {
-    items.push({ file: "15-profile.html", text: "Profile" });
-    items.push({ file: "05-my-loans.html", text: "Books you have out" });
-    items.push({ file: "06-reservations.html", text: "Reservations" });
-    items.push({ file: "12-saved-titles.html", text: "Saved titles" });
-    items.push({ file: "07-change-password.html", text: "Change your password" });
-  } else {
-    items.push({ file: "04-signin.html", text: "Sign in" });
+  function link(item) {
+    const node = document.createElement("a");
+    node.className = "mainnav__link";
+    node.href = item.href || to(item.file);
+    node.textContent = item.text;
+    if (item.file === here) node.setAttribute("aria-current", "page");
+    return node;
   }
 
+  function group(id, label, items) {
+    const section = document.createElement("li");
+    section.className = "mainnav__group";
+    const button = document.createElement("button");
+    const panel = document.createElement("ul");
+    const open = items.some(function (item) { return item.file === here; });
+
+    button.type = "button";
+    button.className = "mainnav__group-toggle";
+    button.textContent = label;
+    button.setAttribute("aria-expanded", String(open));
+    button.setAttribute("aria-controls", id);
+    panel.id = id;
+    panel.className = "mainnav__group-list";
+    panel.hidden = !open;
+
+    items.forEach(function (item) {
+      const itemNode = document.createElement("li");
+      itemNode.appendChild(link(item));
+      panel.appendChild(itemNode);
+    });
+
+    button.addEventListener("click", function () {
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!expanded));
+      panel.hidden = expanded;
+    });
+    section.append(button, panel);
+    return section;
+  }
+
+  const catalogue = [{ file: "index.html", text: "Search the catalogue" }];
   if (api.isStaff()) {
-    items.push({ label: "Library staff" });
-    items.push({ file: "08-desk-issue.html", text: "Issue a copy" });
-    items.push({ file: "09-desk-return.html", text: "Receive a return" });
-    items.push({ file: "10-members.html", text: "Members" });
-    items.push({ file: "14-overdue.html", text: "Overdue books" });
+    catalogue.push({ file: "16-catalogue-tools.html", text: "Catalogue tools" });
+  }
+  list.appendChild(group("nav-catalogue", "Catalogue", catalogue));
+
+  const account = signedIn
+    ? [
+      { file: "15-profile.html", text: "Profile" },
+      { file: "05-my-loans.html", text: "Books you have out" },
+      { file: "06-reservations.html", text: "Reservations" },
+      { file: "12-saved-titles.html", text: "Saved titles" },
+    ]
+    : [{ file: "04-signin.html", text: "Sign in" }];
+  list.appendChild(group("nav-account", "Your account", account));
+
+  if (api.isStaff()) {
+    list.appendChild(group("nav-staff", "Library staff", [
+      { file: "08-desk-issue.html", text: "Issue a copy" },
+      { file: "09-desk-return.html", text: "Receive a return" },
+      { file: "10-members.html", text: "Members" },
+      { file: "14-overdue.html", text: "Overdue books" },
+      { file: "17-inventory.html", text: "Inventory" },
+    ]));
   }
 
   if (api.isAdmin()) {
-    items.push({ label: "Administration" });
-    items.push({ file: "11-dashboard.html", text: "Dashboard" });
+    list.appendChild(group("nav-admin", "Administration", [
+      { file: "11-dashboard.html", text: "Dashboard" },
+      { file: "18-invitations.html", text: "Invitations" },
+    ]));
   }
 
   if (signedIn) {
-    items.push({ label: null });   // a rule with no heading, before signing out
-    items.push({ action: "signout", text: "Sign out" });
+    const signout = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "mainnav__link mainnav__link--button";
+    button.textContent = "Sign out";
+    button.addEventListener("click", async function () {
+      button.disabled = true;
+      button.textContent = "Signing out…";
+      await api.logout();
+      location.href = to("index.html");
+    });
+    signout.appendChild(button);
+    list.appendChild(signout);
   }
 
-  items.push({ label: null });
-  items.push({ href: "https://oauife.edu.ng", text: "Obafemi Awolowo University" });
-
-  list.innerHTML = "";
-
-  items.forEach(function (item) {
-    const li = document.createElement("li");
-
-    if (item.label !== undefined) {
-      // A separator, with or without a heading above the group it opens.
-      const rule = document.createElement("li");
-      rule.setAttribute("aria-hidden", "true");
-      const bar = document.createElement("div");
-      bar.className = "mainnav__sep";
-      rule.appendChild(bar);
-      list.appendChild(rule);
-
-      if (item.label === null) return;
-      li.className = "mainnav__label";
-      li.textContent = item.label;
-      list.appendChild(li);
-      return;
-    }
-
-    if (item.action === "signout") {
-      // A button, not a link: signing out changes something, and a link that
-      // changes something is a link a browser may follow on its own.
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "mainnav__link mainnav__link--button";
-      button.textContent = item.text;
-      button.addEventListener("click", async function () {
-        button.disabled = true;
-        button.textContent = "Signing out…";
-        await api.logout();
-        location.href = to("index.html");
-      });
-      li.appendChild(button);
-      list.appendChild(li);
-      return;
-    }
-
-    const link = document.createElement("a");
-    link.className = "mainnav__link";
-    link.href = item.href || to(item.file);
-    link.textContent = item.text;
-    if (item.file === here) link.setAttribute("aria-current", "page");
-    li.appendChild(link);
-    list.appendChild(li);
-  });
+  const university = document.createElement("li");
+  university.appendChild(link({ href: "https://oauife.edu.ng", text: "Obafemi Awolowo University" }));
+  list.appendChild(university);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

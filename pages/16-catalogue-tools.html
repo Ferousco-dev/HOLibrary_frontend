@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue tools | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Add, look up and archive library catalogue records.">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a>
+    <nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden><li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li></ul></nav>
+  </div>
+</header>
+<div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">Catalogue tools</li></ol></nav></div>
+<main id="main" class="shell page">
+  <div class="page__head"><h1>Catalogue tools</h1><p class="page__lead">Find bibliographic metadata, add a title, or remove an outdated title from public search.</p></div>
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+  <div class="split">
+    <div>
+      <section class="panel" aria-labelledby="lookup-heading">
+        <h2 class="panel__title" id="lookup-heading">Look up a title</h2>
+        <p class="hint">Search the external catalogue by ISBN or title, then use a result to start the library record.</p>
+        <form id="lookup-form" novalidate>
+          <div class="formrow"><div class="field"><label for="lookup-query">Title or author</label><input class="input" id="lookup-query" type="search" autocomplete="off"></div><div class="field"><label for="lookup-isbn">ISBN</label><input class="input" id="lookup-isbn" type="text" inputmode="numeric" autocomplete="off"></div><div class="field field--fixed"><button class="btn btn--secondary" type="submit" id="lookup-btn">Look up</button></div></div>
+        </form>
+        <div id="lookup-result"></div>
+      </section>
+      <section class="panel" aria-labelledby="add-heading">
+        <h2 class="panel__title" id="add-heading">Add a catalogue record</h2>
+        <form id="book-form" novalidate>
+          <div class="field"><label for="title">Title</label><input class="input" id="title" required></div>
+          <div class="field"><label for="subtitle">Subtitle</label><input class="input" id="subtitle"></div>
+          <div class="formrow"><div class="field"><label for="call-number">Call number</label><input class="input" id="call-number" required placeholder="QA76.76 .M37"></div><div class="field"><label for="isbn13">ISBN-13</label><input class="input" id="isbn13"></div></div>
+          <div class="formrow"><div class="field"><label for="authors">Authors</label><input class="input" id="authors" placeholder="One author per comma"></div><div class="field"><label for="subjects">Subjects</label><input class="input" id="subjects" placeholder="One subject per comma"></div></div>
+          <div class="formrow"><div class="field"><label for="publisher">Publisher</label><input class="input" id="publisher"></div><div class="field"><label for="published-year">Published year</label><input class="input" id="published-year" type="number" min="1000" max="2100"></div><div class="field"><label for="place">Place of publication</label><input class="input" id="place"></div></div>
+          <div class="field"><label for="description">Description</label><textarea class="textarea" id="description" rows="4"></textarea></div>
+          <button class="btn btn--primary" type="submit" id="book-btn">Add title</button>
+        </form>
+        <div id="book-result"></div>
+      </section>
+    </div>
+    <aside class="split__aside">
+      <section class="panel" aria-labelledby="archive-heading">
+        <h2 class="panel__title" id="archive-heading">Archive a title</h2>
+        <p class="hint">Archiving removes a title from search without deleting its borrowing history.</p>
+        <form id="archive-form" novalidate>
+          <div class="field"><label for="archive-id">Book ID</label><input class="input" id="archive-id" required autocomplete="off"></div>
+          <button class="btn btn--danger" type="submit" id="archive-btn">Archive title</button>
+        </form>
+        <div id="archive-result"></div>
+      </section>
+    </aside>
+  </div>
+</main>
+<footer class="sitefoot"><div class="sitefoot__inner"><div><h2>The Library</h2><ul><li><a href="../index.html">Search the catalogue</a></li><li><a href="06-reservations.html">Reservations</a></li><li><a href="wings.html">Wings and shelving</a></li></ul></div><div><h2>Your account</h2><ul><li><a href="15-profile.html">Profile</a></li><li><a href="05-my-loans.html">Books you have out</a></li><li><a href="07-change-password.html">Change your password</a></li></ul></div><div><h2>Help</h2><ul><li><a href="borrowing.html">How borrowing works</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div><div><h2>Visit</h2><ul><li>Hezekiah Oluwasanmi Library</li><li>Obafemi Awolowo University</li><li>Ile-Ife, Osun State</li></ul></div></div><div class="sitefoot__base"><span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span><span>Catalogue and circulation only. This library does not lend digital texts.</span></div></footer>
+<script src="../js/config.js"></script><script src="../js/format.js"></script><script src="../js/validate.js"></script><script src="../js/api.js"></script><script src="../js/ui.js"></script><script src="../js/nav.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script><script src="../js/push.js"></script>
+<script>
+const lookupForm = document.getElementById("lookup-form");
+const lookupResult = document.getElementById("lookup-result");
+const bookForm = document.getElementById("book-form");
+const bookResult = document.getElementById("book-result");
+const archiveForm = document.getElementById("archive-form");
+const archiveResult = document.getElementById("archive-result");
+
+function value(id) { return document.getElementById(id).value.trim(); }
+function listValue(id) { return value(id).split(",").map(function (item) { return item.trim(); }).filter(Boolean); }
+function notice(target, title, body, tone) { replace(target, el("div", { className: "notice notice--" + tone }, [el("p", { className: "notice__head" }, title), el("p", { className: "notice__body" }, body)])); }
+
+lookupForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const query = value("lookup-query");
+  const isbn = value("lookup-isbn");
+  if (!query && !isbn) { notice(lookupResult, "Enter a search", "Use an ISBN or a title/author.", "warn"); return; }
+  const button = document.getElementById("lookup-btn");
+  button.disabled = true; button.textContent = "Looking up…"; replace(lookupResult, loadingState("Searching the external catalogue"));
+  try {
+    const params = new URLSearchParams();
+    if (query) params.set("q", query);
+    if (isbn) params.set("isbn", isbn);
+    const rows = ((await api.get("/books/lookup?" + params.toString())).data || []).items || [];
+    replace(lookupResult, rows.length ? el("ul", { className: "results" }, rows.map(function (book) {
+      return el("li", {}, [el("h3", { className: "result__title" }, book.title || "Untitled"), el("p", { className: "result__meta" }, [book.authors ? book.authors.join(", ") : "", book.isbn13 || book.isbn10 || "", book.source || ""]), el("button", { className: "btn btn--secondary", type: "button", onClick: function () { fillBook(book); } }, "Use this metadata")]);
+    })) : messageState("No external matches were found."));
+    announce(rows.length + " external title(s) found.");
+  } catch (err) { notice(lookupResult, "Lookup failed", err.message, "bad"); announce(err.message); }
+  finally { button.disabled = false; button.textContent = "Look up"; }
+});
+
+function fillBook(book) {
+  ["title", "subtitle", "isbn13", "publisher", "published-year", "place"].forEach(function (id) {
+    const key = id === "published-year" ? "published_year" : id;
+    if (book[key]) document.getElementById(id).value = book[key];
+  });
+  if (book.authors) document.getElementById("authors").value = book.authors.join(", ");
+  if (book.subjects) document.getElementById("subjects").value = book.subjects.join(", ");
+  document.getElementById("title").focus();
+  announce("Metadata copied into the catalogue form.");
+}
+
+bookForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (!value("title") || !value("call-number")) { notice(bookResult, "Title and call number are required", "Complete the required fields before adding the record.", "warn"); return; }
+  const button = document.getElementById("book-btn");
+  const payload = { title: value("title"), call_number: value("call-number") };
+  ["subtitle", "isbn13", "publisher", "place_of_publication", "description"].forEach(function (key) { const id = key === "place_of_publication" ? "place" : key; if (value(id)) payload[key] = value(id); });
+  if (value("published-year")) payload.published_year = Number(value("published-year"));
+  if (listValue("authors").length) payload.authors = listValue("authors");
+  if (listValue("subjects").length) payload.subjects = listValue("subjects");
+  button.disabled = true; button.textContent = "Adding…";
+  try { const result = (await api.post("/books", payload)).data || {}; notice(bookResult, "Title added", result.title || "The catalogue record is now available.", "ok"); bookForm.reset(); announce("Catalogue record added."); }
+  catch (err) { notice(bookResult, "Title not added", err.message, "bad"); announce(err.message); }
+  finally { button.disabled = false; button.textContent = "Add title"; }
+});
+
+archiveForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (!value("archive-id")) return;
+  const sure = await confirmAction({ title: "Archive this title?", body: "It will leave catalogue search, but its borrowing history will remain.", confirm: "Archive title", cancel: "Keep title", tone: "bad" });
+  if (!sure) return;
+  const button = document.getElementById("archive-btn");
+  button.disabled = true; button.textContent = "Archiving…";
+  try { await api.post("/books/" + encodeURIComponent(value("archive-id")) + "/archive"); notice(archiveResult, "Title archived", "The title no longer appears in catalogue search.", "ok"); archiveForm.reset(); announce("Title archived."); }
+  catch (err) { notice(archiveResult, "Title not archived", err.message, "bad"); announce(err.message); }
+  finally { button.disabled = false; button.textContent = "Archive title"; }
+});
+</script>
+</body>
+</html>
