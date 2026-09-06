@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Profile | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="View your library profile and account activity.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="15-profile.html" aria-current="page">Profile</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li><a class="mainnav__link" href="07-change-password.html">Change your password</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Profile</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell page">
+  <div class="page__head">
+    <h1>Profile</h1>
+    <p class="page__lead">Your library identity and a quick view of your account activity.</p>
+  </div>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+  <div id="content"></div>
+</main>
+
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="wings.html">Wings and shelving</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="15-profile.html">Profile</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="borrowing.html">How borrowing works</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+const content = document.getElementById("content");
+
+function listData(result) {
+  return Array.isArray(result && result.data) ? result.data : [];
+}
+
+function profileFacts(user) {
+  const facts = el("dl", { className: "dl" });
+  const fields = [
+    ["Library number", user.identifier],
+    ["Email", user.email],
+    ["Category", user.category || user.role],
+    ["Department", user.department],
+    ["Faculty", user.faculty],
+    ["Level", user.level],
+  ];
+
+  fields.forEach(function (field) {
+    if (field[1]) facts.append(el("dt", {}, field[0]), el("dd", {}, field[1]));
+  });
+  return facts;
+}
+
+function profilePanel(user) {
+  const state = user.status === "active"
+    ? { tone: "ok", text: "Active" }
+    : { tone: "none", text: user.status || "Account" };
+
+  return el("section", { className: "panel", "aria-labelledby": "profile-heading" }, [
+    el("div", { className: "recordhead" }, [
+      el("div", {}, [
+        el("h2", { className: "panel__title", id: "profile-heading" }, user.full_name || "Library member"),
+        el("p", {}, el("span", { className: "status status--" + state.tone }, state.text)),
+      ]),
+      el("p", { className: "hint" }, "Your identity is managed by the library."),
+    ]),
+    profileFacts(user),
+    el("p", { className: "result__actions" },
+      el("a", { className: "btn btn--secondary", href: "07-change-password.html" }, "Change your password")),
+  ]);
+}
+
+function activityPanel(loanCount, reservationCount, bookmarkCount) {
+  return el("section", { "aria-labelledby": "activity-heading" }, [
+    el("h2", { id: "activity-heading" }, "Your library activity"),
+    el("div", { className: "stats" }, [
+      el("a", { className: "stat", href: "05-my-loans.html" }, [
+        el("span", { className: "stat__value" }, String(loanCount)),
+        el("span", { className: "stat__label" }, loanCount === 1 ? "Book out" : "Books out"),
+      ]),
+      el("a", { className: "stat", href: "06-reservations.html" }, [
+        el("span", { className: "stat__value" }, String(reservationCount)),
+        el("span", { className: "stat__label" }, reservationCount === 1 ? "Reservation" : "Reservations"),
+      ]),
+      el("a", { className: "stat", href: "12-saved-titles.html" }, [
+        el("span", { className: "stat__value" }, String(bookmarkCount)),
+        el("span", { className: "stat__label" }, bookmarkCount === 1 ? "Saved title" : "Saved titles"),
+      ]),
+    ]),
+  ]);
+}
+
+load({
+  into: content,
+  label: "Loading your profile",
+  needsSignIn: "see your profile",
+  fetch: function () {
+    return Promise.all([
+      Promise.resolve(api.who()),
+      api.get("/me/loans"),
+      api.get("/me/reservations"),
+      api.get("/me/bookmarks"),
+    ]);
+  },
+  render: function (results) {
+    const user = results[0] || {};
+    const loans = listData(results[1]);
+    const reservations = listData(results[2]);
+    const bookmarks = listData(results[3]);
+
+    document.title = (user.full_name || "Profile") + " | Hezekiah Oluwasanmi Library";
+    announce("Profile loaded for " + (user.full_name || "your account") + ".");
+    return [profilePanel(user), activityPanel(loans.length, reservations.length, bookmarks.length)];
+  },
+});
+</script>
+
+</body>
+</html>

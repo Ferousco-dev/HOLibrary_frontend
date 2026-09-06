@@ -41,6 +41,7 @@ function buildNav(list) {
 
   items.push({ label: "Your account" });
   if (signedIn) {
+    items.push({ file: "15-profile.html", text: "Profile" });
     items.push({ file: "05-my-loans.html", text: "Books you have out" });
     items.push({ file: "06-reservations.html", text: "Reservations" });
     items.push({ file: "12-saved-titles.html", text: "Saved titles" });
