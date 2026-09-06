@@ -306,7 +306,9 @@ async function issue(found, member, button) {
 }
 
 validate.attach(form);
-accessionInput.focus();
+// preventScroll, so the desk can type straight away without the page
+// scrolling past its own heading on load.
+accessionInput.focus({ preventScroll: true });
 </script>
 
 </body>

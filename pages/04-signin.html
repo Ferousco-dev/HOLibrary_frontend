@@ -320,7 +320,10 @@ forgotForm.addEventListener("submit", async function (event) {
   announce("If that address is on an account, a reset link has been sent.");
 });
 
-loginInput.focus();
+// preventScroll: the cursor is ready without the page jumping down to the
+// field and hiding its own heading. A reader arriving here should see the
+// top of the form, not the middle of it.
+loginInput.focus({ preventScroll: true });
 </script>
 
 </body>

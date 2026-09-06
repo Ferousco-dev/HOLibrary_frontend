@@ -72,12 +72,16 @@
   <section class="panel" aria-labelledby="find-heading">
     <h2 class="panel__title" id="find-heading">Find a member</h2>
     <form id="search-form" novalidate role="search">
-      <div class="field">
-        <label for="q">Name, matriculation number or email</label>
-        <input class="input" type="search" id="q" name="q"
-               autocomplete="off" placeholder="SEN/2025/001">
+      <div class="formrow">
+        <div class="field">
+          <label for="q">Name, matriculation number or email</label>
+          <input class="input" type="search" id="q" name="q"
+                 autocomplete="off" placeholder="SEN/2025/001">
+        </div>
+        <div class="field field--fixed">
+          <button class="btn btn--primary" type="submit">Search the roll</button>
+        </div>
       </div>
-      <p><button class="btn btn--primary" type="submit">Search the roll</button></p>
     </form>
   </section>
 

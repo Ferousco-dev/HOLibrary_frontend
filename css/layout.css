@@ -192,6 +192,11 @@
 
 /* Two-column: main content + supporting sidebar. Stacks below 900px. */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-5); align-items: start; }
+/* Until there is something to show beside it, the form takes the whole width.
+   The desk screens open with an empty results column, and reserving 320px of
+   nothing squeezes the field the librarian is about to type into. */
+.split:has(> .split__aside:empty) { grid-template-columns: minmax(0, 1fr); }
+.split > .split__aside:empty { display: none; }
 
 /* The sidebar explains how to read the results, so it has to stay visible
    while the results are being read. It sticks below the header rather than at

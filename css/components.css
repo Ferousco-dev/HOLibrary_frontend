@@ -79,6 +79,20 @@
 /* A validation failure. Must say what to do, not just that something is wrong. */
 .field__error { font-size: var(--text-sm); color: var(--bad); font-weight: 600; margin: var(--space-2) 0 0; }
 
+/* A field and its button on one line, the shape the catalogue search already
+   has: type a thing, press the thing next to it.
+
+   align-items: flex-end so the button sits level with the bottom of the input
+   rather than with the top of its label. It wraps on a narrow screen, where a
+   button squeezed beside a box is worse than one underneath it.
+
+   Removed once as unused and restored here. It was written for exactly this
+   and was simply waiting for a second screen with a lookup on it. */
+.formrow { display: flex; gap: var(--space-3); align-items: flex-end; flex-wrap: wrap; }
+.formrow .field { flex: 1 1 220px; margin-bottom: 0; }
+/* Keeps the button its own width instead of stretching to fill the line. */
+.field--fixed { flex: 0 0 auto; }
+
 /* --- tables -------------------------------------------------------------
    For tabular data only, never for layout (SEN106: tables describe
    relationships). Always give a <caption> and scope on every <th>. */
