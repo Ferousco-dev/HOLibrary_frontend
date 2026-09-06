@@ -21,8 +21,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- 1. CHANGE THIS -->
-  <title>Saved Titles | Hezekiah Oluwasanmi Library</title>
-  <meta name="description" content="One sentence describing this page.">
+  <title>Saved titles | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Titles you have saved to come back to later.">
 
   <link rel="stylesheet" href="../css/tokens.css">
   <link rel="stylesheet" href="../css/base.css">
@@ -73,58 +73,22 @@
   <nav class="crumbs" aria-label="Breadcrumb">
     <ol>
       <li><a href="../index.html">Catalogue</a></li>
-      <li aria-current="page">Saved Titles</li>
+      <li aria-current="page">Saved titles</li>
     </ol>
   </nav>
 </div>
 
 <main id="main" class="shell page">
 
-  <!-- 4. CHANGE EVERYTHING BELOW ---------------------------------------- -->
-
   <div class="page__head">
-    <h1>Saved Titles</h1>
-    <p class="page__lead">Books you’ve bookmarked to borrow later. Remove items or navigate pages below.</p>
+    <h1>Saved titles</h1>
+    <p class="page__lead">Books you have kept to come back to. Saving one holds no copy and joins no queue.</p>
   </div>
 
-  <!-- Outcomes are announced here for screen reader users, who get no visual
-       cue that anything happened. It is visually hidden on purpose. Write to
-       it with announce("Loan recorded."), never innerHTML. -->
+  <!-- Outcomes are announced here for screen reader users. -->
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
 
-
-<!-- Saved Titles Section -->
-  <section id="saved-titles" class="panel" aria-labelledby="saved-titles-heading">
-  <header class="page__head">
-    <h2 id="saved-titles-heading">Saved Titles</h2>
-  </header>
-
-  <!-- Empty state -->
-  <div id="empty-message" class="empty" hidden>
-    <p class="sr-only">No saved titles</p>
-    <p>You haven’t saved any books yet.</p>
-    <p class="hint">Browse the catalogue and click “Save” on any title to add it here.</p>
-  </div>
-
-  <!-- Loading state (optional) -->
-  <div id="loading" class="loading" role="status" aria-live="polite" hidden>
-    <div class="loader" aria-hidden="true"></div>
-    <p>Loading saved titles…</p>
-  </div>
-
-  <!-- Results list -->
-  <ul id="saved-books-list" class="results" role="list" aria-live="polite"></ul>
-
-  <!-- Pager -->
-  <nav id="saved-pager" class="pager" aria-label="Saved titles pagination" hidden>
-    <ul id="pager-list" class="pager__list"></ul>
-    <p id="pager-count" class="pager__count" aria-hidden="true"></p>
-  </nav>
-
-  <!-- Live region for announcements (visually hidden) -->
-  <div id="live-region" class="liveregion" aria-live="polite" aria-atomic="true"></div>
-  </section>
-  <!-- ------------------------------------------------------------------- -->
+  <div id="content"></div>
 
 </main>
 
@@ -179,13 +143,135 @@
 <script src="../js/format.js"></script>
 <script src="../js/validate.js"></script>
 <script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
 <script src="../js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 <script src="../js/push.js"></script>
 
+<script>
+/* Saved titles are held by the server, not by this browser.
+
+   The first version of this screen kept them in localStorage. That looks like
+   it works until the reader signs in on a library terminal and finds an empty
+   list, or clears their browser and loses the lot. GET /me/bookmarks and
+   DELETE /bookmarks/{bookID} are the real thing, and the member is taken from
+   the token so there is no id in the URL to tamper with.
+
+   Removing addresses the BOOK, not the bookmark: the server treats a repeated
+   save as a no-op and a repeated delete as success, so a double click cannot
+   produce an error the reader has to understand. */
+
+const content = document.getElementById("content");
+const PER_PAGE = 10;
+
+function savedItem(book, page) {
+  const remove = el("button", {
+    type: "button",
+    className: "btn btn--secondary",
+    // Every row's button reads "Remove", so the title has to be in the
+    // accessible name or a screen reader hears the same word all the way down.
+    "aria-label": "Remove " + book.Title + " from your saved titles",
+    onClick: function (event) { removeSaved(book, event.currentTarget, page); },
+  }, "Remove");
+
+  return el("article", { className: "result" }, [
+    el("div", { className: "result__body" }, [
+      coverElement(book, "list"),
+      el("div", { className: "result__text" }, [
+        el("h2", { className: "result__title" },
+          el("a", { href: "03-book.html?id=" + encodeURIComponent(book.ID) }, book.Title)),
+        book.Authors && book.Authors.length
+          ? el("p", { className: "result__meta" }, book.Authors.join(", "))
+          : null,
+        el("p", { className: "result__meta" }, "Call number " + book.CallNumber),
+        el("p", {}, availabilityLine(book).head),
+        el("p", { className: "result__actions" }, remove),
+      ]),
+    ]),
+  ]);
+}
+
+async function removeSaved(book, button, page) {
+  button.disabled = true;
+  button.textContent = "Removing\u2026";
+
+  try {
+    await api.del("/bookmarks/" + encodeURIComponent(book.ID));
+    announce(book.Title + " removed from your saved titles.");
+    // Re-read rather than splice the row out: removing the last item on a
+    // page changes how many pages there are.
+    show(page);
+  } catch (err) {
+    button.disabled = false;
+    button.textContent = "Remove";
+    announce(err.message);
+  }
+}
+
+function show(page) {
+  page = page || 1;
+  return load({
+    into: content,
+    label: "Loading your saved titles",
+    needsSignIn: "see the titles you have saved",
+    empty: "You have not saved anything yet. Open a title and choose Save to keep it here.",
+    fetch: () => api.get("/me/bookmarks?page=" + page + "&per_page=" + PER_PAGE),
+    announce: (r) => plural((r.meta && r.meta.total) || (r.data || []).length,
+      "saved title", "saved titles") + ".",
+    render: function (result) {
+      const rows = result.data || [];
+      if (rows.length === 0) return null;
+
+      const total = (result.meta && result.meta.total) || rows.length;
+      const pages = Math.max(1, Math.ceil(total / PER_PAGE));
+
+      const list = el("section", { className: "panel", "aria-labelledby": "saved-heading" }, [
+        el("h2", { className: "panel__title", id: "saved-heading" }, "Titles you have saved"),
+        el("div", { className: "results" },
+          rows.map(function (row) { return savedItem(row.book || row, page); })),
+      ]);
+
+      if (pages <= 1) return list;
+      return [list, pager(page, pages, total)];
+    },
+  });
+}
+
+/* Real links, not buttons: a page of saved titles has its own address, so it
+   can be shared and reached with the back button. */
+function pager(page, pages, total) {
+  const items = [];
+  for (let n = 1; n <= pages; n++) {
+    items.push(el("li", {}, el("a", {
+      className: "pager__link",
+      href: "?page=" + n,
+      "aria-current": n === page ? "page" : null,
+      "aria-label": "Page " + n + " of " + pages,
+      onClick: function (event) {
+        event.preventDefault();
+        history.pushState({ page: n }, "", "?page=" + n);
+        show(n);
+      },
+    }, String(n))));
+  }
+
+  return el("nav", { className: "pager", "aria-label": "Saved titles pages" }, [
+    el("ul", { className: "pager__list" }, items),
+    el("p", { className: "pager__count" },
+      plural(total, "saved title", "saved titles") + " in all."),
+  ]);
+}
+
+window.addEventListener("popstate", function () {
+  show(Number(new URLSearchParams(location.search).get("page")) || 1);
+});
+
+show(Number(new URLSearchParams(location.search).get("page")) || 1);
+</script>
+
 <!-- Your page's own script goes here. -->
-<script src="../js/12-saved-titles.js"></script>
+
 
 </body>
 </html>

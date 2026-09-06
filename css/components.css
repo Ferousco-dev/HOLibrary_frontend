@@ -221,6 +221,9 @@
 .pager__link[aria-disabled="true"] {
   color: var(--ink-muted); background: var(--wash); pointer-events: none;
 }
+/* The running total under a pager. Removed once as unused; the saved titles
+   screen uses it, so it is back. */
+.pager__count { font-size: var(--text-sm); color: var(--ink-muted); margin: var(--space-3) 0 0; }
 
 /* --- loader -------------------------------------------------------------
    A book opening. Shown while a search is in flight, so the wait has

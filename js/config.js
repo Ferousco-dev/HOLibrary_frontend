@@ -7,7 +7,7 @@
 const HOL = {
   /* The live API. It is already built, tested and deployed. You are writing
      the interface for it. You cannot change it, and you do not need to. */
-  API: "https://api.library.appmd.dev/api/v1",
+  API: "http://localhost:8080/api/v1",
 
   /* READ THIS BEFORE YOU WRITE A SINGLE FETCH.
 
