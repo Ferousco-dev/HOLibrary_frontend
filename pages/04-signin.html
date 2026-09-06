@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Sign in | Hezekiah Oluwasanmi Library</title>
+  <meta name="description" content="Sign in to your Hezekiah Oluwasanmi Library account.">
+
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= HEADER -- copy exactly, do not edit ================= -->
+<header class="siteheader">
+  <div class="siteheader__inner">
+    <a class="brand" href="../index.html">
+      <img class="brand__crest" src="../assets/oau-logo.png"
+           alt="Obafemi Awolowo University crest">
+      <span class="brand__name">Hezekiah Oluwasanmi Library</span>
+    </a>
+
+    <nav class="mainnav" aria-label="Main navigation">
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="navtoggle__bars" aria-hidden="true"><span></span></span>
+        Menu
+      </button>
+      <ul class="mainnav__list" id="primary-nav" hidden>
+        <li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Your account</li>
+        <li><a class="mainnav__link" href="04-signin.html" aria-current="page">Sign in</a></li>
+        <li><a class="mainnav__link" href="05-my-loans.html">Books you have out</a></li>
+        <li><a class="mainnav__link" href="06-reservations.html">Reservations</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li class="mainnav__label">Library staff</li>
+        <li><a class="mainnav__link" href="08-desk-issue.html">Circulation desk</a></li>
+        <li><a class="mainnav__link" href="10-members.html">Members</a></li>
+        <li aria-hidden="true"><div class="mainnav__sep"></div></li>
+        <li><a class="mainnav__link" href="https://oauife.edu.ng">Obafemi Awolowo University</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ====================== end header ==================================== -->
+
+<div class="shell">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Catalogue</a></li>
+      <li aria-current="page">Sign in</li>
+    </ol>
+  </nav>
+</div>
+
+<main id="main" class="shell shell--narrow page">
+
+  <div class="page__head">
+    <h1>Sign in</h1>
+    <p class="page__lead">Sign in to your library account.</p>
+  </div>
+
+  <p class="liveregion" id="live" aria-live="polite" role="status"></p>
+
+  <div id="notice"></div>
+
+  <section class="panel" aria-labelledby="signin-heading">
+    <h2 class="panel__title" id="signin-heading">Library account</h2>
+
+    <form id="signin-form" novalidate>
+      <div class="field">
+        <label class="field__label" for="login">Matric or staff number</label>
+        <input class="field__input" type="text" id="login" name="login" required
+               autocomplete="username" autocapitalize="characters" spellcheck="false"
+               placeholder="SEN/2025/001"
+               data-error="Enter your matriculation or staff number.">
+        <p class="hint">Your email address works here too, if that is what you remember.</p>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="password">Password</label>
+        <input class="field__input" type="password" id="password" name="password" required
+               autocomplete="current-password"
+               data-error="Enter your password.">
+      </div>
+
+      <p class="result__actions">
+        <button class="btn btn--primary" type="submit" id="signin-btn">Sign in</button>
+        <button class="btn btn--secondary" type="button" id="forgot-btn"
+                aria-expanded="false" aria-controls="forgot">Forgot your password?</button>
+      </p>
+    </form>
+
+    <div id="forgot" hidden>
+      <h3>Send yourself a reset link</h3>
+      <form id="forgot-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="email">The email address on your account</label>
+          <input class="field__input" type="email" id="email" name="email" required
+                 autocomplete="email" placeholder="name@oauife.edu.ng"
+                 data-error="Enter the email address on your library account.">
+        </div>
+        <p><button class="btn btn--primary" type="submit" id="forgot-submit">Send the link</button></p>
+      </form>
+      <div id="forgot-result"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER -- copy exactly, do not edit ================= -->
+<footer class="sitefoot">
+  <div class="sitefoot__inner">
+    <div>
+      <h2>The Library</h2>
+      <ul>
+        <li><a href="../index.html">Search the catalogue</a></li>
+        <li><a href="06-reservations.html">Reservations</a></li>
+        <li><a href="#">Opening hours</a></li>
+        <li><a href="#">Wings and floors</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Your account</h2>
+      <ul>
+        <li><a href="04-signin.html">Sign in</a></li>
+        <li><a href="05-my-loans.html">Books you have out</a></li>
+        <li><a href="07-change-password.html">Change your password</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Help</h2>
+      <ul>
+        <li><a href="#">How borrowing works</a></li>
+        <li><a href="#">Fines and renewals</a></li>
+        <li><a href="#">Accessibility statement</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        <li>Hezekiah Oluwasanmi Library</li>
+        <li>Obafemi Awolowo University</li>
+        <li>Ile-Ife, Osun State</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sitefoot__base">
+    <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
+    <span>Catalogue and circulation only. This library does not lend digital texts.</span>
+  </div>
+</footer>
+
+
+<!-- ====================== end footer ==================================== -->
+
+<script src="../js/config.js"></script>
+<script src="../js/format.js"></script>
+<script src="../js/validate.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/ui.js"></script>
+<script src="../js/nav.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
+<script src="../js/push.js"></script>
+
+<script>
+/* Signing in, and the one branch that matters afterwards.
+
+   A member registered at the desk or imported from a spreadsheet is created
+   with must_change_password set. The token they get back opens exactly two
+   routes and nothing else, so sending them to the catalogue would land them
+   on a page their own session cannot read. They go to the password screen
+   instead, which is built to be told why it is showing.
+
+   Where a visitor was headed before being asked to sign in is carried in
+   ?next=, and only ever a path inside this site: taking a whole URL from the
+   query string is how an open redirect is built, and a sign-in page is
+   exactly where somebody would aim one. */
+
+const form = document.getElementById("signin-form");
+const loginInput = document.getElementById("login");
+const passwordInput = document.getElementById("password");
+const signInBtn = document.getElementById("signin-btn");
+const notice = document.getElementById("notice");
+
+const params = new URLSearchParams(location.search);
+
+/* Only a same-site path, and never one that could be read as another host.
+   "//evil.example" and "https://evil.example" are both rejected; so is a
+   backslash, which some browsers normalise into a slash. */
+function safeNext() {
+  const next = params.get("next") || "";
+  if (!next.startsWith("/") || next.startsWith("//") || next.includes("\\")) return null;
+  return next;
+}
+
+if (params.get("expired") === "1") {
+  replace(notice, el("div", { className: "notice notice--warn" }, [
+    el("p", { className: "notice__head" }, "Your session has ended."),
+    el("p", { className: "notice__body" }, "Sign in again to carry on."),
+  ]));
+}
+
+// Already signed in and arriving here by hand: say so rather than pretending
+// the session does not exist.
+if (api.isSignedIn()) {
+  replace(notice, el("div", { className: "notice notice--ok" }, [
+    el("p", { className: "notice__head" }, "You are already signed in."),
+    el("p", { className: "notice__body" },
+      "Signing in again below will replace this session."),
+    el("p", {}, el("a", { href: "../index.html" }, "Back to the catalogue")),
+  ]));
+}
+
+validate.attach(form);
+
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (!validate.form(form)) return;
+
+  signInBtn.disabled = true;
+  signInBtn.textContent = "Signing in…";
+  replace(notice);
+
+  try {
+    const session = await api.login(loginInput.value.trim(), passwordInput.value);
+
+    if (session.must_change_password) {
+      announce("Choose a new password before you go on.");
+      location.href = "07-change-password.html?required=1";
+      return;
+    }
+
+    announce("Signed in.");
+    location.href = safeNext() || "../index.html";
+  } catch (err) {
+    signInBtn.disabled = false;
+    signInBtn.textContent = "Sign in";
+    passwordInput.value = "";
+
+    // The server's own words. It distinguishes wrong details from a suspended
+    // account from too many attempts, and each needs a different response from
+    // the reader: retype, come to the desk, or wait a minute.
+    replace(notice, el("div", { className: "notice notice--bad" }, [
+      el("p", { className: "notice__head" }, "You are not signed in."),
+      el("p", { className: "notice__body" }, err.message),
+      err.status === 429
+        ? el("p", { className: "notice__body" },
+            "Attempts are limited to five a minute. Wait a minute of quiet before trying again: "
+            + "each new attempt restarts the wait.")
+        : null,
+    ]));
+    announce(err.message);
+    loginInput.focus();
+  }
+});
+
+/* ---- forgot password ---------------------------------------------------
+   Disclosed rather than linked, because it is three fields' worth of page and
+   a reader who wants it is already looking at the form it belongs to. */
+
+const forgotBtn = document.getElementById("forgot-btn");
+const forgotPanel = document.getElementById("forgot");
+const forgotForm = document.getElementById("forgot-form");
+const forgotSubmit = document.getElementById("forgot-submit");
+const forgotResult = document.getElementById("forgot-result");
+
+forgotBtn.addEventListener("click", function () {
+  const opening = forgotPanel.hidden;
+  forgotPanel.hidden = !opening;
+  forgotBtn.setAttribute("aria-expanded", String(opening));
+  if (opening) document.getElementById("email").focus();
+});
+
+validate.attach(forgotForm);
+
+forgotForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+  if (!validate.form(forgotForm)) return;
+
+  forgotSubmit.disabled = true;
+  forgotSubmit.textContent = "Sending…";
+
+  try {
+    await api.post("/auth/forgot-password", {
+      email: document.getElementById("email").value.trim(),
+    });
+  } catch (err) {
+    // A rate limit is worth saying. Anything else is not: see below.
+    if (err.status === 429) {
+      forgotSubmit.disabled = false;
+      forgotSubmit.textContent = "Send the link";
+      replace(forgotResult, el("div", { className: "notice notice--bad" }, [
+        el("p", { className: "notice__head" }, "Too many requests."),
+        el("p", { className: "notice__body" }, err.message),
+      ]));
+      announce(err.message);
+      return;
+    }
+  }
+
+  /* The same answer whether or not that address is on an account, and the
+     server answers 202 either way for the same reason. "No account with that
+     email" would let anyone check who holds a library account by typing
+     addresses at this box. */
+  forgotForm.hidden = true;
+  replace(forgotResult, el("div", { className: "notice notice--ok" }, [
+    el("p", { className: "notice__head" }, "If that address is on an account, a link is on its way."),
+    el("p", { className: "notice__body" },
+      "It expires shortly. If nothing arrives, check the address or ask at the desk."),
+  ]));
+  announce("If that address is on an account, a reset link has been sent.");
+});
+
+loginInput.focus();
+</script>
+
+</body>
+</html>
