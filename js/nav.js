@@ -107,6 +107,7 @@ function buildNav(list) {
     list.appendChild(group("nav-admin", "Administration", [
       { file: "11-dashboard.html", text: "Dashboard" },
       { file: "18-invitations.html", text: "Invitations" },
+      { file: "19-user-roles.html", text: "Users and roles" },
     ]));
   }
 
