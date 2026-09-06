@@ -5,14 +5,36 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* The page fills the window even when it has little to say.
+
+   Without this, a short page (404, a sign-in form, an empty result) ends its
+   footer wherever the content happened to stop, and the page background shows
+   below it as a band of white. The footer looks like it has floated up the
+   screen. Every screen has the same three parts in the same order, so the
+   fix belongs here once rather than page by page.
+
+   dvh, with vh behind it: on a phone, 100vh is the window with the browser's
+   own chrome ignored, which leaves the footer slightly off the bottom until
+   the toolbar hides. */
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: 1.55;
   color: var(--ink);
   background: var(--wash);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Takes the slack, so the footer is pushed to the bottom rather than pulled
+   there: pulling it with margin-top:auto would swallow the gap it keeps from
+   the content on a long page. */
+main {
+  flex: 1 0 auto;
 }
 
 h1, h2, h3, h4 {
