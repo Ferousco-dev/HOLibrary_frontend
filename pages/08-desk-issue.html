@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Issue a Copy — HOLibrary</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header">
+  <a class="brand" href="../index.html">
+    <img src="../assets/crest.png" alt="Hezekiah Oluwasanmi Library" width="28" height="28">
+    <span>Hezekiah Oluwasanmi Library</span>
+  </a>
+  <nav aria-label="Staff menu">
+    <ul class="site-nav">
+      <li><a href="../index.html">Catalogue</a></li>
+      <li><a href="10-members.html">Members</a></li>
+      <li><a href="08-desk-issue.html" aria-current="page">Issue a copy</a></li>
+      <li><a href="09-desk-return.html">Receive a return</a></li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <a href="../index.html">Home</a> &rsaquo;
+  <a href="10-members.html">Circulation desk</a> &rsaquo;
+  <span aria-current="page">Issue a copy</span>
+</nav>
+
+<main id="main-content">
+  <h1>Issue a copy</h1>
+  <p>Enter the copy in your hand, then the member borrowing it.</p>
+
+  <form class="panel" id="issue-form" novalidate>
+    <div class="field">
+      <label for="accession-number">Accession number</label>
+      <input
+        type="text"
+        id="accession-number"
+        name="accession-number"
+        autocomplete="off"
+        inputmode="text"
+        required
+        autofocus>
+      <span class="hint">The number on the copy you are holding, not the call number.</span>
+    </div>
+
+    <div class="field">
+      <label for="member-number">Member number</label>
+      <input
+        type="text"
+        id="member-number"
+        name="member-number"
+        autocomplete="off"
+        inputmode="text"
+        required>
+      <span class="hint">Matric number or staff number.</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="issue-submit">
+      Issue copy
+    </button>
+  </form>
+
+  <div id="issue-result" aria-live="polite"></div>
+</main>
+
+<footer class="site-footer">
+  <p>Hezekiah Oluwasanmi Library, Obafemi Awolowo University</p>
+</footer>
+
+<script type="module">
+  import { api } from "../js/api.js";
+  import { formatDateTime } from "../js/format.js";
+
+  const form = document.getElementById("issue-form");
+  const submitBtn = document.getElementById("issue-submit");
+  const resultBox = document.getElementById("issue-result");
+  const accessionInput = document.getElementById("accession-number");
+  const memberInput = document.getElementById("member-number");
+
+  function clearResult() {
+    resultBox.textContent = "";
+  }
+
+  function showLoading() {
+    clearResult();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Issuing...";
+    const loading = document.createElement("p");
+    loading.className = "notice";
+    const spinner = document.createElement("span");
+    spinner.className = "loader";
+    spinner.setAttribute("aria-hidden", "true");
+    loading.appendChild(spinner);
+    loading.appendChild(document.createTextNode("Checking with the server..."));
+    resultBox.appendChild(loading);
+  }
+
+  function resetSubmitButton() {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Issue copy";
+  }
+
+  function showSuccess(loan) {
+    clearResult();
+    const panel = document.createElement("div");
+    panel.className = "notice notice-success";
+    panel.setAttribute("role", "status");
+
+    const heading = document.createElement("p");
+    heading.textContent = "Copy issued.";
+    panel.appendChild(heading);
+
+    const table = document.createElement("table");
+    table.className = "result-table";
+
+    const rows = [
+      ["Title", loan.book_title || loan.title || "\u2014"],
+      ["Accession number", loan.accession_number || accessionInput.value],
+      ["Issued to", loan.member_name ? loan.member_name + " (" + (loan.member_number || memberInput.value) + ")" : memberInput.value],
+      ["Due back", loan.due_date ? formatDateTime(loan.due_date) : "\u2014"],
+    ];
+    rows.forEach(([label, value]) => {
+      const tr = document.createElement("tr");
+      const th = document.createElement("th");
+      th.scope = "row";
+      th.textContent = label;
+      const td = document.createElement("td");
+      td.textContent = value;
+      tr.appendChild(th);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    });
+    panel.appendChild(table);
+    resultBox.appendChild(panel);
+
+    const again = document.createElement("button");
+    again.type = "button";
+    again.className = "btn btn-secondary";
+    again.textContent = "Issue another copy";
+    again.addEventListener("click", () => {
+      form.reset();
+      clearResult();
+      accessionInput.focus();
+    });
+    resultBox.appendChild(again);
+  }
+
+  function showRefusal(message) {
+    clearResult();
+    const panel = document.createElement("div");
+    panel.className = "notice notice-error";
+    panel.setAttribute("role", "alert");
+    // Server's own sentence. Never reworded — the librarian and the
+    // member at the counter are both reading this.
+    panel.textContent = message;
+    resultBox.appendChild(panel);
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+
+    showLoading();
+    try {
+      // NOTE: confirm exact request field names against
+      // https://api.library.appmd.dev/docs (POST /loans) before
+      // opening the pull request — the handover doc names the
+      // operation but not its request body shape.
+      const loan = await api.post("/loans", {
+        accession_number: accessionInput.value.trim(),
+        member_number: memberInput.value.trim(),
+      });
+      showSuccess(loan);
+    } catch (err) {
+      showRefusal(err.message);
+    } finally {
+      resetSubmitButton();
+    }
+  });
+</script>
+</body>
+</html>
