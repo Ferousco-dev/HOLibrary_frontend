@@ -60,6 +60,22 @@
    reads it when the field takes focus. */
 .hint { font-size: var(--text-sm); color: var(--ink-muted); margin: var(--space-2) 0 0; }
 
+/* Sits under the field it belongs to: "forgot your password" under the
+   password box, where somebody who has just failed to remember it is looking. */
+.field__aside { margin: var(--space-2) 0 0; font-size: var(--text-sm); }
+
+/* A control that reads as a link and behaves as a button.
+
+   Used where the thing being offered is a change of state rather than a
+   destination: it opens a panel on this page, so it must not be a link a
+   browser could follow, middle-click into a new tab, or index. */
+.linkish {
+  font: inherit; font-size: var(--text-sm);
+  padding: 0; border: 0; background: none;
+  color: var(--blue); text-decoration: underline; cursor: pointer;
+}
+.linkish:hover { color: var(--blue-dark); }
+
 /* A validation failure. Must say what to do, not just that something is wrong. */
 .field__error { font-size: var(--text-sm); color: var(--bad); font-weight: 600; margin: var(--space-2) 0 0; }
 

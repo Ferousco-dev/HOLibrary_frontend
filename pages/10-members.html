@@ -73,8 +73,8 @@
     <h2 class="panel__title" id="find-heading">Find a member</h2>
     <form id="search-form" novalidate role="search">
       <div class="field">
-        <label class="field__label" for="q">Name, matriculation number or email</label>
-        <input class="field__input" type="search" id="q" name="q"
+        <label for="q">Name, matriculation number or email</label>
+        <input class="input" type="search" id="q" name="q"
                autocomplete="off" placeholder="SEN/2025/001">
       </div>
       <p><button class="btn btn--primary" type="submit">Search the roll</button></p>
@@ -126,8 +126,8 @@
 
     <form id="import-form" novalidate>
       <div class="field">
-        <label class="field__label" for="csv">Your CSV file</label>
-        <input class="field__input" type="file" id="csv" name="csv"
+        <label for="csv">Your CSV file</label>
+        <input class="input" type="file" id="csv" name="csv"
                accept=".csv,text/csv" required
                data-error="Choose a CSV file exported from your spreadsheet.">
         <p class="hint">Up to 8 MB. Everyone in the file is registered as a member;
@@ -147,32 +147,32 @@
 
     <form id="register-form" novalidate>
       <div class="field">
-        <label class="field__label" for="identifier">Matriculation or staff number</label>
-        <input class="field__input" type="text" id="identifier" name="identifier" required
+        <label for="identifier">Matriculation or staff number</label>
+        <input class="input" type="text" id="identifier" name="identifier" required
                autocomplete="off" autocapitalize="characters" placeholder="SEN/2025/001">
       </div>
 
       <div class="field">
-        <label class="field__label" for="email">Email address</label>
-        <input class="field__input" type="email" id="email" name="email" required
+        <label for="email">Email address</label>
+        <input class="input" type="email" id="email" name="email" required
                autocomplete="off" placeholder="name@oauife.edu.ng">
       </div>
 
       <div class="field">
-        <label class="field__label" for="first-name">First name</label>
-        <input class="field__input" type="text" id="first-name" name="first-name" required
+        <label for="first-name">First name</label>
+        <input class="input" type="text" id="first-name" name="first-name" required
                autocomplete="off">
       </div>
 
       <div class="field">
-        <label class="field__label" for="last-name">Last name</label>
-        <input class="field__input" type="text" id="last-name" name="last-name" required
+        <label for="last-name">Last name</label>
+        <input class="input" type="text" id="last-name" name="last-name" required
                autocomplete="off">
       </div>
 
       <div class="field">
-        <label class="field__label" for="category">Category</label>
-        <select class="field__input" id="category" name="category" required>
+        <label for="category">Category</label>
+        <select class="select" id="category" name="category" required>
           <option value="undergraduate">Undergraduate, 2 books for 14 days</option>
           <option value="postgraduate">Postgraduate, 4 books for 21 days</option>
           <option value="staff">Staff, 6 books for 28 days</option>
@@ -181,8 +181,8 @@
       </div>
 
       <div class="field">
-        <label class="field__label" for="department">Department</label>
-        <input class="field__input" type="text" id="department" name="department"
+        <label for="department">Department</label>
+        <input class="input" type="text" id="department" name="department"
                autocomplete="off" placeholder="Software Engineering">
       </div>
 

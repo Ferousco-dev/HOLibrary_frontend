@@ -76,8 +76,8 @@
 
     <form id="signin-form" novalidate>
       <div class="field">
-        <label class="field__label" for="login">Matric or staff number</label>
-        <input class="field__input" type="text" id="login" name="login" required
+        <label for="login">Matric or staff number</label>
+        <input class="input" type="text" id="login" name="login" required
                autocomplete="username" autocapitalize="characters" spellcheck="false"
                placeholder="SEN/2025/001"
                data-error="Enter your matriculation or staff number.">
@@ -85,25 +85,25 @@
       </div>
 
       <div class="field">
-        <label class="field__label" for="password">Password</label>
-        <input class="field__input" type="password" id="password" name="password" required
+        <label for="password">Password</label>
+        <input class="input" type="password" id="password" name="password" required
                autocomplete="current-password"
                data-error="Enter your password.">
+        <p class="field__aside">
+          <button class="linkish" type="button" id="forgot-btn"
+                  aria-expanded="false" aria-controls="forgot">Forgot your password?</button>
+        </p>
       </div>
 
-      <p class="result__actions">
-        <button class="btn btn--primary" type="submit" id="signin-btn">Sign in</button>
-        <button class="btn btn--secondary" type="button" id="forgot-btn"
-                aria-expanded="false" aria-controls="forgot">Forgot your password?</button>
-      </p>
+      <p><button class="btn btn--primary" type="submit" id="signin-btn">Sign in</button></p>
     </form>
 
     <div id="forgot" hidden>
       <h3>Send yourself a reset link</h3>
       <form id="forgot-form" novalidate>
         <div class="field">
-          <label class="field__label" for="email">The email address on your account</label>
-          <input class="field__input" type="email" id="email" name="email" required
+          <label for="email">The email address on your account</label>
+          <input class="input" type="email" id="email" name="email" required
                  autocomplete="email" placeholder="name@oauife.edu.ng"
                  data-error="Enter the email address on your library account.">
         </div>
