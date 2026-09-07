@@ -77,7 +77,13 @@ function buildNav(list) {
     return section;
   }
 
-  const catalogue = [{ file: "index.html", text: "Search the catalogue" }];
+  const catalogue = [
+    { file: "index.html", text: "Search the catalogue" },
+    { file: "browse.html", text: "Browse the catalogue" },
+    { file: "new-arrivals.html", text: "New arrivals" },
+    { file: "subjects.html", text: "Browse by subject" },
+    { file: "library-info.html", text: "Library information" },
+  ];
   if (api.isStaff()) {
     catalogue.push({ file: "16-catalogue-tools.html", text: "Catalogue tools" });
   }
@@ -89,6 +95,7 @@ function buildNav(list) {
       { file: "05-my-loans.html", text: "Books you have out" },
       { file: "06-reservations.html", text: "Reservations" },
       { file: "12-saved-titles.html", text: "Saved titles" },
+      { file: "saved-searches.html", text: "Saved searches" },
     ]
     : [{ file: "04-signin.html", text: "Sign in" }];
   list.appendChild(group("nav-account", "Your account", account));

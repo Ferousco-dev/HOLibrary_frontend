@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New arrivals | Hezekiah Oluwasanmi Library</title><meta name="description" content="The newest physical catalogue records added to Hezekiah Oluwasanmi Library.">
+  <link rel="stylesheet" href="../css/tokens.css"><link rel="stylesheet" href="../css/base.css"><link rel="stylesheet" href="../css/layout.css"><link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="siteheader"><div class="siteheader__inner"><a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a><nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden></ul></nav></div></header>
+<div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">New arrivals</li></ol></nav></div>
+<main id="main" class="shell page"><div class="page__head"><h1>New arrivals</h1><p class="page__lead">Recently added records from the physical collection. Check each title for copies and shelf information.</p></div><p class="liveregion" id="live" aria-live="polite" role="status"></p><section aria-labelledby="arrivals-heading"><h2 class="sr-only" id="arrivals-heading">Newest catalogue titles</h2><div id="arrivals"><div class="loading"><div class="loader" role="status" aria-label="Loading new arrivals"></div><p>Looking through the shelves…</p></div></div></section></main>
+<footer class="sitefoot"><div class="sitefoot__inner"><div><h2>The Library</h2><ul><li><a href="../index.html">Search the catalogue</a></li><li><a href="browse.html">Browse the catalogue</a></li><li><a href="library-info.html">Library information</a></li></ul></div><div><h2>Help</h2><ul><li><a href="borrowing.html">How borrowing works</a></li><li><a href="accessibility.html">Accessibility</a></li></ul></div><div><h2>Visit</h2><ul><li>Hezekiah Oluwasanmi Library</li><li>Obafemi Awolowo University</li><li>Ile-Ife, Osun State</li></ul></div></div></footer>
+<script src="../js/config.js"></script><script src="../js/format.js"></script><script src="../js/api.js"></script><script src="../js/ui.js"></script><script src="../js/nav.js"></script>
+<script>
+const arrivals = document.getElementById("arrivals");
+api.get("/books?sort=year_desc&page=1&per_page=12").then(function (result) {
+  const books = result.data || [];
+  if (!books.length) { replace(arrivals, messageState("No new catalogue records are available yet.")); return; }
+  replace(arrivals, el("div", { className: "results" }, books.map(function (book) {
+    return el("article", { className: "result" }, el("div", { className: "result__body" }, [
+      coverElement(book, "list"),
+      el("div", { className: "result__text" }, [
+        el("h2", { className: "result__title" }, el("a", { href: "03-book.html?id=" + encodeURIComponent(book.ID) }, book.Title)),
+        book.Authors && book.Authors.length ? el("p", { className: "result__meta" }, book.Authors.join(", ")) : null,
+        el("p", { className: "result__meta" }, [book.PublishedYear ? String(book.PublishedYear) : "Publication year not recorded", book.wing ? " · " + book.wing + " Wing" : ""]),
+        el("p", { className: "notice__body" }, availabilityLine(book).head),
+      ]),
+    ]));
+  })));
+  announce(books.length + " new arrivals loaded.");
+}).catch(function (error) { replace(arrivals, messageState(error.message, "bad")); announce(error.message); });
+</script>
+</body>
+</html>

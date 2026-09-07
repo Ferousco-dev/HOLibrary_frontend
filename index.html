@@ -144,7 +144,7 @@
     </p>
 
     <details class="hero__filters" id="filter-details">
-      <summary class="hero__filter-toggle">Filter and browse</summary>
+      <summary class="hero__filter-toggle">Browse and refine the catalogue</summary>
       <div class="hero__filter-body">
         <div class="hero__filter-row">
           <div class="field">
@@ -182,13 +182,70 @@
             <label for="filter-subject">Subject</label>
             <input class="input" type="text" id="filter-subject" placeholder="e.g. thermodynamics">
           </div>
+          <div class="field">
+            <label for="filter-author">Author</label>
+            <input class="input" type="text" id="filter-author" placeholder="e.g. Achebe">
+          </div>
+          <div class="field">
+            <label for="filter-faculty">Faculty</label>
+            <input class="input" type="text" id="filter-faculty" placeholder="When recorded">
+          </div>
+          <div class="field">
+            <label for="filter-department">Department</label>
+            <input class="input" type="text" id="filter-department" placeholder="When recorded">
+          </div>
+          <div class="field">
+            <label for="filter-language">Language</label>
+            <select class="select" id="filter-language">
+              <option value="">Any language</option>
+              <option value="English">English</option>
+              <option value="French">French</option>
+              <option value="Yoruba">Yoruba</option>
+              <option value="Arabic">Arabic</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-wing">Library wing</label>
+            <select class="select" id="filter-wing">
+              <option value="">Both wings</option>
+              <option value="North">North Wing</option>
+              <option value="South">South Wing</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-year-from">Published from</label>
+            <input class="input" type="number" id="filter-year-from" min="1000" max="2100" placeholder="1900">
+          </div>
+          <div class="field">
+            <label for="filter-year-to">Published to</label>
+            <input class="input" type="number" id="filter-year-to" min="1000" max="2100" placeholder="2026">
+          </div>
+          <div class="field">
+            <label for="filter-availability">Availability</label>
+            <select class="select" id="filter-availability">
+              <option value="">Any availability</option>
+              <option value="on_shelf">On the shelf</option>
+              <option value="on_loan">All copies on loan</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filter-sort">Sort results</label>
+            <select class="select" id="filter-sort">
+              <option value="relevance">Most relevant</option>
+              <option value="title">Title A-Z</option>
+              <option value="year_desc">Newest publication year</option>
+              <option value="year_asc">Oldest publication year</option>
+            </select>
+          </div>
           <label class="hero__check">
-            <input type="checkbox" id="filter-available">
-            Available to borrow right now
+            <input type="checkbox" id="filter-borrowable">
+            Available to borrow now
           </label>
         </div>
         <div class="hero__filter-actions">
-          <button type="button" id="browse-btn" class="btn btn--secondary">Browse titles</button>
+          <button type="button" id="browse-btn" class="btn btn--secondary">Browse the catalogue</button>
+          <button type="button" id="clear-filters" class="btn btn--secondary">Clear all filters</button>
+          <button type="button" id="save-search" class="btn btn--secondary" hidden>Save this search</button>
         </div>
       </div>
     </details>
@@ -209,6 +266,7 @@
   <div class="split">
     <section aria-labelledby="results-heading">
       <h2 class="sr-only" id="results-heading">Search results</h2>
+      <div id="active-filters" class="filter-chips" aria-label="Active filters"></div>
       <div id="results">
         <div class="panel empty">
           <p><strong>Enter a search above to begin.</strong></p>
@@ -283,6 +341,7 @@
 <script src="js/format.js"></script>
 <script src="js/validate.js"></script>
 <script src="js/api.js"></script>
+<script src="js/searches.js"></script>
 <script src="js/nav.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
@@ -304,6 +363,7 @@
 const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
+const activeFilters = document.getElementById("active-filters");
 
 // Check the field as the reader leaves it, and report the reason next to it.
 validate.attach(form);
@@ -312,15 +372,34 @@ function collectFilters() {
   return {
     cls: document.getElementById("filter-class").value,
     subject: (document.getElementById("filter-subject").value || "").trim(),
-    available: document.getElementById("filter-available").checked,
+    author: (document.getElementById("filter-author").value || "").trim(),
+    faculty: (document.getElementById("filter-faculty").value || "").trim(),
+    department: (document.getElementById("filter-department").value || "").trim(),
+    yearFrom: document.getElementById("filter-year-from").value,
+    yearTo: document.getElementById("filter-year-to").value,
+    language: document.getElementById("filter-language").value,
+    wing: document.getElementById("filter-wing").value,
+    availability: document.getElementById("filter-availability").value,
+    borrowable: document.getElementById("filter-borrowable").checked,
+    sort: document.getElementById("filter-sort").value,
   };
 }
 
 function restoreFilters(filters) {
   document.getElementById("filter-class").value = filters.cls || "";
   document.getElementById("filter-subject").value = filters.subject || "";
-  document.getElementById("filter-available").checked = Boolean(filters.available);
-  if (filters.cls || filters.subject || filters.available) {
+  document.getElementById("filter-author").value = filters.author || "";
+  document.getElementById("filter-faculty").value = filters.faculty || "";
+  document.getElementById("filter-department").value = filters.department || "";
+  document.getElementById("filter-year-from").value = filters.yearFrom || "";
+  document.getElementById("filter-year-to").value = filters.yearTo || "";
+  document.getElementById("filter-language").value = filters.language || "";
+  document.getElementById("filter-wing").value = filters.wing || "";
+  document.getElementById("filter-availability").value = filters.availability || "";
+  document.getElementById("filter-borrowable").checked = Boolean(filters.borrowable);
+  document.getElementById("filter-sort").value = filters.sort || "relevance";
+  if (filters.cls || filters.subject || filters.author || filters.faculty || filters.department || filters.yearFrom || filters.yearTo
+      || filters.language || filters.wing || filters.availability || filters.borrowable) {
     document.getElementById("filter-details").open = true;
   }
 }
@@ -347,6 +426,23 @@ document.getElementById("browse-btn").addEventListener("click", function () {
   go(q, 1);
 });
 
+document.getElementById("clear-filters").addEventListener("click", function () {
+  go(input.value.trim(), 1, {
+    cls: "", subject: "", author: "", faculty: "", department: "", yearFrom: "", yearTo: "", language: "", wing: "",
+    availability: "", borrowable: false, sort: "relevance",
+  });
+});
+
+const saveSearchButton = document.getElementById("save-search");
+if (api.isSignedIn()) saveSearchButton.hidden = false;
+saveSearchButton.addEventListener("click", function () {
+  const url = window.location.pathname + window.location.search;
+  const label = input.value.trim() || "Browse: " + (collectFilters().subject || collectFilters().wing || "all titles");
+  const saved = saveCurrentSearch(label, url);
+  saveSearchButton.textContent = saved.url === url ? "Search saved" : "Save this search";
+  announce("Search saved to this device.");
+});
+
 /* Puts the search in the address bar, then runs it. A results page is then a
    real page: shareable, bookmarkable, and reachable with the back button. */
 function go(query, page, filters) {
@@ -355,7 +451,10 @@ function go(query, page, filters) {
   if (query) { url.searchParams.set("q", query); } else { url.searchParams.delete("q"); }
   if (filters.cls) { url.searchParams.set("class", filters.cls); } else { url.searchParams.delete("class"); }
   if (filters.subject) { url.searchParams.set("subject", filters.subject); } else { url.searchParams.delete("subject"); }
-  if (filters.available) { url.searchParams.set("available", "1"); } else { url.searchParams.delete("available"); }
+  ["author", "faculty", "department", "yearFrom", "yearTo", "language", "wing", "availability", "sort"].forEach(function (key) {
+    if (filters[key]) url.searchParams.set(key, filters[key]); else url.searchParams.delete(key);
+  });
+  if (filters.borrowable) { url.searchParams.set("borrowable", "1"); } else { url.searchParams.delete("borrowable"); }
   if (page > 1) { url.searchParams.set("page", page); } else { url.searchParams.delete("page"); }
   history.pushState({ q: query, page: page, filters: filters }, "", url);
   runSearch(query, page, filters);
@@ -369,11 +468,23 @@ window.addEventListener("popstate", function () {
   const filters = {
     cls: params.get("class") || "",
     subject: params.get("subject") || "",
-    available: params.get("available") === "1",
+    author: params.get("author") || "",
+    faculty: params.get("faculty") || "",
+    department: params.get("department") || "",
+    faculty: params.get("faculty") || "",
+    department: params.get("department") || "",
+    yearFrom: params.get("yearFrom") || "",
+    yearTo: params.get("yearTo") || "",
+    language: params.get("language") || "",
+    wing: params.get("wing") || "",
+    availability: params.get("availability") || "",
+    borrowable: params.get("borrowable") === "1",
+    sort: params.get("sort") || "relevance",
   };
   input.value = q;
   restoreFilters(filters);
-  if (q || filters.cls || filters.subject || filters.available) {
+  if (q || filters.cls || filters.subject || filters.author || filters.faculty || filters.department || filters.yearFrom || filters.yearTo
+      || filters.language || filters.wing || filters.availability || filters.borrowable) {
     runSearch(q, Number(params.get("page")) || 1, filters);
   }
 });
@@ -382,18 +493,29 @@ const PER_PAGE = 10;
 
 async function runSearch(query, page, filters) {
   page = page || 1;
-  filters = filters || { cls: "", subject: "", available: false };
+  filters = filters || collectFilters();
 
   const params = new URLSearchParams();
   if (query) params.set("q", query);
   if (filters.cls) params.set("class", filters.cls);
   if (filters.subject) params.set("subject", filters.subject);
-  if (filters.available) params.set("available", "true");
+  if (filters.author) params.set("author", filters.author);
+  if (filters.faculty) params.set("faculty", filters.faculty);
+  if (filters.department) params.set("department", filters.department);
+  if (filters.yearFrom) params.set("year_from", filters.yearFrom);
+  if (filters.yearTo) params.set("year_to", filters.yearTo);
+  if (filters.language) params.set("language", filters.language);
+  if (filters.wing) params.set("wing", filters.wing);
+  if (filters.availability) params.set("availability", filters.availability);
+  if (filters.availability === "on_shelf" || filters.borrowable) params.set("available", "true");
+  if (filters.borrowable) params.set("borrowable", "true");
+  if (filters.sort && filters.sort !== "relevance") params.set("sort", filters.sort);
   params.set("page", page);
   params.set("per_page", PER_PAGE);
 
   results.innerHTML = "";
   results.appendChild(loading());
+  renderFilterChips(query, filters);
   announce("Searching.");
 
   try {
@@ -416,11 +538,19 @@ async function runSearch(query, page, filters) {
   const filters = {
     cls: params.get("class") || "",
     subject: params.get("subject") || "",
-    available: params.get("available") === "1",
+    author: params.get("author") || "",
+    yearFrom: params.get("yearFrom") || "",
+    yearTo: params.get("yearTo") || "",
+    language: params.get("language") || "",
+    wing: params.get("wing") || "",
+    availability: params.get("availability") || "",
+    borrowable: params.get("borrowable") === "1",
+    sort: params.get("sort") || "relevance",
   };
   if (q) input.value = q;
   restoreFilters(filters);
-  if (q || filters.cls || filters.subject || filters.available) {
+  if (q || filters.cls || filters.subject || filters.author || filters.faculty || filters.department || filters.yearFrom || filters.yearTo
+      || filters.language || filters.wing || filters.availability || filters.borrowable) {
     runSearch(q, Number(params.get("page")) || 1, filters);
   }
 })();
@@ -428,9 +558,12 @@ async function runSearch(query, page, filters) {
 function render(result, query, page, filters) {
   const items = result.data || [];
   results.innerHTML = "";
+  renderFilterChips(query, filters);
 
   if (items.length === 0) {
-    const filtersActive = filters && (filters.cls || filters.subject || filters.available);
+    const filtersActive = filters && (filters.cls || filters.subject || filters.author || filters.faculty || filters.department
+      || filters.yearFrom || filters.yearTo || filters.language || filters.wing
+      || filters.availability || filters.borrowable);
     const empty = document.createElement("div");
     empty.className = "panel empty";
 
@@ -450,7 +583,10 @@ function render(result, query, page, filters) {
         // whether the filters were the reason for the empty result.
         clearLink.addEventListener("click", function (e) {
           e.preventDefault();
-          go(query, 1, { cls: "", subject: "", available: false });
+          go(query, 1, {
+            cls: "", subject: "", author: "", faculty: "", department: "", yearFrom: "", yearTo: "", language: "", wing: "",
+            availability: "", borrowable: false, sort: "relevance",
+          });
         });
         hint.appendChild(clearLink);
         hint.appendChild(document.createTextNode("."));
@@ -491,6 +627,41 @@ function render(result, query, page, filters) {
   if (pages > 1) results.appendChild(pager(query, page, pages, filters));
 }
 
+function renderFilterChips(query, filters) {
+  activeFilters.replaceChildren();
+  const values = [];
+  if (query) values.push(["Search: " + query, "q"]);
+  const labels = {
+    cls: "Section: ", subject: "Subject: ", author: "Author: ", faculty: "Faculty: ", department: "Department: ", yearFrom: "From: ",
+    yearTo: "To: ", language: "Language: ", wing: "Wing: ", availability: "Availability: ",
+    sort: "Sort: ",
+  };
+  Object.keys(labels).forEach(function (key) {
+    if (filters && filters[key]) values.push([labels[key] + filters[key], key]);
+  });
+  if (filters && filters.borrowable) values.push(["Available to borrow now", "borrowable"]);
+
+  values.forEach(function (item) {
+    const chip = document.createElement("span");
+    chip.className = "filter-chip";
+    chip.appendChild(document.createTextNode(item[0]));
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "filter-chip__remove";
+    remove.setAttribute("aria-label", "Remove " + item[0]);
+    remove.textContent = "x";
+    remove.addEventListener("click", function () {
+      const next = Object.assign({}, filters);
+      if (item[1] === "q") input.value = "";
+      else if (item[1] === "borrowable") next.borrowable = false;
+      else next[item[1]] = "";
+      go(item[1] === "q" ? "" : query, 1, next);
+    });
+    chip.appendChild(remove);
+    activeFilters.appendChild(chip);
+  });
+}
+
 /* Page links.
 
    Real <a> elements with real hrefs, so a reader can middle-click a page, and
@@ -511,7 +682,10 @@ function pager(query, page, pages, filters) {
     if (query) { u.searchParams.set("q", query); } else { u.searchParams.delete("q"); }
     if (filters && filters.cls) { u.searchParams.set("class", filters.cls); } else { u.searchParams.delete("class"); }
     if (filters && filters.subject) { u.searchParams.set("subject", filters.subject); } else { u.searchParams.delete("subject"); }
-    if (filters && filters.available) { u.searchParams.set("available", "1"); } else { u.searchParams.delete("available"); }
+    ["author", "faculty", "department", "yearFrom", "yearTo", "language", "wing", "availability", "sort"].forEach(function (key) {
+      if (filters && filters[key]) u.searchParams.set(key, filters[key]); else u.searchParams.delete(key);
+    });
+    if (filters && filters.borrowable) { u.searchParams.set("borrowable", "1"); } else { u.searchParams.delete("borrowable"); }
     if (n > 1) { u.searchParams.set("page", n); } else { u.searchParams.delete("page"); }
     return u.pathname + u.search;
   }

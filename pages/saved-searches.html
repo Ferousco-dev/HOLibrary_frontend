@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved searches | Hezekiah Oluwasanmi Library</title><meta name="description" content="Return to catalogue searches saved on this device.">
+  <link rel="stylesheet" href="../css/tokens.css"><link rel="stylesheet" href="../css/base.css"><link rel="stylesheet" href="../css/layout.css"><link rel="stylesheet" href="../css/components.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="siteheader"><div class="siteheader__inner"><a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a><nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden></ul></nav></div></header>
+<div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">Saved searches</li></ol></nav></div>
+<main id="main" class="shell shell--narrow page"><div class="page__head"><h1>Saved searches</h1><p class="page__lead">Return to searches you saved on this device. Search filters remain in each link so the result can be shared.</p></div><p class="liveregion" id="live" aria-live="polite" role="status"></p><div id="saved-searches"></div></main>
+<footer class="sitefoot"><div class="sitefoot__inner"><div><h2>The Library</h2><ul><li><a href="../index.html">Search the catalogue</a></li><li><a href="browse.html">Browse the catalogue</a></li><li><a href="library-info.html">Library information</a></li></ul></div><div><h2>Your account</h2><ul><li><a href="05-my-loans.html">Books you have out</a></li><li><a href="06-reservations.html">Reservations</a></li></ul></div><div><h2>Help</h2><ul><li><a href="borrowing.html">How borrowing works</a></li><li><a href="accessibility.html">Accessibility</a></li></ul></div></div></footer>
+<script src="../js/config.js"></script><script src="../js/api.js"></script><script src="../js/ui.js"></script><script src="../js/searches.js"></script><script src="../js/nav.js"></script>
+<script>
+const target = document.getElementById("saved-searches");
+if (!api.isSignedIn()) {
+  replace(target, signedOutState("see your saved searches"));
+} else {
+  const searches = readSavedSearches();
+  if (!searches.length) {
+    replace(target, messageState("You have no saved searches on this device yet.", null, [el("p", { className: "hint" }, el("a", { href: "../index.html" }, "Search the catalogue"))]));
+  } else {
+    replace(target, el("section", { className: "panel", "aria-labelledby": "saved-searches-heading" }, [
+      el("h2", { className: "panel__title", id: "saved-searches-heading" }, "Your saved searches"),
+      el("p", { className: "hint" }, "Saved searches are currently stored in this browser. Account syncing will appear when the library API supports it."),
+      el("ul", { className: "saved-search-list" }, searches.map(function (search) {
+        const link = el("a", { href: search.url }, search.label);
+        const remove = el("button", { type: "button", className: "btn btn--secondary", "aria-label": "Delete " + search.label }, "Delete");
+        remove.addEventListener("click", function () { removeSavedSearch(search.id); announce("Saved search deleted."); location.reload(); });
+        return el("li", {}, [el("div", {}, link), remove]);
+      })),
+    ]));
+  }
+}
+</script>
+</body>
+</html>

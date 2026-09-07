@@ -156,6 +156,84 @@
 .status--bad  { color: var(--bad);  background: var(--bad-wash);  border-color: var(--bad-line); }
 .status--none { color: var(--ink-muted); background: var(--wash); border-color: var(--rule); }
 
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3);
+  color: var(--indigo);
+  background: var(--indigo-wash);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow-wrap: anywhere;
+}
+.filter-chip__remove {
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+  border: 0;
+  color: var(--indigo);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+.filter-chip__remove:hover { color: var(--blue); }
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-6);
+}
+.browse-card {
+  display: block;
+  min-height: 8rem;
+  padding: var(--space-4);
+  color: var(--ink);
+  background: var(--surface);
+  border: var(--border);
+  border-top: 4px solid var(--gold);
+  text-decoration: none;
+}
+.browse-card:hover { color: var(--indigo); background: var(--indigo-wash); }
+.browse-card strong, .browse-card span { display: block; }
+.browse-card strong { margin-bottom: var(--space-2); color: var(--indigo); font-family: var(--font-head); font-size: var(--text-xl); }
+.browse-card span { color: var(--ink-muted); font-size: var(--text-sm); }
+.browse-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); }
+.info-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.info-list .panel { margin-bottom: 0; }
+.book-summary { margin-top: var(--space-5); padding-top: var(--space-4); border-top: var(--border); }
+.related { margin-top: var(--space-5); }
+.related-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.related-item { min-width: 0; }
+.related-item .cover { width: 100%; margin-bottom: var(--space-3); }
+.related-item .result__title { font-size: var(--text-lg); overflow-wrap: anywhere; }
+.related-item .result__meta { overflow-wrap: anywhere; }
+.saved-search-list { list-style: none; margin: 0; padding: 0; }
+.saved-search-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: var(--border);
+}
+.saved-search-list li:last-child { border-bottom: 0; }
+.saved-search-list li > div { min-width: 0; overflow-wrap: anywhere; }
+
+@media (max-width: 560px) {
+  .browse-grid, .info-list { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* A row stays compact until its role is being changed. Native details keeps
    the disclosure keyboard-accessible and announces its open state. */
 .role-editor { margin-top: var(--space-2); max-width: 15rem; }

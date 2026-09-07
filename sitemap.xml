@@ -15,4 +15,8 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://library.appmd.dev/pages/browse</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://library.appmd.dev/pages/subjects</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://library.appmd.dev/pages/new-arrivals</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://library.appmd.dev/pages/library-info</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

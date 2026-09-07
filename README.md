@@ -56,6 +56,10 @@ See [`DEC-001`](.ilana/decisions.md) in the Ìlànà record for the full reasoni
 | File | URL | Description |
 |---|---|---|
 | `index.html` | `/` | **Catalogue search** — the landing page and the reference implementation for the project. Search by title, author, or ISBN. Results show copy count, availability status, and a borrow-before-you-walk-to-the-shelf indicator. |
+| `pages/browse.html` | `/pages/browse` | **Browse the catalogue** — subject and library-wing starting points for physical books. |
+| `pages/subjects.html` | `/pages/subjects` | **Browse by subject** — broad shelf-classification entry points. |
+| `pages/new-arrivals.html` | `/pages/new-arrivals` | **New arrivals** — newest catalogue records, with covers and availability. |
+| `pages/library-info.html` | `/pages/library-info` | **Library information** — opening hours, location, contact, borrowing help, and the OAU repository link. |
 | `pages/03-book.html` | `/pages/03-book` | **Book detail** — full record for a single title: cover image (via Open Library), call number, all physical copies with their individual statuses, and a Reserve button. |
 | `pages/04-signin.html` | `/pages/04-signin` | **Sign in** — accepts a matric or staff number and password. Redirects back to the page the reader came from after a successful sign-in. |
 | `pages/404.html` | `/404` | **Not found** — returned by Vercel for any path that does not exist. |
@@ -72,6 +76,7 @@ See [`DEC-001`](.ilana/decisions.md) in the Ìlànà record for the full reasoni
 | `pages/06-reservations.html` | `/pages/06-reservations` | **Reservations** — current queue positions and option to cancel a reservation. |
 | `pages/07-change-password.html` | `/pages/07-change-password` | **Change password** — required on first sign-in when `must_change_password` is true. |
 | `pages/12-saved-titles.html` | `/pages/12-saved-titles` | **Saved titles** — bookmarked catalogue entries the reader has saved. |
+| `pages/saved-searches.html` | `/pages/saved-searches` | **Saved searches** — signed-in members can save and delete catalogue URLs in this browser until account-level API storage is available. |
 
 ### Library staff (librarian or admin role)
 
@@ -129,6 +134,11 @@ holibrary-frontend/
 │   ├── 10-members.html
 │   ├── 11-dashboard.html
 │   ├── 12-saved-titles.html
+│   ├── saved-searches.html
+│   ├── browse.html
+│   ├── subjects.html
+│   ├── new-arrivals.html
+│   ├── library-info.html
 │   ├── 13-member-record.html
 │   ├── 404.html
 │   ├── accessibility.html
@@ -144,6 +154,7 @@ holibrary-frontend/
 │   ├── format.js               # Date formatting, availability wording, covers
 │   ├── validate.js             # Client-side form validation
 │   └── push.js                 # Push notification opt-in flow
+│   └── searches.js             # Browser-local saved-search storage until API support exists
 │
 ├── css/
 │   ├── tokens.css              # Design tokens (colours, type, spacing)
@@ -205,6 +216,19 @@ api.isStaff()      // librarian or admin
 api.isAdmin()
 ```
 
+Catalogue URLs preserve `q`, `class`, `subject`, `author`, `faculty`,
+`department`, `yearFrom`, `yearTo`, `language`, `wing`, `availability`,
+`borrowable`, `sort`, and `page`. The deployed API currently guarantees the
+original `q`, `class`, `subject`, `available`, `page`, and `per_page` inputs;
+the additional filters are sent when supported by the server and remain in
+the URL for shareability.
+
+There is currently no `/me/searches` or related-titles endpoint. Saved
+searches therefore use browser-local storage for signed-in members and the
+detail page derives related titles from supported catalogue searches. Neither
+feature submits research items, downloads repository files, or adds digital
+circulation.
+
 **Token strategy**
 
 - The access token is kept in memory (not `localStorage` or `sessionStorage`), so it dies when the tab closes.
@@ -215,6 +239,12 @@ api.isAdmin()
 **Error shape**
 
 Failed requests throw an `ApiError` with `.status`, `.code`, and `.message` taken from the server's own response body. Page scripts should display `err.message` directly — the API writes its refusals for a reader.
+
+### `js/searches.js`
+
+Stores signed-in members' saved catalogue URLs in browser-local storage until
+the API provides an account-level saved-search resource. Notification controls
+are intentionally absent until the API exposes availability subscriptions.
 
 ### `js/nav.js`
 

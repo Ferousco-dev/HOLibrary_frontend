@@ -244,6 +244,9 @@ function renderBook(book, copies, myLoan, isSaved) {
   split.append(main, aside);
   content.appendChild(split);
 
+  const related = relatedTitles(book);
+  content.appendChild(related);
+
   announce(book.Title + " loaded.");
 }
 
@@ -286,7 +289,36 @@ function titlePanel(book, copies) {
   body.appendChild(text);
   panel.appendChild(body);
 
+  const linkActions = document.createElement("p");
+  linkActions.className = "result__actions";
+  const copyLink = document.createElement("button");
+  copyLink.type = "button";
+  copyLink.className = "btn btn--secondary";
+  copyLink.textContent = "Copy link";
+  const copyStatus = document.createElement("span");
+  copyStatus.className = "hint";
+  copyStatus.setAttribute("aria-live", "polite");
+  copyLink.addEventListener("click", async function () {
+    const link = window.location.href;
+    try {
+      await navigator.clipboard.writeText(link);
+      copyStatus.textContent = "Link copied.";
+    } catch (error) {
+      copyStatus.textContent = "Copy failed. Select the page address to share it.";
+    }
+  });
+  linkActions.append(copyLink, copyStatus);
+  panel.appendChild(linkActions);
+
   panel.appendChild(factGrid(book));
+
+  const description = book.Description || book.Summary || book.description || book.summary;
+  if (description) {
+    panel.appendChild(el("section", { className: "book-summary", "aria-labelledby": "summary-heading" }, [
+      el("h2", { className: "panel__title", id: "summary-heading" }, "About this title"),
+      el("p", {}, description),
+    ]));
+  }
 
   const state = availabilityLine(book);
   const notice = document.createElement("div");
@@ -318,13 +350,52 @@ function factGrid(book) {
     grid.append(dt, dd);
   }
 
-  fact("Publisher", book.Publisher + (book.PublishedYear ? " (" + book.PublishedYear + ")" : ""));
+  fact("Edition", book.Edition || book.edition);
+  fact("Publisher", book.Publisher || book.publisher);
+  fact("Publication year", book.PublishedYear || book.publication_year);
+  fact("Language", book.Language || book.language);
   fact("ISBN", book.ISBN13 || book.ISBN10 || "Not recorded");
   fact("Call number", book.CallNumber);
   fact("Wing", book.wing && book.wing !== "Unknown" ? book.wing + " Wing" : null);
   if (book.Subjects && book.Subjects.length) fact("Subjects", book.Subjects.join("; "));
 
   return grid;
+}
+
+function relatedTitles(book) {
+  const section = el("section", { className: "panel related", "aria-labelledby": "related-heading" }, [
+    el("h2", { className: "panel__title", id: "related-heading" }, "Related titles"),
+    el("div", { className: "loading" }, [
+      el("div", { className: "loader", role: "status", "aria-label": "Loading related titles" }),
+      el("p", {}, "Looking for titles with a shared subject or author…"),
+    ]),
+  ]);
+  const subject = book.Subjects && book.Subjects[0];
+  const author = book.Authors && book.Authors[0];
+  if (!subject && !author) {
+    replace(section, el("h2", { className: "panel__title", id: "related-heading" }, "Related titles"),
+      el("p", { className: "hint" }, "Related titles will appear when subject or author data is recorded."));
+    return section;
+  }
+
+  const query = subject ? "subject=" + encodeURIComponent(subject) : "author=" + encodeURIComponent(author);
+  api.get("/books?" + query + "&page=1&per_page=6").then(function (result) {
+    const books = (result.data || []).filter(function (item) { return item.ID !== book.ID; }).slice(0, 4);
+    const content = books.length
+      ? el("div", { className: "related-grid" }, books.map(function (item) {
+        return el("article", { className: "related-item" }, [
+          coverElement(item, "list"),
+          el("h3", { className: "result__title" }, el("a", { href: "03-book.html?id=" + encodeURIComponent(item.ID) }, item.Title)),
+          el("p", { className: "result__meta" }, item.Authors && item.Authors.length ? item.Authors.join(", ") : "Author not recorded"),
+        ]);
+      }))
+      : el("p", { className: "hint" }, "No related titles were found in the catalogue.");
+    replace(section, el("h2", { className: "panel__title", id: "related-heading" }, "Related titles"), content);
+  }).catch(function () {
+    replace(section, el("h2", { className: "panel__title", id: "related-heading" }, "Related titles"),
+      el("p", { className: "hint" }, "Related titles are unavailable right now."));
+  });
+  return section;
 }
 
 /* Maps the server's copy status to the words and the tone the design system
@@ -614,6 +685,7 @@ function saveToggle(book, isSaved) {
   btn.type = "button";
   btn.className = "btn btn--secondary";
   btn.textContent = isSaved ? "Saved to your list" : "Save this title";
+  btn.setAttribute("aria-pressed", String(isSaved));
 
   // Local variable tracks the live state so the click handler does not have to
   // read the button label, which is fragile under future text changes.
@@ -628,11 +700,13 @@ function saveToggle(book, isSaved) {
         await api.del("/bookmarks/" + encodeURIComponent(book.ID));
         saved = false;
         btn.textContent = "Save this title";
+        btn.setAttribute("aria-pressed", "false");
         announce(book.Title + " removed from your saved titles.");
       } else {
         await api.post("/bookmarks", { book_id: book.ID });
         saved = true;
         btn.textContent = "Saved to your list";
+        btn.setAttribute("aria-pressed", "true");
         announce(book.Title + " added to your saved titles.");
       }
     } catch (err) {
