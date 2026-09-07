@@ -78,7 +78,7 @@ function roleEditor(user) {
 }
 
 function userTable(users) {
-  return el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
+  return el("div", { className: "table-wrap" }, el("table", { className: "table table--responsive" }, [
     el("caption", {}, "Library accounts and access roles"),
     el("thead", {}, el("tr", {}, [
       el("th", { scope: "col" }, "Name"),
@@ -90,12 +90,12 @@ function userTable(users) {
     ])),
     el("tbody", {}, users.map(function (user) {
       return el("tr", {}, [
-        el("td", {}, el("a", { href: "13-member-record.html?id=" + encodeURIComponent(user.id) }, user.full_name || "Unnamed user")),
-        el("td", { className: "accession" }, user.identifier || "-"),
-        el("td", {}, user.email || "-"),
-        el("td", {}, [badge(user.role, roleTone(user.role)), roleEditor(user)]),
-        el("td", {}, user.category || "-"),
-        el("td", {}, badge(user.status, statusTone(user.status))),
+        el("td", { "data-label": "Name" }, el("a", { href: "13-member-record.html?id=" + encodeURIComponent(user.id) }, user.full_name || "Unnamed user")),
+        el("td", { className: "accession", "data-label": "Identifier" }, user.identifier || "-"),
+        el("td", { "data-label": "Email" }, user.email || "-"),
+        el("td", { "data-label": "Role" }, [badge(user.role, roleTone(user.role)), roleEditor(user)]),
+        el("td", { "data-label": "Category" }, user.category || "-"),
+        el("td", { "data-label": "Status" }, badge(user.status, statusTone(user.status))),
       ]);
     })),
   ]));
