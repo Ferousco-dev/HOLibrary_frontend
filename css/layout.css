@@ -133,24 +133,21 @@
    desk. Presentational only, so it is hidden from assistive technology. */
 .mainnav__sep { height: 1px; background: var(--rule); margin: var(--space-2) var(--space-3); }
 @media (max-width: 560px) {
-  .brand__name { font-size: 0.9375rem; }
+  .brand__name { display: none; }
+  .brand::after {
+    content: "Holibrary";
+    font-family: var(--font-head);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--indigo);
+    line-height: 1.15;
+  }
   .mainnav__list { min-width: 220px; }
 }
 
-/* Below ~400px the crest, the full library name and the "Menu" button no
-   longer fit on one line: the name is flex: none by design (it must not
-   wrap awkwardly), so the row overflows and pushes the button off-screen
-   instead of shrinking. Hiding the name visually keeps it in the accessible
-   name of .brand, so a screen reader still reads the library's name; only
-   the visual duplicate of the crest goes. These declarations are the same
-   ones .sr-only carries in base.css, repeated because the class cannot be
-   added and removed from the markup at a breakpoint. */
+/* Keep the compact brand and menu usable on the smallest screens. */
 @media (max-width: 400px) {
-  .brand__name {
-    position: absolute; width: 1px; height: 1px;
-    padding: 0; margin: -1px; overflow: hidden;
-    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
+  .brand__crest { width: 36px; }
   .navtoggle { padding: var(--space-2) var(--space-3); }
 }
 
@@ -201,6 +198,7 @@
 
 /* Two-column: main content + supporting sidebar. Stacks below 900px. */
 .split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--space-5); align-items: start; }
+.split > * { min-width: 0; }
 /* Until there is something to show beside it, the form takes the whole width.
    The desk screens open with an empty results column, and reserving 320px of
    nothing squeezes the field the librarian is about to type into. */
