@@ -70,7 +70,11 @@ function roleEditor(user) {
     "aria-label": "Save role for " + user.full_name,
     onClick: function () { updateRole(user, select, button); },
   }, "Save");
-  return el("div", { className: "result__actions" }, [select, button]);
+  const details = el("details", { className: "role-editor", name: "user-role-editor" }, [
+    el("summary", {}, "Change role"),
+    el("div", { className: "role-editor__body" }, [select, button]),
+  ]);
+  return details;
 }
 
 function userTable(users) {

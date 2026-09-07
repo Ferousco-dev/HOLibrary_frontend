@@ -156,6 +156,20 @@
 .status--bad  { color: var(--bad);  background: var(--bad-wash);  border-color: var(--bad-line); }
 .status--none { color: var(--ink-muted); background: var(--wash); border-color: var(--rule); }
 
+/* A row stays compact until its role is being changed. Native details keeps
+   the disclosure keyboard-accessible and announces its open state. */
+.role-editor { margin-top: var(--space-2); max-width: 15rem; }
+.role-editor summary {
+  color: var(--blue); cursor: pointer; font-size: var(--text-sm);
+  font-weight: 600; padding: var(--space-1) 0;
+}
+.role-editor summary:hover { color: var(--blue-dark); }
+.role-editor__body {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding-top: var(--space-2); flex-wrap: wrap;
+}
+.role-editor__body .select { flex: 1 1 9rem; }
+
 /* A block-level message: an availability line, a refusal, a confirmation. */
 .notice { border: 1px solid var(--rule); border-radius: var(--radius);
   padding: var(--space-4); background: var(--wash); margin-bottom: var(--space-4); }
