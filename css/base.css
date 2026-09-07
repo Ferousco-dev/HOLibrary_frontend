@@ -5,6 +5,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Mobile browsers add a blue flash when a control is tapped. The pressed and
+  focus states below provide the interface feedback instead; keyboard users
+  still keep the visible :focus-visible ring. */
+* { -webkit-tap-highlight-color: transparent; }
+
 /* The page fills the window even when it has little to say.
 
    Without this, a short page (404, a sign-in form, an empty result) ends its
