@@ -227,6 +227,20 @@
       padding: 1.25rem;
     }
 
+    .loan-card__book {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .loan-card__book .cover {
+      width: 92px;
+    }
+
+    .loan-card__book .result__text {
+      min-width: 0;
+    }
+
     .loan-card__category {
       display: inline-flex;
       align-items: center;
@@ -297,6 +311,10 @@
 
       .loan-card__inner {
         padding: 1rem;
+      }
+
+      .loan-card__book .cover {
+        width: 68px;
       }
 
       .loan-card__due {
@@ -386,13 +404,27 @@ const content = document.getElementById("content");
 
 function loanCard(loan) {
   const due = dueState(loan.due_at);
+  const book = loan.book || {
+    Title: loan.book_title,
+    ID: loan.book_id,
+    CallNumber: "",
+  };
+  const title = el("a", {
+    href: "03-book.html?id=" + encodeURIComponent(loan.book_id),
+  }, loan.book_title);
+
   return el("article", {
     className: "loan-card" + (loan.is_overdue ? " loan-card--overdue" : ""),
   }, el("div", { className: "loan-card__inner" }, [
-    el("h3", { className: "result__title" }, loan.book_title),
-    el("p", { className: "result__meta" }, [
-      "Accession number: ",
-      el("span", { className: "accession" }, loan.accession_number),
+    el("div", { className: "loan-card__book" }, [
+      coverElement(book, "list"),
+      el("div", { className: "result__text" }, [
+        el("h3", { className: "result__title" }, title),
+        el("p", { className: "result__meta" }, [
+          "Accession number: ",
+          el("span", { className: "accession" }, loan.accession_number),
+        ]),
+      ]),
     ]),
     el("div", { className: "loan-card__due" }, [
       el("p", { className: "loan-card__due-date" }, [
@@ -429,7 +461,20 @@ const loaded = load({
   label: "Loading your loans",
   needsSignIn: "see the books you have out",
   empty: "You have no books out at the moment.",
-  fetch: () => api.get("/me/loans"),
+  fetch: async function () {
+    const result = await api.get("/me/loans");
+    const loans = result.data || [];
+    const enriched = await Promise.all(loans.map(async function (loan) {
+      try {
+        const detail = await api.get("/books/" + encodeURIComponent(loan.book_id));
+        const record = detail.data || detail;
+        return Object.assign({}, loan, { book: record.book || record });
+      } catch (error) {
+        return loan;
+      }
+    }));
+    return Object.assign({}, result, { data: enriched });
+  },
   announce: (r) => (r.data || []).length + " book(s) currently out.",
   render: function (result) {
     const loans = result.data || [];
