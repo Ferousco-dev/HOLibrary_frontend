@@ -19,6 +19,7 @@ const statusResult = document.getElementById("status-result");
 function invitationNotice(target, title, body, tone) { replace(target, el("div", { className: "notice notice--" + tone }, [el("p", { className: "notice__head" }, title), el("p", { className: "notice__body" }, body)])); }
 function invitationStatus(row) { return el("span", { className: "status status--" + (row.status === "delivered" || row.status === "opened" ? "ok" : row.status === "failed" || row.status === "bounced" ? "bad" : "warn") }, row.status || "unknown"); }
 async function loadInvitations() {
+  if (!guardPage({ into: statusResult, requiredRole: "admin" })) return;
   replace(statusResult, loadingState("Loading invitation delivery"));
   try {
     const rows = ((await api.get("/admin/invitations?per_page=25")).data || []);

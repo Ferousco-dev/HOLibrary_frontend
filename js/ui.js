@@ -83,6 +83,30 @@ function signInHref() {
   return base + "?next=" + encodeURIComponent(here);
 }
 
+function redirectToSignIn(expired) {
+  const target = signInHref();
+  location.replace(target + (expired ? "&expired=1" : ""));
+}
+
+function accessDeniedState() {
+  return messageState("You do not have permission to view this page.", "bad", [
+    el("p", { className: "hint" }, el("a", { href: "../index.html" }, "Back to the catalogue")),
+  ]);
+}
+
+function guardPage(spec) {
+  if (!api.isSignedIn()) {
+    redirectToSignIn(false);
+    return false;
+  }
+  if (spec.requiredRole === "admin" && !api.isAdmin()) {
+    replace(spec.into, accessDeniedState());
+    announce("You do not have permission to view this page.");
+    return false;
+  }
+  return true;
+}
+
 /* Every /me screen needs the same signed-out state, and each was writing its
    own. what completes the sentence "Sign in to ...". */
 function signedOutState(what) {
@@ -109,9 +133,7 @@ function signedOutState(what) {
 async function load(spec) {
   const { into, fetch: ask, render, label, empty, needsSignIn } = spec;
 
-  if (needsSignIn && !api.isSignedIn()) {
-    replace(into, signedOutState(needsSignIn));
-    announce("Sign in to " + needsSignIn + ".");
+  if (needsSignIn && !guardPage({ into: into, requiredRole: spec.requiredRole })) {
     return;
   }
 
@@ -132,10 +154,10 @@ async function load(spec) {
     if (spec.announce) announce(spec.announce(result));
   } catch (err) {
     // 401 from a page that thought it was signed in: the refresh token has
-    // expired too. Say so plainly instead of showing a bare "unauthorised".
+    // expired too. Leave the protected page instead of showing its shell with
+    // a small error panel inside it.
     if (err.status === 401 && needsSignIn) {
-      replace(into, signedOutState(needsSignIn));
-      announce("Your session has ended. Sign in again.");
+      redirectToSignIn(true);
       return;
     }
     replace(into, messageState(err.message, "bad"));

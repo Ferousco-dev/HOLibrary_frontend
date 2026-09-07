@@ -102,6 +102,7 @@ function userTable(users) {
 }
 
 async function loadUsers() {
+  if (!guardPage({ into: result, requiredRole: "admin" })) return;
   const button = document.getElementById("refresh-btn");
   button.disabled = true;
   replace(result, loadingState("Loading users"));
