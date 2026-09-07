@@ -4,6 +4,6 @@ node_modules/
 *.log
 .vercel
 .env*
-.codex-finalizer
-.tmp
-.presentation-output
+.codex-finalizer/
+.tmp/
+.presentation-output/
