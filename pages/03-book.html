@@ -428,9 +428,9 @@ function copiesTable(book, copies) {
 }
 
 /* ---- the borrow, reserve and save panel ---------------------------------
-   Loans are issued by a librarian against the physical volume and member card.
-   A title page must therefore make an available shelf copy actionable without
-   pretending a visitor can create an unverified self-checkout online. */
+   The deployed API only records a loan after a librarian issues its physical
+   copy. The page therefore gives a truthful pick-up path rather than showing
+   a button that merely looks like an online checkout. */
 
 function reservePanel(book, myLoan, isSaved) {
   const frag = document.createDocumentFragment();
@@ -479,7 +479,7 @@ function reservePanel(book, myLoan, isSaved) {
 
   if (copiesOnShelf) {
     const lead = document.createElement("p");
-    lead.textContent = "An eligible copy is on the shelf now. Pick up any available copy listed below and take it with your library card to the circulation desk.";
+    lead.textContent = "An eligible copy is on the shelf now. The accession number below identifies the exact copy to collect.";
 
     const actionRow = document.createElement("p");
     const directions = document.createElement("a");
@@ -487,12 +487,12 @@ function reservePanel(book, myLoan, isSaved) {
     directions.href = "borrowing.html?book=" + encodeURIComponent(book.ID)
       + "&title=" + encodeURIComponent(book.Title)
       + "&call=" + encodeURIComponent(book.CallNumber || "");
-    directions.textContent = "Start borrowing";
+    directions.textContent = "See collection details";
     actionRow.appendChild(directions);
 
     const explain = document.createElement("p");
     explain.className = "hint";
-    explain.textContent = "A librarian checks your account, scans the physical copy and sets the due date. You do not need to reserve a copy that is already available.";
+    explain.textContent = "You do not need to reserve an available title. The current library server records the loan when staff issue the physical copy.";
     frag.append(lead, actionRow, explain);
 
     if (signedIn) frag.appendChild(saveToggle(book, isSaved));

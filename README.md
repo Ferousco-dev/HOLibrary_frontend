@@ -87,6 +87,7 @@ See [`DEC-001`](.ilana/decisions.md) in the Ìlànà record for the full reasoni
 | File | URL | Description |
 |---|---|---|
 | `pages/11-dashboard.html` | `/pages/11-dashboard` | **Dashboard** — live statistics: active loans, overdue items, reservations queue, member counts. |
+| `pages/20-books-out.html` | `/pages/20-books-out` | **Books out** — staff register of all currently open loans, with member, title, accession number and due date. |
 
 ---
 

@@ -99,6 +99,11 @@ function guardPage(spec) {
     redirectToSignIn(false);
     return false;
   }
+  if (spec.requiredRole === "staff" && !api.isStaff()) {
+    replace(spec.into, accessDeniedState());
+    announce("You do not have permission to view this page.");
+    return false;
+  }
   if (spec.requiredRole === "admin" && !api.isAdmin()) {
     replace(spec.into, accessDeniedState());
     announce("You do not have permission to view this page.");

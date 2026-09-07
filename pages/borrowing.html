@@ -191,75 +191,25 @@
 <script src="../js/push.js"></script>
 
 <script>
-/* A title page sends its chosen book here. This is deliberately a confirmation
-   of the physical borrowing handoff, rather than a fake self-checkout: the
-   live API records loans only after a librarian scans the member card and
-   accession number at the circulation desk. */
+/* This page explains the physical-library policy. It deliberately does not
+   offer a fake checkout confirmation: the current API has no member self-loan
+   endpoint and only records a loan after its copy is issued by staff. */
 (function () {
   const params = new URLSearchParams(window.location.search);
   const title = params.get("title");
-  const bookId = params.get("book");
-  if (!title || !bookId) return;
-
+  if (!title) return;
   const panel = document.getElementById("borrow-confirmation");
   panel.hidden = false;
-
+  panel.className = "panel notice notice--warn";
   const heading = document.createElement("h2");
   heading.className = "panel__title";
   heading.id = "borrow-confirmation-heading";
-  heading.textContent = "Borrow this book?";
-
-  const summary = document.createElement("p");
-  const strong = document.createElement("strong");
-  strong.textContent = title;
-  summary.append("You selected ", strong, ".");
-
-  const call = params.get("call");
-  const instructions = document.createElement("p");
-  instructions.textContent = "Take an available copy"
-    + (call ? " at call number " + call : "")
-    + " and your library card to the circulation desk. The librarian will confirm your account and issue the copy.";
-
-  const actions = document.createElement("p");
-  actions.className = "result__actions";
-  const accept = document.createElement("button");
-  accept.type = "button";
-  accept.className = "btn btn--primary";
-  accept.textContent = "Yes, I accept";
-  const cancel = document.createElement("a");
-  cancel.className = "btn";
-  cancel.href = "03-book.html?id=" + encodeURIComponent(bookId);
-  cancel.textContent = "Go back";
-  actions.append(accept, cancel);
-
-  const result = document.createElement("div");
-  result.setAttribute("aria-live", "polite");
-
-  accept.addEventListener("click", function () {
-    try {
-      sessionStorage.setItem("hol.pendingBorrow", JSON.stringify({
-        bookId: bookId,
-        title: title,
-        acceptedAt: new Date().toISOString(),
-      }));
-    } catch (e) { /* Private browsing may deny storage; the handoff still works. */ }
-
-    accept.disabled = true;
-    accept.textContent = "Ready for the desk";
-    result.className = "notice notice--ok";
-    result.replaceChildren();
-    const head = document.createElement("p");
-    head.className = "notice__head";
-    head.textContent = "Your borrowing handoff is ready.";
-    const body = document.createElement("p");
-    body.className = "notice__body";
-    body.textContent = "Bring the book and your library card to the circulation desk. The loan appears in your account as soon as the librarian issues it.";
-    result.append(head, body);
-    announce("Borrowing handoff ready for " + title + ".");
-  });
-
-  panel.append(heading, summary, instructions, actions, result);
-})();
+  heading.textContent = "Collection details for " + title;
+  const text = document.createElement("p");
+  text.className = "notice__body";
+  text.textContent = "An available copy can be collected using its accession number. The loan appears in your account after library staff issue that physical copy.";
+  panel.append(heading, text);
+}());
 </script>
 
 

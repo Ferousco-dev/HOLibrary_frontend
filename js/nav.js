@@ -97,8 +97,9 @@ function buildNav(list) {
     list.appendChild(group("nav-staff", "Library staff", [
       { file: "08-desk-issue.html", text: "Issue a copy" },
       { file: "09-desk-return.html", text: "Receive a return" },
-      { file: "10-members.html", text: "Add Members" },
-      { file: "14-overdue.html", text: "Overdue books" },
+      { file: "20-books-out.html", text: "Books out" },
+      { file: "14-overdue.html", text: "Overdue" },
+      { file: "10-members.html", text: "Members" },
       { file: "17-inventory.html", text: "Inventory" },
     ]));
   }
