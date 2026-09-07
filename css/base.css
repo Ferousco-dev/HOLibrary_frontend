@@ -34,7 +34,8 @@ body {
    there: pulling it with margin-top:auto would swallow the gap it keeps from
    the content on a long page. */
 main {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 h1, h2, h3, h4 {
