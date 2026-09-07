@@ -344,6 +344,7 @@
   .cover { width: 68px; }
   .cover--detail { width: 120px; }
   .result__body { gap: var(--space-4); }
+  .result__text h1 { font-size: var(--text-2xl); overflow-wrap: anywhere; }
 }
 
 /* --- pagination ---------------------------------------------------------
