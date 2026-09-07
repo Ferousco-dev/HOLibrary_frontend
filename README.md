@@ -22,7 +22,8 @@ The public-facing web application for the **Hezekiah Oluwasanmi Library (HOL)** 
 11. [Security](#security)
 12. [CI pipeline](#ci-pipeline)
 13. [Contributing](#contributing)
-14. [Ìlànà — project record](#ìlànà--project-record)
+14. [Contributors](#contributors)
+15. [Ìlànà — project record](#ìlànà--project-record)
 
 ---
 
@@ -445,6 +446,12 @@ git commit -m "Show accession number on each loan card"
 git push -u origin feature/05-my-loans
 # then open a pull request on GitHub
 ```
+
+---
+
+## Contributors
+
+- [Aliyah](https://github.com/aliyahoiza360-tech)
 
 ---
 
