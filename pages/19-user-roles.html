@@ -11,7 +11,7 @@
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="siteheader"><div class="siteheader__inner"><a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a><nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden><li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li></ul></nav></div></header>
 <div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">Users and roles</li></ol></nav></div>
-<main id="main" class="shell page"><div class="page__head"><h1>Users and roles</h1><p class="page__lead">Review every library account, its role, and its current sign-in status.</p></div><p class="liveregion" id="live" aria-live="polite" role="status"></p><section class="panel" aria-labelledby="role-note-heading"><h2 class="panel__title" id="role-note-heading">Role changes</h2><p>Role upgrades are not available yet because the API currently exposes no role-update operation. This page shows the server's roles without pretending that the status endpoint can change them.</p><p class="hint">Account suspension and reactivation remain available from <a href="10-members.html">Members</a>.</p></section><section class="panel" aria-labelledby="users-heading"><div class="recordhead"><div><h2 class="panel__title" id="users-heading">All users</h2><p class="hint" id="total-label"></p></div><button class="btn btn--secondary" type="button" id="refresh-btn">Refresh</button></div><form id="search-form" class="formrow" novalidate><div class="field"><label for="query">Search users</label><input class="input" id="query" type="search" placeholder="Name, identifier or email" autocomplete="off"></div><div class="field field--fixed"><button class="btn btn--primary" type="submit">Search</button></div></form><div id="users-result"></div><div class="result__actions" id="pager" hidden><button class="btn btn--secondary" type="button" id="previous-btn">Previous</button><span class="hint" id="page-label"></span><button class="btn btn--secondary" type="button" id="next-btn">Next</button></div></section></main>
+<main id="main" class="shell page"><div class="page__head"><h1>Users and roles</h1><p class="page__lead">Review library accounts and update access roles when responsibilities change.</p></div><p class="liveregion" id="live" aria-live="polite" role="status"></p><section class="panel" aria-labelledby="role-note-heading"><h2 class="panel__title" id="role-note-heading">Role changes</h2><p>Role changes are recorded by the server. Demoting the last administrator is refused automatically so the library cannot lose its final administrative account.</p><p class="hint">Account suspension and reactivation remain available from <a href="10-members.html">Members</a>.</p></section><section class="panel" aria-labelledby="users-heading"><div class="recordhead"><div><h2 class="panel__title" id="users-heading">All users</h2><p class="hint" id="total-label"></p></div><button class="btn btn--secondary" type="button" id="refresh-btn">Refresh</button></div><form id="search-form" class="formrow" novalidate><div class="field"><label for="query">Search users</label><input class="input" id="query" type="search" placeholder="Name, identifier or email" autocomplete="off"></div><div class="field field--fixed"><button class="btn btn--primary" type="submit">Search</button></div></form><div id="users-result"></div><div class="result__actions" id="pager" hidden><button class="btn btn--secondary" type="button" id="previous-btn">Previous</button><span class="hint" id="page-label"></span><button class="btn btn--secondary" type="button" id="next-btn">Next</button></div></section></main>
 <footer class="sitefoot"><div class="sitefoot__inner"><div><h2>The Library</h2><ul><li><a href="../index.html">Search the catalogue</a></li><li><a href="06-reservations.html">Reservations</a></li><li><a href="wings.html">Wings and shelving</a></li></ul></div><div><h2>Your account</h2><ul><li><a href="15-profile.html">Profile</a></li><li><a href="05-my-loans.html">Books you have out</a></li><li><a href="07-change-password.html">Change your password</a></li></ul></div><div><h2>Help</h2><ul><li><a href="borrowing.html">How borrowing works</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li></ul></div><div><h2>Visit</h2><ul><li>Hezekiah Oluwasanmi Library</li><li>Obafemi Awolowo University</li><li>Ile-Ife, Osun State</li></ul></div></div><div class="sitefoot__base"><span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span><span>Catalogue and circulation only. This library does not lend digital texts.</span></div></footer>
 <script src="../js/config.js"></script><script src="../js/format.js"></script><script src="../js/api.js"></script><script src="../js/ui.js"></script><script src="../js/nav.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script><script src="../js/push.js"></script>
 <script>
@@ -26,6 +26,52 @@ const perPage = 25;
 function roleTone(role) { return role === "admin" ? "ok" : role === "librarian" ? "warn" : "none"; }
 function statusTone(status) { return status === "active" ? "ok" : status === "suspended" ? "bad" : "none"; }
 function badge(text, tone) { return el("span", { className: "status status--" + tone }, text || "-" ); }
+
+async function updateRole(user, select, button) {
+  const nextRole = select.value;
+  if (nextRole === user.role) return;
+  const sure = await confirmAction({
+    title: "Change this user's role?",
+    body: user.full_name + " will become a " + nextRole + ". This changes the access they receive across the library system.",
+    confirm: "Change role",
+    cancel: "Keep current role",
+  });
+  if (!sure) {
+    select.value = user.role;
+    return;
+  }
+
+  button.disabled = true;
+  select.disabled = true;
+  button.textContent = "Saving…";
+  try {
+    await api.patch("/members/" + encodeURIComponent(user.id) + "/role", { role: nextRole });
+    announce(user.full_name + " is now a " + nextRole + ".");
+    loadUsers();
+  } catch (err) {
+    select.value = user.role;
+    announce(err.message);
+    button.disabled = false;
+    select.disabled = false;
+    button.textContent = "Save";
+  }
+}
+
+function roleEditor(user) {
+  const select = el("select", {
+    className: "select",
+    "aria-label": "Role for " + user.full_name,
+  }, ["member", "librarian", "admin"].map(function (role) {
+    return el("option", { value: role, selected: role === user.role }, role);
+  }));
+  const button = el("button", {
+    className: "btn btn--secondary",
+    type: "button",
+    "aria-label": "Save role for " + user.full_name,
+    onClick: function () { updateRole(user, select, button); },
+  }, "Save");
+  return el("div", { className: "result__actions" }, [select, button]);
+}
 
 function userTable(users) {
   return el("div", { className: "table-wrap" }, el("table", { className: "table" }, [
@@ -43,7 +89,7 @@ function userTable(users) {
         el("td", {}, el("a", { href: "13-member-record.html?id=" + encodeURIComponent(user.id) }, user.full_name || "Unnamed user")),
         el("td", { className: "accession" }, user.identifier || "-"),
         el("td", {}, user.email || "-"),
-        el("td", {}, badge(user.role, roleTone(user.role))),
+        el("td", {}, [badge(user.role, roleTone(user.role)), roleEditor(user)]),
         el("td", {}, user.category || "-"),
         el("td", {}, badge(user.status, statusTone(user.status))),
       ]);
