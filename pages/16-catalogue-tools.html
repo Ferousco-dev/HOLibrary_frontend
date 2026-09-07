@@ -35,11 +35,11 @@
       <section class="panel" aria-labelledby="add-heading">
         <h2 class="panel__title" id="add-heading">Add a catalogue record</h2>
         <form id="book-form" novalidate>
-          <div class="field"><label for="title">Title</label><input class="input" id="title" required></div>
-          <div class="field"><label for="subtitle">Subtitle</label><input class="input" id="subtitle"></div>
-          <div class="formrow"><div class="field"><label for="call-number">Call number</label><input class="input" id="call-number" required placeholder="QA76.76 .M37"></div><div class="field"><label for="isbn13">ISBN-13</label><input class="input" id="isbn13"></div></div>
-          <div class="formrow"><div class="field"><label for="authors">Authors</label><input class="input" id="authors" placeholder="One author per comma"></div><div class="field"><label for="subjects">Subjects</label><input class="input" id="subjects" placeholder="One subject per comma"></div></div>
-          <div class="formrow"><div class="field"><label for="publisher">Publisher</label><input class="input" id="publisher"></div><div class="field"><label for="published-year">Published year</label><input class="input" id="published-year" type="number" min="1000" max="2100"></div><div class="field"><label for="place">Place of publication</label><input class="input" id="place"></div></div>
+          <div class="field"><label for="title">Title</label><input class="input" type="text" id="title" required></div>
+          <div class="field"><label for="subtitle">Subtitle</label><input class="input" type="text" id="subtitle"></div>
+          <div class="formrow"><div class="field"><label for="call-number">Call number</label><input class="input" type="text" id="call-number" required placeholder="QA76.76 .M37"></div><div class="field"><label for="isbn13">ISBN-13</label><input class="input" type="text" id="isbn13"></div></div>
+          <div class="formrow"><div class="field"><label for="authors">Authors</label><input class="input" type="text" id="authors" placeholder="One author per comma"></div><div class="field"><label for="subjects">Subjects</label><input class="input" type="text" id="subjects" placeholder="One subject per comma"></div></div>
+          <div class="formrow"><div class="field"><label for="publisher">Publisher</label><input class="input" type="text" id="publisher"></div><div class="field"><label for="published-year">Published year</label><input class="input" id="published-year" type="number" min="1000" max="2100"></div><div class="field"><label for="place">Place of publication</label><input class="input" type="text" id="place"></div></div>
           <div class="field"><label for="description">Description</label><textarea class="textarea" id="description" rows="4"></textarea></div>
           <button class="btn btn--primary" type="submit" id="book-btn">Add title</button>
         </form>
@@ -51,7 +51,7 @@
         <h2 class="panel__title" id="archive-heading">Archive a title</h2>
         <p class="hint">Archiving removes a title from search without deleting its borrowing history.</p>
         <form id="archive-form" novalidate>
-          <div class="field"><label for="archive-id">Book ID</label><input class="input" id="archive-id" required autocomplete="off"></div>
+          <div class="field"><label for="archive-id">Book ID</label><input class="input" type="text" id="archive-id" required autocomplete="off"></div>
           <button class="btn btn--danger" type="submit" id="archive-btn">Archive title</button>
         </form>
         <div id="archive-result"></div>
