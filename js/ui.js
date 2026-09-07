@@ -151,6 +151,10 @@ async function load(spec) {
     const nodes = [].concat(drawn === null || drawn === undefined ? [] : drawn);
 
     if (nodes.length === 0) {
+      if (spec.empty === null) {
+        replace(into);
+        return;
+      }
       replace(into, messageState(empty || "There is nothing here yet."));
       announce(empty || "Nothing to show.");
       return;

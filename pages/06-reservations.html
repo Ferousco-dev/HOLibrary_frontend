@@ -254,7 +254,7 @@ function showHistory() {
     into: historyBox,
     label: "Loading your history",
     needsSignIn: "see your borrowing history",
-    empty: "You have not borrowed anything yet.",
+    empty: null,
     fetch: () => api.get("/me/history"),
     render: function (result) {
       // Returned loans only. What is still out belongs on the loans page, and

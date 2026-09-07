@@ -1,0 +1,621 @@
+{"kind":"deck","id":"pr/q0di16","name":"Deck"}
+{"kind":"layout","layoutId":"/ppt/slideMasters/slideMaster1.xml","name":"","type":"master"}
+{"kind":"layout","layoutId":"/ppt/slideLayouts/slideLayout1.xml","name":"DEFAULT"}
+{"kind":"slide","id":"sl/y90nupkv","slide":1,"title":"OBAFEMI AWOLOWO UNIVERSITY, ILE-IFE","textShapes":9}
+{"kind":"textbox","id":"sh/k3yl0zql","slide":1,"name":"Text 0","text":"OBAFEMI AWOLOWO UNIVERSITY, ILE-IFE","textPreview":"OBAFEMI AWOLOWO UNIVERSITY, ILE-IFE","textChars":35,"textLines":1,"bbox":[297.6,176.64,864,26.88]}
+{"kind":"textbox","id":"sh/7qp4be9c","slide":1,"name":"Text 1","text":"Online Library\nManagement System","textPreview":"Online Library | Management System","textChars":32,"textLines":2,"bbox":[297.6,211.2,883.2,144]}
+{"kind":"textbox","id":"sh/65g3298r","slide":1,"name":"Text 2","text":"A web-based catalogue and circulation system for the\nHezekiah Oluwasanmi Library","textPreview":"A web-based catalogue and circulation system for the | Hezekiah Oluwasanmi Library","textChars":80,"textLines":2,"bbox":[300.48,360.96,825.6,63.36]}
+{"kind":"shape","id":"sh/ts7md4r2","slide":1,"name":"Shape 3","bbox":[300.48,443.52,710.4,0]}
+{"kind":"textbox","id":"sh/sryl4zqx","slide":1,"name":"Text 4","text":"GROUP","textPreview":"GROUP","textChars":5,"textLines":1,"bbox":[300.48,466.56,129.6,28.8]}
+{"kind":"textbox","id":"sh/fu94fe98","slide":1,"name":"Text 5","text":"Group 4, Part 1, 22 members","textPreview":"Group 4, Part 1, 22 members","textChars":27,"textLines":1,"bbox":[436.8,466.56,777.6,28.8]}
+{"kind":"textbox","id":"sh/utg3698n","slide":1,"name":"Text 6","text":"COURSE","textPreview":"COURSE","textChars":6,"textLines":1,"bbox":[300.48,504.96,129.6,28.8]}
+{"kind":"textbox","id":"sh/wn6dc7eh","slide":1,"name":"Text 7","text":"SEN 106 / SEN 216, Introduction to Web Technologies","textPreview":"SEN 106 / SEN 216, Introduction to Web Technologies","textChars":51,"textLines":1,"bbox":[436.8,504.96,777.6,28.8]}
+{"kind":"textbox","id":"sh/hofulsf2","slide":1,"name":"Text 8","text":"LIVE","textPreview":"LIVE","textChars":4,"textLines":1,"bbox":[300.48,543.36,129.6,28.8]}
+{"kind":"textbox","id":"sh/ul4vaxgb","slide":1,"name":"Text 9","text":"library.appmd.dev  ·  api.library.appmd.dev","textPreview":"library.appmd.dev  ·  api.library.appmd.dev","textChars":43,"textLines":1,"bbox":[436.8,543.36,777.6,28.8]}
+{"kind":"image","id":"im/kr6xgnu5","slide":1,"name":"Image 0","bbox":[100.8,165.12,155.52,151.68]}
+{"kind":"notes","id":"nt/y90nupkv","slide":1,"text":"Good morning. We are Group 4. Our project is an online library management system for the Hezekiah Oluwasanmi Library. Both halves are live and we will show them running."}
+{"kind":"slide","id":"sl/hwbqtkby","slide":2,"title":"THE PROBLEM","textShapes":24}
+{"kind":"textbox","id":"sh/9072xkry","slide":2,"name":"Text 0","text":"THE PROBLEM","textPreview":"THE PROBLEM","textChars":11,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/ozy1ofad","slide":2,"name":"Text 1","text":"Everything is on paper, and nothing is searchable","textPreview":"Everything is on paper, and nothing is searchable","textChars":49,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/a10jqpsj","slide":2,"name":"Text 2","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/x4r21kru","slide":2,"name":"Text 3","text":"The Hezekiah Oluwasanmi Library holds one of the largest collections in West Africa. Finding a book still means walking to the shelf. Borrowing is recorded in a ledger, so no one can answer a simple question without opening a book of records.","textPreview":"The Hezekiah Oluwasanmi Library holds one of the largest collections in West Africa. Finding a book still means walking to the shelf. Bor...","textChars":242,"textLines":1,"bbox":[59.52,145.92,609.6,115.2]}
+{"kind":"shape","id":"sh/w3i1sfa9","slide":2,"name":"Shape 4","bbox":[59.52,280.32,609.6,97.92]}
+{"kind":"shape","id":"sh/r65knqtk","slide":2,"name":"Shape 5","bbox":[80.64,299.52,32.64,32.64]}
+{"kind":"textbox","id":"sh/q5wjelsz","slide":2,"name":"Text 6","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[80.64,299.52,32.64,32.64]}
+{"kind":"textbox","id":"sh/ove9o7yd","slide":2,"name":"Text 7","text":"Is it available?","textPreview":"Is it available?","textChars":16,"textLines":1,"bbox":[122.88,298.56,523.2,34.56]}
+{"kind":"textbox","id":"sh/9wnqhczy","slide":2,"name":"Text 8","text":"The catalogue cannot say. A student walks to the shelf to find out.","textPreview":"The catalogue cannot say. A student walks to the shelf to find out.","textChars":67,"textLines":1,"bbox":[82.56,339.84,563.52,24.96]}
+{"kind":"shape","id":"sh/mtwrmxg7","slide":2,"name":"Shape 9","bbox":[59.52,391.68,609.6,97.92]}
+{"kind":"shape","id":"sh/nu58f2hs","slide":2,"name":"Shape 10","bbox":[80.64,410.88,32.64,32.64]}
+{"kind":"textbox","id":"sh/wjy9sry9","slide":2,"name":"Text 11","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[80.64,410.88,32.64,32.64]}
+{"kind":"textbox","id":"sh/xk7qlczu","slide":2,"name":"Text 12","text":"Who has it?","textPreview":"Who has it?","textChars":11,"textLines":1,"bbox":[122.88,409.92,523.2,34.56]}
+{"kind":"textbox","id":"sh/ahwrqhgj","slide":2,"name":"Text 13","text":"Loans live in a ledger. Tracing one book means reading pages by hand.","textPreview":"Loans live in a ledger. Tracing one book means reading pages by hand.","textChars":69,"textLines":1,"bbox":[82.56,451.2,563.52,24.96]}
+{"kind":"shape","id":"sh/bip8jmho","slide":2,"name":"Shape 14","bbox":[59.52,503.04,609.6,97.92]}
+{"kind":"shape","id":"sh/cnupgny5","slide":2,"name":"Shape 15","bbox":[80.64,522.24,32.64,32.64]}
+{"kind":"textbox","id":"sh/do3q9szq","slide":2,"name":"Text 16","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[80.64,522.24,32.64,32.64]}
+{"kind":"textbox","id":"sh/t8byxkn2","slide":2,"name":"Text 17","text":"What is overdue?","textPreview":"What is overdue?","textChars":16,"textLines":1,"bbox":[122.88,521.28,523.2,34.56]}
+{"kind":"textbox","id":"sh/s72xofmh","slide":2,"name":"Text 18","text":"Nobody knows until a ledger is audited, so fines go uncollected.","textPreview":"Nobody knows until a ledger is audited, so fines go uncollected.","textChars":64,"textLines":1,"bbox":[82.56,562.56,563.52,24.96]}
+{"kind":"shape","id":"sh/76twva5c","slide":2,"name":"Shape 19","bbox":[706.56,145.92,513.89,441.6]}
+{"kind":"textbox","id":"sh/65kfmpor","slide":2,"name":"Text 20","text":"What the system replaces","textPreview":"What the system replaces","textChars":24,"textLines":1,"bbox":[729.6,164.16,467.81,34.56]}
+{"kind":"textbox","id":"sh/hcvy14ne","slide":2,"name":"Text 21","text":"Card catalogue","textPreview":"Card catalogue","textChars":14,"textLines":1,"bbox":[729.6,203.52,470.4,24.96]}
+{"kind":"textbox","id":"sh/gbmxszmt","slide":2,"name":"Text 22","text":"Full-text search over 223 titles","textPreview":"Full-text search over 223 titles","textChars":32,"textLines":1,"bbox":[729.6,227.52,470.4,40.32]}
+{"kind":"textbox","id":"sh/fadgzu58","slide":2,"name":"Text 23","text":"Paper ledger","textPreview":"Paper ledger","textChars":12,"textLines":1,"bbox":[729.6,280.32,470.4,24.96]}
+{"kind":"textbox","id":"sh/u94fqp4n","slide":2,"name":"Text 24","text":"A loan row, timed to the second","textPreview":"A loan row, timed to the second","textChars":31,"textLines":1,"bbox":[729.6,304.32,470.4,40.32]}
+{"kind":"textbox","id":"sh/p0vy54na","slide":2,"name":"Text 25","text":"Shelf walk","textPreview":"Shelf walk","textChars":10,"textLines":1,"bbox":[729.6,357.12,470.4,24.96]}
+{"kind":"textbox","id":"sh/4zmxwzmp","slide":2,"name":"Text 26","text":"Live availability before you leave your room","textPreview":"Live availability before you leave your room","textChars":44,"textLines":1,"bbox":[729.6,381.12,470.4,40.32]}
+{"kind":"textbox","id":"sh/mlgvq147","slide":2,"name":"Text 27","text":"Manual audit","textPreview":"Manual audit","textChars":12,"textLines":1,"bbox":[729.6,433.92,470.4,24.96]}
+{"kind":"textbox","id":"sh/nmpcj6ls","slide":2,"name":"Text 28","text":"Overdue computed from the clock","textPreview":"Overdue computed from the clock","textChars":31,"textLines":1,"bbox":[729.6,457.92,470.4,40.32]}
+{"kind":"textbox","id":"sh/onydsbmd","slide":2,"name":"Text 29","text":"Verbal reminder","textPreview":"Verbal reminder","textChars":15,"textLines":1,"bbox":[729.6,510.72,470.4,24.96]}
+{"kind":"textbox","id":"sh/9o7ulg3y","slide":2,"name":"Text 30","text":"Email and push sent automatically","textPreview":"Email and push sent automatically","textChars":33,"textLines":1,"bbox":[729.6,534.72,470.4,40.32]}
+{"kind":"image","id":"im/5sripona","slide":2,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/hwbqtkby","slide":2,"text":"The library is not short of books. It is short of answers about them."}
+{"kind":"slide","id":"sl/ofy9wn61","slide":3,"title":"WHAT WE BUILT","textShapes":22}
+{"kind":"textbox","id":"sh/cza94vmx","slide":3,"name":"Text 0","text":"WHAT WE BUILT","textPreview":"WHAT WE BUILT","textChars":13,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/d0jax03i","slide":3,"name":"Text 1","text":"A catalogue and a circulation desk","textPreview":"A catalogue and a circulation desk","textChars":34,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/3ah8rqlg","slide":3,"name":"Text 2","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/obq90bml","slide":3,"name":"Text 3","text":"The system manages the physical collection. It never stores or serves book content: it tracks where each physical copy is and who is holding it.","textPreview":"The system manages the physical collection. It never stores or serves book content: it tracks where each physical copy is and who is hold...","textChars":144,"textLines":1,"bbox":[59.52,144,1056,49.92]}
+{"kind":"shape","id":"sh/pcjqtg36","slide":3,"name":"Shape 4","bbox":[59.52,213.12,369.6,184.32]}
+{"kind":"shape","id":"sh/m5cra54z","slide":3,"name":"Shape 5","bbox":[80.64,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/n6ls3alk","slide":3,"name":"Text 6","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[80.64,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/n2l4fq98","slide":3,"name":"Text 7","text":"Search the catalogue","textPreview":"Search the catalogue","textChars":20,"textLines":1,"bbox":[122.88,231.36,283.2,34.56]}
+{"kind":"textbox","id":"sh/m1c3mlsn","slide":3,"name":"Text 8","text":"Title, author, ISBN and subject, with typo tolerance. Open to the public, no login.","textPreview":"Title, author, ISBN and subject, with typo tolerance. Open to the public, no login.","textChars":83,"textLines":1,"bbox":[82.56,272.64,323.52,109.44]}
+{"kind":"shape","id":"sh/943mhgre","slide":3,"name":"Shape 9","bbox":[452.16,213.12,369.6,184.32]}
+{"kind":"shape","id":"sh/83ulovat","slide":3,"name":"Shape 10","bbox":[473.28,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/v6l4jq94","slide":3,"name":"Text 11","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[473.28,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/a5c3ql8z","slide":3,"name":"Text 12","text":"Borrow and return","textPreview":"Borrow and return","textChars":17,"textLines":1,"bbox":[515.52,231.36,283.2,34.56]}
+{"kind":"textbox","id":"sh/x8nml0ra","slide":3,"name":"Text 13","text":"A librarian issues a copy at the desk. Limits and loan periods follow the member category.","textPreview":"A librarian issues a copy at the desk. Limits and loan periods follow the member category.","textChars":90,"textLines":1,"bbox":[475.2,272.64,323.52,109.44]}
+{"kind":"shape","id":"sh/w7ulsvqp","slide":3,"name":"Shape 14","bbox":[844.8,213.12,369.6,184.32]}
+{"kind":"shape","id":"sh/ja54na9g","slide":3,"name":"Shape 15","bbox":[865.92,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/i9w3u58v","slide":3,"name":"Text 16","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[865.92,232.32,32.64,32.64]}
+{"kind":"textbox","id":"sh/e10f2twf","slide":3,"name":"Text 17","text":"Reserve a title","textPreview":"Reserve a title","textChars":15,"textLines":1,"bbox":[908.16,231.36,283.2,34.56]}
+{"kind":"textbox","id":"sh/f29gbyx0","slide":3,"name":"Text 18","text":"When every copy is out, a member joins a queue and is told when one comes back.","textPreview":"When every copy is out, a member joins a queue and is told when one comes back.","textChars":79,"textLines":1,"bbox":[867.84,272.64,323.52,109.44]}
+{"kind":"shape","id":"sh/03ix43e5","slide":3,"name":"Shape 19","bbox":[59.52,414.72,369.6,184.32]}
+{"kind":"shape","id":"sh/14ryd8fq","slide":3,"name":"Shape 20","bbox":[80.64,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/6d0fytg3","slide":3,"name":"Text 21","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[80.64,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/re9g7yxo","slide":3,"name":"Text 22","text":"Save a title","textPreview":"Save a title","textChars":12,"textLines":1,"bbox":[122.88,432.96,283.2,34.56]}
+{"kind":"textbox","id":"sh/sfix03y9","slide":3,"name":"Text 23","text":"A private reading list. It reserves nothing and only the member can see it.","textPreview":"A private reading list. It reserves nothing and only the member can see it.","textChars":75,"textLines":1,"bbox":[82.56,474.24,323.52,109.44]}
+{"kind":"shape","id":"sh/tgry9ofu","slide":3,"name":"Shape 24","bbox":[452.16,414.72,369.6,184.32]}
+{"kind":"shape","id":"sh/a9kfadwn","slide":3,"name":"Shape 25","bbox":[473.28,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/batgjixs","slide":3,"name":"Text 26","text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[473.28,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/l4fi9cza","slide":3,"name":"Text 27","text":"Members and roles","textPreview":"Members and roles","textChars":17,"textLines":1,"bbox":[515.52,432.96,283.2,34.56]}
+{"kind":"textbox","id":"sh/k3m1g7yp","slide":3,"name":"Text 28","text":"Member, librarian and administrator. Every permission is re-checked on the server.","textPreview":"Member, librarian and administrator. Every permission is re-checked on the server.","textChars":82,"textLines":1,"bbox":[475.2,474.24,323.52,109.44]}
+{"kind":"shape","id":"sh/z2d07mh4","slide":3,"name":"Shape 29","bbox":[844.8,414.72,369.6,184.32]}
+{"kind":"shape","id":"sh/y14jehgj","slide":3,"name":"Shape 30","bbox":[865.92,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/x0vi5czy","slide":3,"name":"Text 31","text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[865.92,433.92,32.64,32.64]}
+{"kind":"textbox","id":"sh/czmhc7id","slide":3,"name":"Text 32","text":"Notifications","textPreview":"Notifications","textChars":13,"textLines":1,"bbox":[908.16,432.96,283.2,34.56]}
+{"kind":"textbox","id":"sh/byd032h8","slide":3,"name":"Text 33","text":"Due dates and reserve alerts by email and push, queued through an outbox.","textPreview":"Due dates and reserve alerts by email and push, queued through an outbox.","textChars":73,"textLines":1,"bbox":[867.84,474.24,323.52,109.44]}
+{"kind":"image","id":"im/hg7apkj6","slide":3,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/ofy9wn61","slide":3,"text":"Scope discipline mattered. We were tempted to add PDFs. We did not: this is a system for a building full of physical books."}
+{"kind":"slide","id":"sl/jyx0ra1s","slide":4,"title":"THE STACK","textShapes":50}
+{"kind":"textbox","id":"sh/1cj2d8b6","slide":4,"name":"Text 0","text":"THE STACK","textPreview":"THE STACK","textChars":9,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/0ba143al","slide":4,"name":"Text 1","text":"Every technology, and what each one is for","textPreview":"Every technology, and what each one is for","textChars":42,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/ql8jytsj","slide":4,"name":"Text 2","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/doj29oba","slide":4,"name":"Shape 3","bbox":[59.52,138.24,364.8,449.28]}
+{"kind":"textbox","id":"sh/sna103ap","slide":4,"name":"Text 4","text":"Back end","textPreview":"Back end","textChars":8,"textLines":1,"bbox":[82.56,156.48,318.72,34.56]}
+{"kind":"textbox","id":"sh/3ihk3et8","slide":4,"name":"Text 5","text":"Go 1.27","textPreview":"Go 1.27","textChars":7,"textLines":1,"bbox":[82.56,192,318.72,19.2]}
+{"kind":"textbox","id":"sh/ih8ju9sn","slide":4,"name":"Text 6","text":"One static binary. Concurrency is in the language, which borrowing needs.","textPreview":"One static binary. Concurrency is in the language, which borrowing needs.","textChars":73,"textLines":1,"bbox":[82.56,210.24,318.72,43.84]}
+{"kind":"textbox","id":"sh/kbm987y5","slide":4,"name":"Text 7","text":"PostgreSQL","textPreview":"PostgreSQL","textChars":10,"textLines":1,"bbox":[82.56,256.96,318.72,19.2]}
+{"kind":"textbox","id":"sh/5cva1cfq","slide":4,"name":"Text 8","text":"Row locks and transactions. A loan's correctness depends on them.","textPreview":"Row locks and transactions. A loan's correctness depends on them.","textChars":65,"textLines":1,"bbox":[82.56,275.2,318.72,43.84]}
+{"kind":"textbox","id":"sh/i94r6xgz","slide":4,"name":"Text 9","text":"pgx","textPreview":"pgx","textChars":3,"textLines":1,"bbox":[82.56,321.92,318.72,19.2]}
+{"kind":"textbox","id":"sh/jadsz2xk","slide":4,"name":"Text 10","text":"Postgres driver and connection pool.","textPreview":"Postgres driver and connection pool.","textChars":36,"textLines":1,"bbox":[82.56,340.16,318.72,43.84]}
+{"kind":"textbox","id":"sh/w72947yt","slide":4,"name":"Text 11","text":"Redis","textPreview":"Redis","textChars":5,"textLines":1,"bbox":[82.56,386.88,318.72,19.2]}
+{"kind":"textbox","id":"sh/x8vaxsfe","slide":4,"name":"Text 12","text":"Rate-limit counters only. A cache, never a store of record.","textPreview":"Rate-limit counters only. A cache, never a store of record.","textChars":59,"textLines":1,"bbox":[82.56,405.12,318.72,43.84]}
+{"kind":"textbox","id":"sh/a5kr2xg3","slide":4,"name":"Text 13","text":"Argon2id","textPreview":"Argon2id","textChars":8,"textLines":1,"bbox":[82.56,451.84,318.72,19.2]}
+{"kind":"textbox","id":"sh/v6tsv2xo","slide":4,"name":"Text 14","text":"Password hashing, memory-hard at 64 MB.","textPreview":"Password hashing, memory-hard at 64 MB.","textChars":39,"textLines":1,"bbox":[82.56,470.08,318.72,43.84]}
+{"kind":"textbox","id":"sh/g36tgryd","slide":4,"name":"Text 15","text":"JWT HS256","textPreview":"JWT HS256","textChars":9,"textLines":1,"bbox":[82.56,516.8,318.72,19.2]}
+{"kind":"textbox","id":"sh/h4fa9wfy","slide":4,"name":"Text 16","text":"Access tokens, with the algorithm pinned.","textPreview":"Access tokens, with the algorithm pinned.","textChars":41,"textLines":1,"bbox":[82.56,535.04,318.72,43.84]}
+{"kind":"shape","id":"sh/p0batw72","slide":4,"name":"Shape 17","bbox":[453.12,138.24,364.8,449.28]}
+{"kind":"textbox","id":"sh/oz29krqh","slide":4,"name":"Text 18","text":"Front end","textPreview":"Front end","textChars":9,"textLines":1,"bbox":[476.16,156.48,318.72,34.56]}
+{"kind":"textbox","id":"sh/3ytsrmpw","slide":4,"name":"Text 19","text":"HTML5","textPreview":"HTML5","textChars":5,"textLines":1,"bbox":[476.16,192,318.72,19.2]}
+{"kind":"textbox","id":"sh/2xkrih8b","slide":4,"name":"Text 20","text":"Semantic elements and real form controls.","textPreview":"Semantic elements and real form controls.","textChars":41,"textLines":1,"bbox":[476.16,210.24,318.72,43.84]}
+{"kind":"textbox","id":"sh/1wbapc7q","slide":4,"name":"Text 21","text":"CSS3","textPreview":"CSS3","textChars":4,"textLines":1,"bbox":[476.16,256.96,318.72,19.2]}
+{"kind":"textbox","id":"sh/gv29g7q5","slide":4,"name":"Text 22","text":"Custom properties, flexbox and grid. One responsive layout.","textPreview":"Custom properties, flexbox and grid. One responsive layout.","textChars":59,"textLines":1,"bbox":[476.16,275.2,318.72,43.84]}
+{"kind":"textbox","id":"sh/fu9sn2p0","slide":4,"name":"Text 23","text":"JavaScript","textPreview":"JavaScript","textChars":10,"textLines":1,"bbox":[476.16,321.92,318.72,19.2]}
+{"kind":"textbox","id":"sh/et0reh8f","slide":4,"name":"Text 24","text":"Fetch and DOM. No framework: the course examines this directly.","textPreview":"Fetch and DOM. No framework: the course examines this directly.","textChars":63,"textLines":1,"bbox":[476.16,340.16,318.72,43.84]}
+{"kind":"textbox","id":"sh/tsrqlc7u","slide":4,"name":"Text 25","text":"OpenAPI 3.0.3","textPreview":"OpenAPI 3.0.3","textChars":13,"textLines":1,"bbox":[476.16,386.88,318.72,19.2]}
+{"kind":"textbox","id":"sh/sri9s7q9","slide":4,"name":"Text 26","text":"The contract the interface is written against.","textPreview":"The contract the interface is written against.","textChars":46,"textLines":1,"bbox":[476.16,405.12,318.72,43.84]}
+{"kind":"textbox","id":"sh/ilwf69kv","slide":4,"name":"Text 27","text":"Open Library","textPreview":"Open Library","textChars":12,"textLines":1,"bbox":[476.16,451.84,318.72,19.2]}
+{"kind":"textbox","id":"sh/jm5gze1g","slide":4,"name":"Text 28","text":"Book cover images, fetched by ISBN.","textPreview":"Book cover images, fetched by ISBN.","textChars":35,"textLines":1,"bbox":[476.16,470.08,318.72,43.84]}
+{"kind":"textbox","id":"sh/knex8j21","slide":4,"name":"Text 29","text":"Schema.org","textPreview":"Schema.org","textChars":10,"textLines":1,"bbox":[476.16,516.8,318.72,19.2]}
+{"kind":"textbox","id":"sh/5ony1oj6","slide":4,"name":"Text 30","text":"Structured data describing the site as a Library.","textPreview":"Structured data describing the site as a Library.","textChars":49,"textLines":1,"bbox":[476.16,535.04,318.72,43.84]}
+{"kind":"shape","id":"sh/axcf29kj","slide":4,"name":"Shape 31","bbox":[846.72,138.24,417.6,449.28]}
+{"kind":"textbox","id":"sh/vy5gbe14","slide":4,"name":"Text 32","text":"Platform","textPreview":"Platform","textChars":8,"textLines":1,"bbox":[869.76,156.48,371.52,34.56]}
+{"kind":"textbox","id":"sh/wzex4z2p","slide":4,"name":"Text 33","text":"Docker","textPreview":"Docker","textChars":6,"textLines":1,"bbox":[869.76,192,371.52,19.2]}
+{"kind":"textbox","id":"sh/xknyx4ja","slide":4,"name":"Text 34","text":"Multi-stage build to a 15.5 MB scratch image.","textPreview":"Multi-stage build to a 15.5 MB scratch image.","textChars":45,"textLines":1,"bbox":[869.76,210.24,371.52,17.86]}
+{"kind":"textbox","id":"sh/mtcfypkn","slide":4,"name":"Text 35","text":"GitHub Actions","textPreview":"GitHub Actions","textChars":14,"textLines":1,"bbox":[869.76,230.98,371.52,19.2]}
+{"kind":"textbox","id":"sh/nulw7u18","slide":4,"name":"Text 36","text":"Test, scan, migrate, build, deploy, smoke.","textPreview":"Test, scan, migrate, build, deploy, smoke.","textChars":42,"textLines":1,"bbox":[869.76,249.22,371.52,17.86]}
+{"kind":"textbox","id":"sh/fm5c3q54","slide":4,"name":"Text 37","text":"Render","textPreview":"Render","textChars":6,"textLines":1,"bbox":[869.76,269.95,371.52,19.2]}
+{"kind":"textbox","id":"sh/elwba54j","slide":4,"name":"Text 38","text":"Runs the API. Ohio, US East.","textPreview":"Runs the API. Ohio, US East.","textChars":28,"textLines":1,"bbox":[869.76,288.19,371.52,17.86]}
+{"kind":"textbox","id":"sh/18nu50nu","slide":4,"name":"Text 39","text":"Neon","textPreview":"Neon","textChars":4,"textLines":1,"bbox":[869.76,308.93,371.52,19.2]}
+{"kind":"textbox","id":"sh/0netcvm9","slide":4,"name":"Text 40","text":"Managed Postgres. us-east-1.","textPreview":"Managed Postgres. us-east-1.","textChars":28,"textLines":1,"bbox":[869.76,327.17,371.52,17.86]}
+{"kind":"textbox","id":"sh/rilczq5s","slide":4,"name":"Text 41","text":"Upstash","textPreview":"Upstash","textChars":7,"textLines":1,"bbox":[869.76,347.9,371.52,19.2]}
+{"kind":"textbox","id":"sh/qhcb6l47","slide":4,"name":"Text 42","text":"Managed Redis. us-east-1.","textPreview":"Managed Redis. us-east-1.","textChars":25,"textLines":1,"bbox":[869.76,366.14,371.52,17.86]}
+{"kind":"textbox","id":"sh/dknu10ny","slide":4,"name":"Text 43","text":"Vercel","textPreview":"Vercel","textChars":6,"textLines":1,"bbox":[869.76,386.88,371.52,19.2]}
+{"kind":"textbox","id":"sh/sjut8vmd","slide":4,"name":"Text 44","text":"Serves the front end at the edge.","textPreview":"Serves the front end at the edge.","textChars":33,"textLines":1,"bbox":[869.76,405.12,371.52,17.86]}
+{"kind":"textbox","id":"sh/3elcv65w","slide":4,"name":"Text 45","text":"Cloudflare","textPreview":"Cloudflare","textChars":10,"textLines":1,"bbox":[869.76,425.86,371.52,19.2]}
+{"kind":"textbox","id":"sh/idcb2lob","slide":4,"name":"Text 46","text":"DNS and TLS for appmd.dev.","textPreview":"DNS and TLS for appmd.dev.","textChars":26,"textLines":1,"bbox":[869.76,444.1,371.52,17.86]}
+{"kind":"textbox","id":"sh/8jq9c72t","slide":4,"name":"Text 47","text":"Resend","textPreview":"Resend","textChars":6,"textLines":1,"bbox":[869.76,464.83,371.52,19.2]}
+{"kind":"textbox","id":"sh/tkjq5c3e","slide":4,"name":"Text 48","text":"Transactional email from the verified domain.","textPreview":"Transactional email from the verified domain.","textChars":45,"textLines":1,"bbox":[869.76,483.07,371.52,17.86]}
+{"kind":"textbox","id":"sh/6x8rahk3","slide":4,"name":"Text 49","text":"Firebase FCM","textPreview":"Firebase FCM","textChars":12,"textLines":1,"bbox":[869.76,503.81,371.52,19.2]}
+{"kind":"textbox","id":"sh/7ih83mlo","slide":4,"name":"Text 50","text":"Push notifications to registered devices.","textPreview":"Push notifications to registered devices.","textChars":41,"textLines":1,"bbox":[869.76,522.05,371.52,17.86]}
+{"kind":"textbox","id":"sh/gna9gr25","slide":4,"name":"Text 51","text":"govulncheck","textPreview":"govulncheck","textChars":11,"textLines":1,"bbox":[869.76,542.78,371.52,19.2]}
+{"kind":"textbox","id":"sh/hoja9w3q","slide":4,"name":"Text 52","text":"Dependency vulnerability scanning in CI.","textPreview":"Dependency vulnerability scanning in CI.","textChars":40,"textLines":1,"bbox":[869.76,561.02,371.52,17.86]}
+{"kind":"image","id":"im/1kretwra","slide":4,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/jyx0ra1s","slide":4,"text":"Every choice answers a requirement. Go for the concurrency, Postgres for the locks, Redis only as a counter we can afford to lose. Firebase is here for push and nothing else."}
+{"kind":"slide","id":"sl/i107q5of","slide":5,"title":"THE CLIENT","textShapes":24}
+{"kind":"textbox","id":"sh/gjmhgzqt","slide":5,"text":"THE CLIENT","textPreview":"THE CLIENT","textChars":10,"textLines":1,"bbox":[58,24,330,20]}
+{"kind":"textbox","id":"sh/3md0bu94","slide":5,"text":"The catalogue page, explained","textPreview":"The catalogue page, explained","textChars":29,"textLines":1,"bbox":[58,48,800,40]}
+{"kind":"textbox","id":"sh/2l4zip8j","slide":5,"text":"Hand-written HTML, token-based CSS and JavaScript work together in every screen.","textPreview":"Hand-written HTML, token-based CSS and JavaScript work together in every screen.","textChars":80,"textLines":1,"bbox":[58,87,980,20]}
+{"kind":"shape","id":"sh/onmhkzqp","slide":5,"bbox":[290,118,700,560]}
+{"kind":"shape","id":"sh/qp4jm98v","slide":5,"bbox":[22,122,252,76]}
+{"kind":"shape","id":"sh/8f6hcj6t","slide":5,"bbox":[23,132,4,56]}
+{"kind":"textbox","id":"sh/9gfy5o7e","slide":5,"text":"Semantic structure","textPreview":"Semantic structure","textChars":18,"textLines":1,"bbox":[37,132,224,18]}
+{"kind":"textbox","id":"sh/mdoza9o3","slide":5,"text":"Native header, navigation, main content and footer give the page a clear structure.","textPreview":"Native header, navigation, main content and footer give the page a clear structure.","textChars":83,"textLines":1,"bbox":[37,153,224,36]}
+{"kind":"shape","id":"sh/nexg3epo","slide":5,"bbox":[580,206,10,10]}
+{"kind":"shape","id":"sh/0r6h8z6x","slide":5,"bbox":[274,160,306,51]}
+{"kind":"shape","id":"sh/lcfy147i","slide":5,"bbox":[22,214,252,76]}
+{"kind":"shape","id":"sh/yp4z69or","slide":5,"bbox":[23,224,4,56]}
+{"kind":"textbox","id":"sh/zqxgzupc","slide":5,"text":"Labelled search form","textPreview":"Labelled search form","textChars":20,"textLines":1,"bbox":[37,224,224,18]}
+{"kind":"textbox","id":"sh/cnmh4z61","slide":5,"text":"The search field and button use a real form so readers can search by keyboard.","textPreview":"The search field and button use a real form so readers can search by keyboard.","textChars":78,"textLines":1,"bbox":[37,245,224,36]}
+{"kind":"shape","id":"sh/dovyx476","slide":5,"bbox":[510,299,10,10]}
+{"kind":"shape","id":"sh/t8n6lwvy","slide":5,"bbox":[274,252,236,52]}
+{"kind":"shape","id":"sh/s7u5crud","slide":5,"bbox":[22,306,252,76]}
+{"kind":"shape","id":"sh/r6lojmds","slide":5,"bbox":[23,316,4,56]}
+{"kind":"textbox","id":"sh/65cnahc7","slide":5,"text":"Filter and browse","textPreview":"Filter and browse","textChars":17,"textLines":1,"bbox":[37,316,224,18]}
+{"kind":"textbox","id":"sh/5436hcv2","slide":5,"text":"The expandable filter keeps the first view simple and provides a focused way to browse.","textPreview":"The expandable filter keeps the first view simple and provides a focused way to browse.","textChars":87,"textLines":1,"bbox":[37,337,224,36]}
+{"kind":"shape","id":"sh/43u587uh","slide":5,"bbox":[510,333,10,10]}
+{"kind":"shape","id":"sh/j2lofmdw","slide":5,"bbox":[274,338,236,6]}
+{"kind":"shape","id":"sh/i1cn6hcb","slide":5,"bbox":[22,398,252,76]}
+{"kind":"shape","id":"sh/p076tgv6","slide":5,"bbox":[23,408,4,56]}
+{"kind":"textbox","id":"sh/ozepkbul","slide":5,"text":"Availability language","textPreview":"Availability language","textChars":21,"textLines":1,"bbox":[37,408,224,18]}
+{"kind":"textbox","id":"sh/m583eds3","slide":5,"text":"The legend explains whether a copy can go home, stays in the library or is on loan.","textPreview":"The legend explains whether a copy can go home, stays in the library or is on loan.","textChars":83,"textLines":1,"bbox":[37,429,224,36]}
+{"kind":"shape","id":"sh/76hk7ito","slide":5,"bbox":[757,433,10,10]}
+{"kind":"shape","id":"sh/87qlgna9","slide":5,"bbox":[274,436,483,2]}
+{"kind":"shape","id":"sh/98z298bu","slide":5,"bbox":[22,490,252,76]}
+{"kind":"shape","id":"sh/yho3atsr","slide":5,"bbox":[23,500,4,56]}
+{"kind":"textbox","id":"sh/zihk3ytc","slide":5,"text":"Footer navigation","textPreview":"Footer navigation","textChars":17,"textLines":1,"bbox":[37,500,224,18]}
+{"kind":"textbox","id":"sh/kjqlc3ax","slide":5,"text":"Library, account and help links stay available at the end of every page.","textPreview":"Library, account and help links stay available at the end of every page.","textChars":72,"textLines":1,"bbox":[37,521,224,36]}
+{"kind":"shape","id":"sh/lkz258bi","slide":5,"bbox":[585,615,10,10]}
+{"kind":"shape","id":"sh/ids3mxsb","slide":5,"bbox":[274,528,311,92]}
+{"kind":"shape","id":"sh/je14f2tw","slide":5,"bbox":[1006,122,252,76]}
+{"kind":"shape","id":"sh/ruxkz2l0","slide":5,"bbox":[1007,132,4,56]}
+{"kind":"textbox","id":"sh/qto36xkf","slide":5,"text":"Shared CSS tokens","textPreview":"Shared CSS tokens","textChars":17,"textLines":1,"bbox":[1021,132,224,18]}
+{"kind":"textbox","id":"sh/dwz21s36","slide":5,"text":"The purple and gold palette, spacing and type remain consistent across the interface.","textPreview":"The purple and gold palette, spacing and type remain consistent across the interface.","textChars":85,"textLines":1,"bbox":[1021,153,224,36]}
+{"kind":"shape","id":"sh/sv6l8n2l","slide":5,"bbox":[795,252,10,10]}
+{"kind":"shape","id":"sh/3qxkvilo","slide":5,"bbox":[805,160,201,97]}
+{"kind":"shape","id":"sh/ipo32dk3","slide":5,"bbox":[1006,214,252,76]}
+{"kind":"shape","id":"sh/5sf2xs3u","slide":5,"bbox":[1007,224,4,56]}
+{"kind":"textbox","id":"sh/4r6l4n29","slide":5,"text":"Responsive layout","textPreview":"Responsive layout","textChars":17,"textLines":1,"bbox":[1021,224,224,18]}
+{"kind":"textbox","id":"sh/v2dkrils","slide":5,"text":"CSS grid and flexbox keep the search, results and legend readable from phone to desk.","textPreview":"CSS grid and flexbox keep the search, results and legend readable from phone to desk.","textChars":85,"textLines":1,"bbox":[1021,245,224,36]}
+{"kind":"shape","id":"sh/u14jydk7","slide":5,"bbox":[696,450,10,10]}
+{"kind":"shape","id":"sh/0vi9cfet","slide":5,"bbox":[706,252,300,203]}
+{"kind":"shape","id":"sh/lwrqlkfe","slide":5,"bbox":[1006,306,252,76]}
+{"kind":"shape","id":"sh/yt0ra5wn","slide":5,"bbox":[1007,316,4,56]}
+{"kind":"textbox","id":"sh/zu98jax8","slide":5,"text":"DOM-rendered results","textPreview":"DOM-rendered results","textChars":20,"textLines":1,"bbox":[1021,316,224,18]}
+{"kind":"textbox","id":"sh/8z29gfep","slide":5,"text":"JavaScript creates result content safely with textContent instead of innerHTML.","textPreview":"JavaScript creates result content safely with textContent instead of innerHTML.","textChars":79,"textLines":1,"bbox":[1021,337,224,36]}
+{"kind":"shape","id":"sh/9kbqpkfa","slide":5,"bbox":[593,449,10,10]}
+{"kind":"shape","id":"sh/mx0repwz","slide":5,"bbox":[603,344,403,110]}
+{"kind":"shape","id":"sh/ny98nuxk","slide":5,"bbox":[1006,398,252,76]}
+{"kind":"shape","id":"sh/o3yp4vel","slide":5,"bbox":[1007,408,4,56]}
+{"kind":"textbox","id":"sh/po7qd0f6","slide":5,"text":"One API module","textPreview":"One API module","textChars":14,"textLines":1,"bbox":[1021,408,224,18]}
+{"kind":"textbox","id":"sh/e1w7y5w7","slide":5,"text":"The search action uses one async module for requests, token renewal and errors.","textPreview":"The search action uses one async module for requests, token renewal and errors.","textChars":79,"textLines":1,"bbox":[1021,429,224,36]}
+{"kind":"shape","id":"sh/f25oraxs","slide":5,"bbox":[658,300,10,10]}
+{"kind":"shape","id":"sh/g3ep0fed","slide":5,"bbox":[668,305,338,131]}
+{"kind":"shape","id":"sh/14n6tkfy","slide":5,"bbox":[1006,490,252,76]}
+{"kind":"shape","id":"sh/25w725wj","slide":5,"bbox":[1007,500,4,56]}
+{"kind":"textbox","id":"sh/36povax4","slide":5,"text":"Accessibility built in","textPreview":"Accessibility built in","textChars":22,"textLines":1,"bbox":[1021,500,224,18]}
+{"kind":"textbox","id":"sh/o7yp4fe9","slide":5,"text":"Words support colour, controls work by keyboard and reduced-motion settings are respected.","textPreview":"Words support colour, controls work by keyboard and reduced-motion settings are respected.","textChars":90,"textLines":1,"bbox":[1021,521,224,36]}
+{"kind":"shape","id":"sh/ps76xkfu","slide":5,"bbox":[499,488,10,10]}
+{"kind":"shape","id":"sh/i9cnqlwz","slide":5,"bbox":[509,493,497,35]}
+{"kind":"textbox","id":"sh/jalojqxk","slide":5,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1190,685,32,16]}
+{"kind":"image","id":"im/q1s3etsb","slide":5,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"image","id":"im/2ds3atsf","slide":5,"name":"","alt":"Obafemi Awolowo University crest","bbox":[1175,25,58,58]}
+{"kind":"image","id":"im/8vulonap","slide":5,"name":"","alt":"The HOL catalogue page showing search, availability guidance and footer navigation","bbox":[296,124,688,548]}
+{"kind":"notes","id":"nt/i107q5of","slide":5,"text":"This slide uses a live screenshot of the HOL catalogue page. The callouts connect the visible interface to the HTML, CSS, JavaScript and accessibility decisions described in the original client slide."}
+{"kind":"slide","id":"sl/x8f69ofe","slide":6,"title":"SYSTEM DESIGN","textShapes":25}
+{"kind":"textbox","id":"sh/yhg7epsj","slide":6,"name":"Text 0","text":"SYSTEM DESIGN","textPreview":"SYSTEM DESIGN","textChars":13,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/zi98nu94","slide":6,"name":"Text 1","text":"How a request travels through the system","textPreview":"How a request travels through the system","textChars":40,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/98rqt4r6","slide":6,"name":"Text 2","text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/ml07i9sv","slide":6,"name":"Text 3","text":"Following one action end to end: a member presses Borrow, and a due-date reminder arrives three days later.","textPreview":"Following one action end to end: a member presses Borrow, and a due-date reminder arrives three days later.","textChars":107,"textLines":1,"bbox":[59.52,138.24,1056,34.56]}
+{"kind":"shape","id":"sh/7m98ru9g","slide":6,"name":"Shape 4","bbox":[59.52,192,193.92,122.88]}
+{"kind":"textbox","id":"sh/oryp8fah","slide":6,"name":"Text 5","text":"Browser","textPreview":"Browser","textChars":7,"textLines":1,"bbox":[69.12,207.36,174.72,26.88]}
+{"kind":"textbox","id":"sh/pc76hkr2","slide":6,"name":"Text 6","text":"HTML, CSS and\nJavaScript","textPreview":"HTML, CSS and | JavaScript","textChars":24,"textLines":2,"bbox":[67.2,236.16,178.56,63.36]}
+{"kind":"shape","id":"sh/h4bupgn6","slide":6,"name":"Shape 7","bbox":[257.28,245.76,21.12,17.28]}
+{"kind":"shape","id":"sh/w32twb6l","slide":6,"name":"Shape 8","bbox":[285.12,192,193.92,122.88]}
+{"kind":"textbox","id":"sh/v2tcn650","slide":6,"name":"Text 9","text":"Cloudflare","textPreview":"Cloudflare","textChars":10,"textLines":1,"bbox":[294.72,207.36,174.72,26.88]}
+{"kind":"textbox","id":"sh/u1kbu1ov","slide":6,"name":"Text 10","text":"DNS and TLS\nfor the domain","textPreview":"DNS and TLS | for the domain","textChars":26,"textLines":2,"bbox":[292.8,236.16,178.56,63.36]}
+{"kind":"shape","id":"sh/5svutgni","slide":6,"name":"Shape 11","bbox":[482.88,245.76,21.12,17.28]}
+{"kind":"shape","id":"sh/47mt0b6x","slide":6,"name":"Shape 12","bbox":[510.72,192,193.92,122.88]}
+{"kind":"textbox","id":"sh/j6dcr65c","slide":6,"name":"Text 13","text":"Render","textPreview":"Render","textChars":6,"textLines":1,"bbox":[520.32,207.36,174.72,26.88]}
+{"kind":"textbox","id":"sh/i54bylor","slide":6,"name":"Text 14","text":"The Go binary,\none container","textPreview":"The Go binary, | one container","textChars":28,"textLines":2,"bbox":[518.4,236.16,178.56,63.36]}
+{"kind":"shape","id":"sh/twfux0ne","slide":6,"name":"Shape 15","bbox":[708.48,245.76,21.12,17.28]}
+{"kind":"shape","id":"sh/svmt4v6t","slide":6,"name":"Shape 16","bbox":[736.32,192,193.92,122.88]}
+{"kind":"textbox","id":"sh/cbe5g3ih","slide":6,"name":"Text 17","text":"Postgres","textPreview":"Postgres","textChars":8,"textLines":1,"bbox":[745.92,207.36,174.72,26.88]}
+{"kind":"textbox","id":"sh/dcnm98zm","slide":6,"name":"Text 18","text":"Locks, rows,\nthe truth","textPreview":"Locks, rows, | the truth","textChars":22,"textLines":2,"bbox":[744,236.16,178.56,63.36]}
+{"kind":"shape","id":"sh/qpwnet0b","slide":6,"name":"Shape 19","bbox":[510.72,332.16,193.92,82.56]}
+{"kind":"textbox","id":"sh/bq547yhw","slide":6,"name":"Text 20","text":"Redis","textPreview":"Redis","textChars":5,"textLines":1,"bbox":[520.32,340.8,174.72,23.04]}
+{"kind":"textbox","id":"sh/0fy5k3id","slide":6,"name":"Text 21","text":"rate limits only","textPreview":"rate limits only","textChars":16,"textLines":1,"bbox":[518.4,363.84,178.56,23.04]}
+{"kind":"shape","id":"sh/lg76d8zy","slide":6,"name":"Shape 22","bbox":[607.68,314.88,0,17.28]}
+{"kind":"shape","id":"sh/ydgnit07","slide":6,"name":"Shape 23","bbox":[59.52,481.92,268.8,138.24]}
+{"kind":"textbox","id":"sh/zep4byhs","slide":6,"name":"Text 24","text":"Outbox","textPreview":"Outbox","textChars":6,"textLines":1,"bbox":[72.96,497.28,241.92,26.88]}
+{"kind":"textbox","id":"sh/gju58ji9","slide":6,"name":"Text 25","text":"The intention is written\nin the SAME transaction","textPreview":"The intention is written | in the SAME transaction","textChars":48,"textLines":2,"bbox":[72.96,528,241.92,78.72]}
+{"kind":"shape","id":"sh/1k3mhozu","slide":6,"name":"Shape 26","bbox":[332.16,543.36,19.2,16.32]}
+{"kind":"shape","id":"sh/jet8nm1c","slide":6,"name":"Shape 27","bbox":[357.12,481.92,268.8,138.24]}
+{"kind":"textbox","id":"sh/idk7ehkr","slide":6,"name":"Text 28","text":"Worker","textPreview":"Worker","textChars":6,"textLines":1,"bbox":[370.56,497.28,241.92,26.88]}
+{"kind":"textbox","id":"sh/50bqpcj2","slide":6,"name":"Text 29","text":"Wakes every 30s and\nre-checks the database","textPreview":"Wakes every 30s and | re-checks the database","textChars":42,"textLines":2,"bbox":[370.56,528,241.92,78.72]}
+{"kind":"shape","id":"sh/4f2pgr2h","slide":6,"name":"Shape 30","bbox":[629.76,543.36,19.2,16.32]}
+{"kind":"shape","id":"sh/va98j210","slide":6,"name":"Shape 31","bbox":[654.72,481.92,268.8,138.24]}
+{"kind":"textbox","id":"sh/u907axkf","slide":6,"name":"Text 32","text":"Resend","textPreview":"Resend","textChars":6,"textLines":1,"bbox":[668.16,497.28,241.92,26.88]}
+{"kind":"textbox","id":"sh/hcrqlcj6","slide":6,"name":"Text 33","text":"Email to the member's\nreal address","textPreview":"Email to the member's | real address","textChars":34,"textLines":2,"bbox":[668.16,528,241.92,78.72]}
+{"kind":"shape","id":"sh/wbipc72l","slide":6,"name":"Shape 34","bbox":[927.36,543.36,19.2,16.32]}
+{"kind":"shape","id":"sh/7698f214","slide":6,"name":"Shape 35","bbox":[952.32,481.92,268.8,138.24]}
+{"kind":"textbox","id":"sh/m5076xkj","slide":6,"name":"Text 36","text":"Firebase","textPreview":"Firebase","textChars":8,"textLines":1,"bbox":[965.76,497.28,241.92,26.88]}
+{"kind":"textbox","id":"sh/2dkbalg3","slide":6,"name":"Text 37","text":"Push to any device\nthey registered","textPreview":"Push to any device | they registered","textChars":34,"textLines":2,"bbox":[965.76,528,241.92,78.72]}
+{"kind":"shape","id":"sh/netcjqxo","slide":6,"name":"Shape 38","bbox":[981.12,192,239.33,153.6]}
+{"kind":"textbox","id":"sh/of2tcvy9","slide":6,"name":"Text 39","text":"Why an outbox","textPreview":"Why an outbox","textChars":13,"textLines":1,"bbox":[1004.16,210.24,193.25,34.56]}
+{"kind":"textbox","id":"sh/pgbul0fu","slide":6,"name":"Text 40","text":"The loan and the intention to notify are written in one transaction. Neither can exist without the other.","textPreview":"The loan and the intention to notify are written in one transaction. Neither can exist without the other.","textChars":105,"textLines":1,"bbox":[1004.16,251.52,193.25,78.72]}
+{"kind":"textbox","id":"sh/ep0b6lg7","slide":6,"name":"Text 41","text":"The worker re-reads the database before sending, so a reminder queued last night for a book returned this morning is marked superseded and never sent.","textPreview":"The worker re-reads the database before sending, so a reminder queued last night for a book returned this morning is marked superseded an...","textChars":150,"textLines":1,"bbox":[59.52,433.92,1160.64,32.64]}
+{"kind":"image","id":"im/onylg365","slide":6,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/x8f69ofe","slide":6,"text":"The two halves are deliberately separate. A slow mail provider cannot delay a borrow, and a failed send cannot roll back a loan."}
+{"kind":"slide","id":"sl/gnmp4jqx","slide":7,"title":"ARCHITECTURE","textShapes":15}
+{"kind":"textbox","id":"sh/cb2tkvap","slide":7,"name":"Text 0","text":"ARCHITECTURE","textPreview":"ARCHITECTURE","textChars":12,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/dcbud0ra","slide":7,"name":"Text 1","text":"A layered monolith, deployed as one binary","textPreview":"A layered monolith, deployed as one binary","textChars":42,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/zedcfa9g","slide":7,"name":"Text 2","text":"7","textPreview":"7","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/kzmdova1","slide":7,"name":"Shape 3","bbox":[59.52,145.92,724.8,92.16]}
+{"kind":"textbox","id":"sh/l0vuh0rm","slide":7,"name":"Text 4","text":"Browser","textPreview":"Browser","textChars":7,"textLines":1,"bbox":[86.4,145.92,155.52,92.16]}
+{"kind":"textbox","id":"sh/eh0ba1sr","slide":7,"name":"Text 5","text":"HTML, CSS, JavaScript. Renders results and collects input. Trusted with nothing.","textPreview":"HTML, CSS, JavaScript. Renders results and collects input. Trusted with nothing.","textChars":80,"textLines":1,"bbox":[247.68,145.92,516.48,92.16]}
+{"kind":"shape","id":"sh/fi9c369c","slide":7,"name":"Shape 6","bbox":[398.4,240.96,42.24,14.4]}
+{"kind":"shape","id":"sh/baxkjqlk","slide":7,"name":"Shape 7","bbox":[59.52,255.36,724.8,92.16]}
+{"kind":"textbox","id":"sh/a9ojq5kz","slide":7,"name":"Text 8","text":"Handler","textPreview":"Handler","textChars":7,"textLines":1,"bbox":[86.4,255.36,155.52,92.16]}
+{"kind":"textbox","id":"sh/xcz2l03q","slide":7,"name":"Text 9","text":"Parses HTTP, validates shape, checks the token. No library rules live here.","textPreview":"Parses HTTP, validates shape, checks the token. No library rules live here.","textChars":75,"textLines":1,"bbox":[247.68,255.36,516.48,92.16]}
+{"kind":"shape","id":"sh/cbq1sv25","slide":7,"name":"Shape 10","bbox":[398.4,350.4,42.24,14.4]}
+{"kind":"shape","id":"sh/n6x0fqlo","slide":7,"name":"Shape 11","bbox":[59.52,364.8,724.8,92.16]}
+{"kind":"textbox","id":"sh/25ojml43","slide":7,"name":"Text 12","text":"Service","textPreview":"Service","textChars":7,"textLines":1,"bbox":[86.4,364.8,155.52,92.16]}
+{"kind":"textbox","id":"sh/p8fih03e","slide":7,"name":"Text 13","text":"The library's rules: who may borrow, how many, for how long, what is overdue.","textPreview":"The library's rules: who may borrow, how many, for how long, what is overdue.","textChars":77,"textLines":1,"bbox":[247.68,364.8,516.48,92.16]}
+{"kind":"shape","id":"sh/o761ov2t","slide":7,"name":"Shape 14","bbox":[398.4,459.84,42.24,14.4]}
+{"kind":"shape","id":"sh/f2d0b6lc","slide":7,"name":"Shape 15","bbox":[59.52,474.24,724.8,92.16]}
+{"kind":"textbox","id":"sh/eh4jil4r","slide":7,"name":"Text 16","text":"Repository","textPreview":"Repository","textChars":10,"textLines":1,"bbox":[86.4,474.24,155.52,92.16]}
+{"kind":"textbox","id":"sh/id4ju1oz","slide":7,"name":"Text 17","text":"SQL, transactions and row locks. The only layer that knows Postgres exists.","textPreview":"SQL, transactions and row locks. The only layer that knows Postgres exists.","textChars":75,"textLines":1,"bbox":[247.68,474.24,516.48,92.16]}
+{"kind":"shape","id":"sh/jedkn654","slide":7,"name":"Shape 18","bbox":[808.32,145.92,412.13,215.04]}
+{"kind":"textbox","id":"sh/4fm1wb6p","slide":7,"name":"Text 19","text":"Dependencies point one way","textPreview":"Dependencies point one way","textChars":26,"textLines":1,"bbox":[831.36,164.16,366.05,34.56]}
+{"kind":"textbox","id":"sh/50v2pgna","slide":7,"name":"Text 20","text":"A layer may call the one beneath it and never the one above. The domain package at the centre imports nothing from this project at all, so the library's rules can be tested without a database, a server or a network.","textPreview":"A layer may call the one beneath it and never the one above. The domain package at the centre imports nothing from this project at all, s...","textChars":215,"textLines":1,"bbox":[831.36,205.44,366.05,140.16]}
+{"kind":"shape","id":"sh/q143ylov","slide":7,"name":"Shape 21","bbox":[808.32,378.24,412.13,209.28]}
+{"kind":"textbox","id":"sh/r2dkrq5g","slide":7,"name":"Text 22","text":"Why not microservices?","textPreview":"Why not microservices?","textChars":22,"textLines":1,"bbox":[831.36,396.48,366.05,34.56]}
+{"kind":"textbox","id":"sh/s3ml0v61","slide":7,"name":"Text 23","text":"Borrowing touches the copy, the loan and the member in one atomic step. Split across services that becomes a distributed transaction. One database and one transaction is not a compromise here; it is the correct design.","textPreview":"Borrowing touches the copy, the loan and the member in one atomic step. Split across services that becomes a distributed transaction. One...","textChars":218,"textLines":1,"bbox":[831.36,437.76,366.05,134.4]}
+{"kind":"image","id":"im/ix4nytoz","slide":7,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/gnmp4jqx","slide":7,"text":"If asked why not microservices: borrowing is a single transaction across three tables. Splitting it trades a database guarantee for a distributed one."}
+{"kind":"slide","id":"sl/fu1gfa1s","slide":8,"title":"DATA MODEL","textShapes":8}
+{"kind":"textbox","id":"sh/18byd4zy","slide":8,"name":"Text 0","text":"DATA MODEL","textPreview":"DATA MODEL","textChars":10,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/g72x4zyd","slide":8,"name":"Text 1","text":"The member record, and what it deliberately holds","textPreview":"The member record, and what it deliberately holds","textChars":49,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/6h0fypgb","slide":8,"name":"Text 2","text":"8","textPreview":"8","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/tkby9kzm","slide":8,"name":"Shape 3","bbox":[59.52,138.24,735.36,449.28]}
+{"kind":"textbox","id":"sh/sjix0zy1","slide":8,"name":"Text 4","text":"type Member struct {\n \n    // --- identity ---\n    ID         string  \n    Identifier string  // matric or staff no., UNIQUE\n    Email      string  // citext: Ada@ and ada@ are one\n    Faculty, Department, Level string\n \n    // --- entitlement ---\n    Role     Role             // checked on the SERVER\n    Category *MemberCategory  // null for staff\n    Status   UserStatus       // suspended cannot sign in\n \n    // --- credentials ---\n    PasswordHash        string  // Argon2id. Never sent.\n    MustChangePassword  bool    // travels in the token\n    TokensInvalidBefore time.Time\n \n    // --- provenance ---\n    IsSynthetic bool  // simulator-created\n    CreatedAt, UpdatedAt time.Time  // TIMESTAMPTZ\n}","textPreview":"type Member struct { |   |     // --- identity --- |     ID         string   |     Identifier string  // matric or staff no., UNIQUE |   ...","textChars":708,"textLines":22,"bbox":[78.72,153.6,696.96,418.56]}
+{"kind":"shape","id":"sh/je9g3ahk","slide":8,"name":"Shape 5","bbox":[825.6,138.24,394.85,218.88]}
+{"kind":"textbox","id":"sh/id0fu50z","slide":8,"name":"Text 6","text":"Identity","textPreview":"Identity","textChars":8,"textLines":1,"bbox":[848.64,156.48,348.77,34.56]}
+{"kind":"textbox","id":"sh/o7ydoret","slide":8,"name":"Text 7","text":"The id is a UUID, not a running number: a sequential id invites walking the list. Email is citext, so Ada@ and ada@ are one person and cannot register twice.","textPreview":"The id is a UUID, not a running number: a sequential id invites walking the list. Email is citext, so Ada@ and ada@ are one person and ca...","textChars":157,"textLines":1,"bbox":[848.64,197.76,348.77,144]}
+{"kind":"shape","id":"sh/98rehwve","slide":8,"name":"Shape 8","bbox":[825.6,374.4,394.85,213.12]}
+{"kind":"textbox","id":"sh/m5gvmhwn","slide":8,"name":"Text 9","text":"Credentials","textPreview":"Credentials","textChars":11,"textLines":1,"bbox":[848.64,392.64,348.77,34.56]}
+{"kind":"textbox","id":"sh/n6pwfmd8","slide":8,"name":"Text 10","text":"TokensInvalidBefore voids every session issued before a password change. It is stamped in the same statement as the new hash, so a refresh arriving mid-change cannot slip through.","textPreview":"TokensInvalidBefore voids every session issued before a password change. It is stamped in the same statement as the new hash, so a refres...","textChars":179,"textLines":1,"bbox":[848.64,433.92,348.77,138.24]}
+{"kind":"image","id":"im/zqd8fe18","slide":8,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/fu1gfa1s","slide":8,"text":"The comments in this file are the design record. Each field is here for a reason we can state."}
+{"kind":"slide","id":"sl/udsvah03","slide":9,"title":"BORROWING BEHAVIOUR","textShapes":13}
+{"kind":"textbox","id":"sh/1cfmhgne","slide":9,"name":"Text 0","text":"BORROWING BEHAVIOUR","textPreview":"BORROWING BEHAVIOUR","textChars":19,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/0b65obm9","slide":9,"name":"Text 1","text":"Entitlement is data, not scattered conditionals","textPreview":"Entitlement is data, not scattered conditionals","textChars":47,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/mdonql4z","slide":9,"name":"Text 2","text":"9","textPreview":"9","textChars":1,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/9gzml0nq","slide":9,"name":"Shape 3","bbox":[59.52,138.24,735.36,449.28]}
+{"kind":"textbox","id":"sh/ofq5svm5","slide":9,"name":"Text 4","text":"// What a category is allowed to do.\nconst (\n    Undergraduate MemberCategory = \"undergraduate\"\n    Postgraduate  MemberCategory = \"postgraduate\"\n    Staff         MemberCategory = \"staff\"\n)\n \n// Limits live in one table, not in the handlers.\nvar Terms = map[MemberCategory]LoanTerm{\n    Undergraduate: {MaxLoans: 2, Days: 14},\n    Postgraduate:  {MaxLoans: 4, Days: 21},\n    Staff:         {MaxLoans: 6, Days: 28},\n}\n \ntype Loan struct {\n    CopyID, UserID string\n    BorrowedAt, DueAt time.Time\n    ReturnedAt *time.Time  // nil means still out\n \n    // Note what is ABSENT: no IsOverdue flag.\n    // Overdue is DueAt < now, computed on read.\n}","textPreview":"// What a category is allowed to do. | const ( |     Undergraduate MemberCategory = \"undergraduate\" |     Postgraduate  MemberCategory = ...","textChars":646,"textLines":22,"bbox":[78.72,153.6,696.96,418.56]}
+{"kind":"shape","id":"sh/bih4na5w","slide":9,"name":"Shape 5","bbox":[825.6,138.24,394.85,251.52]}
+{"kind":"textbox","id":"sh/ah8nu54b","slide":9,"name":"Text 6","text":"Loan entitlement","textPreview":"Loan entitlement","textChars":16,"textLines":1,"bbox":[848.64,156.48,348.77,34.56]}
+{"kind":"textbox","id":"sh/oza1gfyh","slide":9,"name":"Text 7","text":"Undergraduate","textPreview":"Undergraduate","textChars":13,"textLines":1,"bbox":[848.64,197.76,345.6,24.96]}
+{"kind":"textbox","id":"sh/p0ji9kf2","slide":9,"name":"Text 8","text":"2 books  ·  14 days","textPreview":"2 books  ·  14 days","textChars":19,"textLines":1,"bbox":[848.64,221.76,345.6,24.96]}
+{"kind":"textbox","id":"sh/2xsjepgb","slide":9,"name":"Text 9","text":"Postgraduate","textPreview":"Postgraduate","textChars":12,"textLines":1,"bbox":[848.64,257.28,345.6,24.96]}
+{"kind":"textbox","id":"sh/3y107axw","slide":9,"name":"Text 10","text":"4 books  ·  21 days","textPreview":"4 books  ·  21 days","textChars":19,"textLines":1,"bbox":[848.64,281.28,345.6,24.96]}
+{"kind":"textbox","id":"sh/cnu1kzyd","slide":9,"name":"Text 11","text":"Staff","textPreview":"Staff","textChars":5,"textLines":1,"bbox":[848.64,316.8,345.6,24.96]}
+{"kind":"textbox","id":"sh/do3id4fy","slide":9,"name":"Text 12","text":"6 books  ·  28 days","textPreview":"6 books  ·  28 days","textChars":19,"textLines":1,"bbox":[848.64,340.8,345.6,24.96]}
+{"kind":"shape","id":"sh/qlcjipgn","slide":9,"name":"Shape 13","bbox":[825.6,407.04,394.85,180.48]}
+{"kind":"textbox","id":"sh/bml0buxs","slide":9,"name":"Text 14","text":"No IsOverdue column","textPreview":"No IsOverdue column","textChars":19,"textLines":1,"bbox":[848.64,425.28,348.77,34.56]}
+{"kind":"textbox","id":"sh/0ru1ozyp","slide":9,"name":"Text 15","text":"A stored flag is only true until the clock moves past it. Overdue is derived on every read, so it can never be stale.","textPreview":"A stored flag is only true until the clock moves past it. Overdue is derived on every read, so it can never be stale.","textChars":117,"textLines":1,"bbox":[848.64,466.56,348.77,105.6]}
+{"kind":"image","id":"im/yho7mlc7","slide":9,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/udsvah03","slide":9,"text":"A stored overdue flag needs a job to keep it true. A derived one cannot be wrong."}
+{"kind":"slide","id":"sl/m90b6t0r","slide":10,"title":"BOOK AND COPY","textShapes":18}
+{"kind":"textbox","id":"sh/xc3mho32","slide":10,"name":"Text 0","text":"BOOK AND COPY","textPreview":"BOOK AND COPY","textChars":13,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/cbu58j2h","slide":10,"name":"Text 1","text":"A book is a title. A copy is an object on a shelf.","textPreview":"A book is a title. A copy is an object on a shelf.","textChars":50,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/ydcnatkn","slide":10,"name":"Text 2","text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/l036l83y","slide":10,"name":"Text 3","text":"This distinction runs through the whole system. You cannot borrow a book, you borrow one numbered copy of it, and that copy is the thing that has a location and a state.","textPreview":"This distinction runs through the whole system. You cannot borrow a book, you borrow one numbered copy of it, and that copy is the thing ...","textChars":169,"textLines":1,"bbox":[59.52,142.08,1056,49.92]}
+{"kind":"shape","id":"sh/kzu5c32t","slide":10,"name":"Shape 4","bbox":[59.52,207.36,556.8,178.56]}
+{"kind":"textbox","id":"sh/725onyl4","slide":10,"name":"Text 5","text":"Book, the title","textPreview":"Book, the title","textChars":15,"textLines":1,"bbox":[82.56,225.6,510.72,34.56]}
+{"kind":"textbox","id":"sh/m1cnetkj","slide":10,"name":"Text 6","text":"Shares one call number, LIB 001. Holds the ISBN, the author and the subject. It is a description, and it is never on a shelf.","textPreview":"Shares one call number, LIB 001. Holds the ISBN, the author and the subject. It is a description, and it is never on a shelf.","textChars":125,"textLines":1,"bbox":[82.56,266.88,510.72,103.68]}
+{"kind":"shape","id":"sh/s7yt4b21","slide":10,"name":"Shape 7","bbox":[662.4,207.36,557.76,178.56]}
+{"kind":"textbox","id":"sh/d87uxg3m","slide":10,"name":"Text 8","text":"Copy, the physical object","textPreview":"Copy, the physical object","textChars":25,"textLines":1,"bbox":[685.44,225.6,511.68,34.56]}
+{"kind":"textbox","id":"sh/q5gb21kb","slide":10,"name":"Text 9","text":"Has its own accession number, unique across the whole library. It has a state: available, on loan, reserved, lost or withdrawn.","textPreview":"Has its own accession number, unique across the whole library. It has a state: available, on loan, reserved, lost or withdrawn.","textChars":127,"textLines":1,"bbox":[685.44,266.88,511.68,103.68]}
+{"kind":"shape","id":"sh/r6pcv6lw","slide":10,"name":"Shape 10","bbox":[59.52,408.96,1160.64,180.48]}
+{"kind":"textbox","id":"sh/0bit8b2d","slide":10,"name":"Text 11","text":"Last-copy retention: the final copy stays in the building","textPreview":"Last-copy retention: the final copy stays in the building","textChars":57,"textLines":1,"bbox":[82.56,427.2,1114.56,34.56]}
+{"kind":"textbox","id":"sh/1cru1g3y","slide":10,"name":"Text 12","text":"5 copies, 3 free","textPreview":"5 copies, 3 free","textChars":16,"textLines":1,"bbox":[86.4,481.92,355.2,24.96]}
+{"kind":"textbox","id":"sh/e9gb61k7","slide":10,"name":"Text 13","text":"2 borrowable","textPreview":"2 borrowable","textChars":12,"textLines":1,"bbox":[86.4,506.88,355.2,26.88]}
+{"kind":"textbox","id":"sh/fapcz6ls","slide":10,"name":"Text 14","text":"One is held back for reading inside the library.","textPreview":"One is held back for reading inside the library.","textChars":48,"textLines":1,"bbox":[86.4,535.68,355.2,42.24]}
+{"kind":"textbox","id":"sh/ozitcv29","slide":10,"name":"Text 15","text":"2 copies, 1 free","textPreview":"2 copies, 1 free","textChars":16,"textLines":1,"bbox":[466.56,481.92,355.2,24.96]}
+{"kind":"textbox","id":"sh/p0ru503u","slide":10,"name":"Text 16","text":"0 borrowable","textPreview":"0 borrowable","textChars":12,"textLines":1,"bbox":[466.56,506.88,355.2,26.88]}
+{"kind":"textbox","id":"sh/xwnupgvy","slide":10,"name":"Text 17","text":"That free copy is the last one. It stays.","textPreview":"That free copy is the last one. It stays.","textChars":41,"textLines":1,"bbox":[466.56,535.68,355.2,42.24]}
+{"kind":"textbox","id":"sh/wvetgbud","slide":10,"name":"Text 18","text":"1 copy, 1 free","textPreview":"1 copy, 1 free","textChars":14,"textLines":1,"bbox":[846.72,481.92,355.2,24.96]}
+{"kind":"textbox","id":"sh/bu5cnqd8","slide":10,"name":"Text 19","text":"1 borrowable","textPreview":"1 borrowable","textChars":12,"textLines":1,"bbox":[846.72,506.88,355.2,26.88]}
+{"kind":"textbox","id":"sh/atwbelcn","slide":10,"name":"Text 20","text":"A single circulating copy is lent, or nobody could read it.","textPreview":"A single circulating copy is lent, or nobody could read it.","textChars":59,"textLines":1,"bbox":[846.72,535.68,355.2,42.24]}
+{"kind":"image","id":"im/u5obql8f","slide":10,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/m90b6t0r","slide":10,"text":"Retention begins at two circulating copies. The middle case is the one examiners ask about: two copies with one free lends nothing, because that free one is the last. A single circulating copy is lent, because holding it back would put it beyond everybody."}
+{"kind":"slide","id":"sl/jetc3ut0","slide":11,"title":"CONCURRENCY AND IDEMPOTENCY","textShapes":39}
+{"kind":"textbox","id":"sh/xcryxg7y","slide":11,"name":"Text 0","text":"CONCURRENCY AND IDEMPOTENCY","textPreview":"CONCURRENCY AND IDEMPOTENCY","textChars":27,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/wbih4b6d","slide":11,"name":"Text 1","text":"What happens when the same request arrives twice","textPreview":"What happens when the same request arrives twice","textChars":48,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/250zy18b","slide":11,"name":"Text 2","text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/98rytw72","slide":11,"name":"Text 3","text":"Two students pressing Borrow at once, and one student pressing Save five times because the network is slow, are the same problem wearing different clothes. Both are answered in the database, never in the application.","textPreview":"Two students pressing Borrow at once, and one student pressing Save five times because the network is slow, are the same problem wearing ...","textChars":216,"textLines":1,"bbox":[59.52,136.32,1160.64,49.92]}
+{"kind":"shape","id":"sh/o7ih0r6h","slide":11,"name":"Shape 4","bbox":[59.52,195.84,568.32,203.52]}
+{"kind":"textbox","id":"sh/72t03qp0","slide":11,"name":"Text 5","text":"Borrowing must happen at most once","textPreview":"Borrowing must happen at most once","textChars":34,"textLines":1,"bbox":[82.56,214.08,522.24,34.56]}
+{"kind":"textbox","id":"sh/61kzalof","slide":11,"name":"Text 6","text":"Twenty simultaneous requests for one available copy:","textPreview":"Twenty simultaneous requests for one available copy:","textChars":52,"textLines":1,"bbox":[82.56,247.68,522.24,23.04]}
+{"kind":"textbox","id":"sh/ofqtgnyt","slide":11,"name":"Text 7","text":"20","textPreview":"20","textChars":2,"textLines":1,"bbox":[88.32,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/9gza9sze","slide":11,"name":"Text 8","text":"sent","textPreview":"sent","textChars":4,"textLines":1,"bbox":[88.32,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/mdobedg3","slide":11,"name":"Text 9","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[266.88,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/nehs7iho","slide":11,"name":"Text 10","text":"created, 201","textPreview":"created, 201","textChars":12,"textLines":1,"bbox":[266.88,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/0b6tc3yx","slide":11,"name":"Text 11","text":"19","textPreview":"19","textChars":2,"textLines":1,"bbox":[445.44,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/1cfa58zi","slide":11,"name":"Text 12","text":"refused, 409","textPreview":"refused, 409","textChars":12,"textLines":1,"bbox":[445.44,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/epobatgr","slide":11,"name":"Text 13","text":"A partial unique index refuses the second one. Not a check, which could be raced.","textPreview":"A partial unique index refuses the second one. Not a check, which could be raced.","textChars":81,"textLines":1,"bbox":[82.56,360.96,522.24,26.88]}
+{"kind":"shape","id":"sh/zaxs3yhc","slide":11,"name":"Shape 14","bbox":[650.88,195.84,569.28,203.52]}
+{"kind":"textbox","id":"sh/cn6t83y1","slide":11,"name":"Text 15","text":"Saving may happen any number of times","textPreview":"Saving may happen any number of times","textChars":37,"textLines":1,"bbox":[673.92,214.08,523.2,34.56]}
+{"kind":"textbox","id":"sh/dofa18z6","slide":11,"name":"Text 16","text":"Twenty simultaneous saves of one title by one member:","textPreview":"Twenty simultaneous saves of one title by one member:","textChars":53,"textLines":1,"bbox":[673.92,247.68,523.2,23.04]}
+{"kind":"textbox","id":"sh/tsnip0ny","slide":11,"name":"Text 17","text":"20","textPreview":"20","textChars":2,"textLines":1,"bbox":[679.68,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/87ehgv6d","slide":11,"name":"Text 18","text":"sent","textPreview":"sent","textChars":4,"textLines":1,"bbox":[679.68,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/7650nq5s","slide":11,"name":"Text 19","text":"0","textPreview":"0","textChars":1,"textLines":1,"bbox":[858.24,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/65wzelo7","slide":11,"name":"Text 20","text":"errors","textPreview":"errors","textChars":6,"textLines":1,"bbox":[858.24,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/l43ilgn2","slide":11,"name":"Text 21","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[1036.8,276.48,163.2,53.76]}
+{"kind":"textbox","id":"sh/k3uhcb6h","slide":11,"name":"Text 22","text":"row stored","textPreview":"row stored","textChars":10,"textLines":1,"bbox":[1036.8,330.24,168.96,23.04]}
+{"kind":"textbox","id":"sh/j2lgjq5w","slide":11,"name":"Text 23","text":"ON CONFLICT absorbs the repeat, so the client never has to ask first.","textPreview":"ON CONFLICT absorbs the repeat, so the client never has to ask first.","textChars":69,"textLines":1,"bbox":[673.92,360.96,523.2,26.88]}
+{"kind":"textbox","id":"sh/y1czalob","slide":11,"name":"Text 24","text":"Idempotency is not applied everywhere. It is a question asked of each action: if this arrives twice, should the second one change anything?","textPreview":"Idempotency is not applied everywhere. It is a question asked of each action: if this arrives twice, should the second one change anything?","textChars":139,"textLines":1,"bbox":[59.52,414.72,1160.64,26.88]}
+{"kind":"shape","id":"sh/p07ixkn6","slide":11,"name":"Shape 25","bbox":[59.52,449.28,1160.64,32.64]}
+{"kind":"textbox","id":"sh/4zyhofml","slide":11,"name":"Text 26","text":"Borrow a copy","textPreview":"Borrow a copy","textChars":13,"textLines":1,"bbox":[76.8,449.28,244.8,32.64]}
+{"kind":"textbox","id":"sh/m58fih43","slide":11,"name":"Text 27","text":"No, at most once","textPreview":"No, at most once","textChars":16,"textLines":1,"bbox":[328.32,449.28,177.6,32.64]}
+{"kind":"textbox","id":"sh/n61wbmlo","slide":11,"name":"Text 28","text":"A second loan on one copy is impossible. Refused with 409.","textPreview":"A second loan on one copy is impossible. Refused with 409.","textChars":58,"textLines":1,"bbox":[512.64,449.28,686.4,32.64]}
+{"kind":"shape","id":"sh/o7axk7m9","slide":11,"name":"Shape 29","bbox":[59.52,487.68,1160.64,32.64]}
+{"kind":"textbox","id":"sh/98jedc3u","slide":11,"name":"Text 30","text":"Return a copy","textPreview":"Return a copy","textChars":13,"textLines":1,"bbox":[76.8,487.68,244.8,32.64]}
+{"kind":"textbox","id":"sh/eh8fex47","slide":11,"name":"Text 31","text":"Yes","textPreview":"Yes","textChars":3,"textLines":1,"bbox":[328.32,487.68,177.6,32.64]}
+{"kind":"textbox","id":"sh/z2hw72lc","slide":11,"name":"Text 32","text":"The loan is already closed. Saying so again changes nothing.","textPreview":"The loan is already closed. Saying so again changes nothing.","textChars":60,"textLines":1,"bbox":[512.64,487.68,686.4,32.64]}
+{"kind":"shape","id":"sh/03qxg7mx","slide":11,"name":"Shape 33","bbox":[59.52,526.08,1160.64,32.64]}
+{"kind":"textbox","id":"sh/14ze9c3i","slide":11,"name":"Text 34","text":"Save or unsave a title","textPreview":"Save or unsave a title","textChars":22,"textLines":1,"bbox":[76.8,526.08,244.8,32.64]}
+{"kind":"textbox","id":"sh/ydcfq1kb","slide":11,"name":"Text 35","text":"Yes","textPreview":"Yes","textChars":3,"textLines":1,"bbox":[328.32,526.08,177.6,32.64]}
+{"kind":"textbox","id":"sh/jylwj6lw","slide":11,"name":"Text 36","text":"A second tap means what the first meant. One row either way.","textPreview":"A second tap means what the first meant. One row either way.","textChars":60,"textLines":1,"bbox":[512.64,526.08,686.4,32.64]}
+{"kind":"shape","id":"sh/3qhsfypc","slide":11,"name":"Shape 37","bbox":[59.52,564.48,1160.64,32.64]}
+{"kind":"textbox","id":"sh/ip8bmtor","slide":11,"name":"Text 38","text":"Send a notification","textPreview":"Send a notification","textChars":19,"textLines":1,"bbox":[76.8,564.48,244.8,32.64]}
+{"kind":"textbox","id":"sh/5sjah872","slide":11,"name":"Text 39","text":"Yes","textPreview":"Yes","textChars":3,"textLines":1,"bbox":[328.32,564.48,177.6,32.64]}
+{"kind":"textbox","id":"sh/4rato36h","slide":11,"name":"Text 40","text":"The worker re-reads the database, so a stale intention is superseded.","textPreview":"The worker re-reads the database, so a stale intention is superseded.","textChars":69,"textLines":1,"bbox":[512.64,564.48,686.4,32.64]}
+{"kind":"shape","id":"sh/v2hsbyp0","slide":11,"name":"Shape 41","bbox":[59.52,602.88,1160.64,32.64]}
+{"kind":"textbox","id":"sh/u18bit8f","slide":11,"name":"Text 42","text":"Apply a migration","textPreview":"Apply a migration","textChars":17,"textLines":1,"bbox":[76.8,602.88,244.8,32.64]}
+{"kind":"textbox","id":"sh/h4zado76","slide":11,"name":"Text 43","text":"Yes","textPreview":"Yes","textChars":3,"textLines":1,"bbox":[328.32,602.88,177.6,32.64]}
+{"kind":"textbox","id":"sh/g3qtkj6l","slide":11,"name":"Text 44","text":"Recorded once, and CI refuses a commit that edits an applied one.","textPreview":"Recorded once, and CI refuses a commit that edits an applied one.","textChars":65,"textLines":1,"bbox":[512.64,602.88,686.4,32.64]}
+{"kind":"textbox","id":"sh/fy1cnipk","slide":11,"name":"Text 45","text":"Every figure and every row above was exercised against the production database before this slide was written.","textPreview":"Every figure and every row above was exercised against the production database before this slide was written.","textChars":109,"textLines":1,"bbox":[59.52,647.04,1160.64,24.96]}
+{"kind":"image","id":"im/l8361wv6","slide":11,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/jetc3ut0","slide":11,"text":"The point: we did not make everything idempotent. We asked the question per action, and borrowing answers it differently from the rest. Borrowing must happen at most once, so a repeat is refused; saving is safe to repeat, so a repeat is absorbed. Both were measured, not assumed."}
+{"kind":"slide","id":"sl/8f2psfyx","slide":12,"title":"SECURITY","textShapes":21}
+{"kind":"textbox","id":"sh/1gbm9s3a","slide":12,"name":"Text 0","text":"SECURITY","textPreview":"SECURITY","textChars":8,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/0f2lgnmp","slide":12,"name":"Text 1","text":"Security decisions we can defend","textPreview":"Security decisions we can defend","textChars":32,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/q903ad4n","slide":12,"name":"Text 2","text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/dcbm583y","slide":12,"name":"Shape 3","bbox":[59.52,140.16,568.32,136.32]}
+{"kind":"shape","id":"sh/sb2lcnmd","slide":12,"name":"Shape 4","bbox":[80.64,159.36,32.64,32.64]}
+{"kind":"textbox","id":"sh/b6d4f2lc","slide":12,"name":"Text 5","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[80.64,159.36,32.64,32.64]}
+{"kind":"textbox","id":"sh/a543mx4r","slide":12,"name":"Text 6","text":"Argon2id password hashing","textPreview":"Argon2id password hashing","textChars":25,"textLines":1,"bbox":[122.88,158.4,481.92,34.56]}
+{"kind":"textbox","id":"sh/wvupgz6t","slide":12,"name":"Text 7","text":"Memory-hard at 64 MB with a fresh salt per password. Chosen over bcrypt because a GPU cannot parallelise it cheaply.","textPreview":"Memory-hard at 64 MB with a fresh salt per password. Chosen over bcrypt because a GPU cannot parallelise it cheaply.","textChars":116,"textLines":1,"bbox":[82.56,199.68,522.24,61.44]}
+{"kind":"shape","id":"sh/xw3q94ne","slide":12,"name":"Shape 8","bbox":[650.88,140.16,568.32,136.32]}
+{"kind":"shape","id":"sh/atc7epon","slide":12,"name":"Shape 9","bbox":[672,159.36,32.64,32.64]}
+{"kind":"textbox","id":"sh/bulo7u58","slide":12,"name":"Text 10","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[672,159.36,32.64,32.64]}
+{"kind":"textbox","id":"sh/orapcf6h","slide":12,"name":"Text 11","text":"Roles checked on the server","textPreview":"Roles checked on the server","textChars":27,"textLines":1,"bbox":[714.24,158.4,481.92,34.56]}
+{"kind":"textbox","id":"sh/9sj65kn2","slide":12,"name":"Text 12","text":"The browser hides buttons for convenience only. Every request re-checks the role, so a crafted request gains nothing.","textPreview":"The browser hides buttons for convenience only. Every request re-checks the role, so a crafted request gains nothing.","textChars":117,"textLines":1,"bbox":[673.92,199.68,522.24,61.44]}
+{"kind":"shape","id":"sh/mps7a5or","slide":12,"name":"Shape 13","bbox":[59.52,293.76,568.32,136.32]}
+{"kind":"shape","id":"sh/nq1o3a5w","slide":12,"name":"Shape 14","bbox":[80.64,312.96,32.64,32.64]}
+{"kind":"textbox","id":"sh/0nap8f6l","slide":12,"name":"Text 15","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[80.64,312.96,32.64,32.64]}
+{"kind":"textbox","id":"sh/1oj61kn6","slide":12,"name":"Text 16","text":"Rate limiting on sign-in","textPreview":"Rate limiting on sign-in","textChars":24,"textLines":1,"bbox":[122.88,312,481.92,34.56]}
+{"kind":"textbox","id":"sh/hkbm5wzu","slide":12,"name":"Text 17","text":"Five attempts per account per minute and 120 per IP. Per-account, so one attacker cannot lock a whole faculty out.","textPreview":"Five attempts per account per minute and 120 per IP. Per-account, so one attacker cannot lock a whole faculty out.","textChars":114,"textLines":1,"bbox":[82.56,353.28,522.24,61.44]}
+{"kind":"shape","id":"sh/gj25cry9","slide":12,"name":"Shape 18","bbox":[650.88,293.76,568.32,136.32]}
+{"kind":"shape","id":"sh/fit436ho","slide":12,"name":"Shape 19","bbox":[672,312.96,32.64,32.64]}
+{"kind":"textbox","id":"sh/uh0na1g3","slide":12,"name":"Text 20","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[672,312.96,32.64,32.64]}
+{"kind":"textbox","id":"sh/tgrm1wzy","slide":12,"name":"Text 21","text":"Sessions that can be revoked","textPreview":"Sessions that can be revoked","textChars":28,"textLines":1,"bbox":[714.24,312,481.92,34.56]}
+{"kind":"textbox","id":"sh/sfi58ryd","slide":12,"name":"Text 22","text":"Refresh tokens are stored hashed and rotated on use. A password change voids every session issued before it.","textPreview":"Refresh tokens are stored hashed and rotated on use. A password change voids every session issued before it.","textChars":108,"textLines":1,"bbox":[673.92,353.28,522.24,61.44]}
+{"kind":"shape","id":"sh/7u94zmhs","slide":12,"name":"Shape 23","bbox":[59.52,447.36,568.32,136.32]}
+{"kind":"shape","id":"sh/6t0n6hg7","slide":12,"name":"Shape 24","bbox":[80.64,466.56,32.64,32.64]}
+{"kind":"textbox","id":"sh/dcv6dgz2","slide":12,"name":"Text 25","text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[80.64,466.56,32.64,32.64]}
+{"kind":"textbox","id":"sh/cbm5kbyh","slide":12,"name":"Text 26","text":"Parameterised SQL throughout","textPreview":"Parameterised SQL throughout","textChars":28,"textLines":1,"bbox":[122.88,465.6,481.92,34.56]}
+{"kind":"textbox","id":"sh/alwbitsn","slide":12,"name":"Text 27","text":"No query is built by joining strings, so a title containing a quote is data and never becomes syntax.","textPreview":"No query is built by joining strings, so a title containing a quote is data and never becomes syntax.","textChars":101,"textLines":1,"bbox":[82.56,506.88,522.24,61.44]}
+{"kind":"shape","id":"sh/bm5sryt8","slide":12,"name":"Shape 28","bbox":[650.88,447.36,568.32,136.32]}
+{"kind":"shape","id":"sh/wnetkjat","slide":12,"name":"Shape 29","bbox":[672,466.56,32.64,32.64]}
+{"kind":"textbox","id":"sh/xonutobe","slide":12,"name":"Text 30","text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[672,466.56,32.64,32.64]}
+{"kind":"textbox","id":"sh/mhcbe9sr","slide":12,"name":"Text 31","text":"Secrets never in the repository","textPreview":"Secrets never in the repository","textChars":31,"textLines":1,"bbox":[714.24,465.6,481.92,34.56]}
+{"kind":"textbox","id":"sh/nilsnetc","slide":12,"name":"Text 32","text":"Configuration comes from the environment. The repository has been checked, and holds no key.","textPreview":"Configuration comes from the environment. The repository has been checked, and holds no key.","textChars":92,"textLines":1,"bbox":[673.92,506.88,522.24,61.44]}
+{"kind":"image","id":"im/vm5kf2tc","slide":12,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/8f2psfyx","slide":12,"text":"Two independent adversarial audits were run against the codebase. Twelve of our twenty-seven defects came from them."}
+{"kind":"slide","id":"sl/hgzapcr6","slide":13,"title":"TIME AND PERFORMANCE","textShapes":16}
+{"kind":"textbox","id":"sh/q50nydsj","slide":13,"name":"Text 0","text":"TIME AND PERFORMANCE","textPreview":"TIME AND PERFORMANCE","textChars":20,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/bq9orito","slide":13,"name":"Text 1","text":"Two problems that only appear at scale","textPreview":"Two problems that only appear at scale","textChars":38,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/p4r6p8by","slide":13,"name":"Text 2","text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/21gnuts7","slide":13,"name":"Shape 3","bbox":[59.52,140.16,568.32,215.04]}
+{"kind":"textbox","id":"sh/32ponyts","slide":13,"name":"Text 4","text":"Time: stored in UTC, shown in Lagos","textPreview":"Time: stored in UTC, shown in Lagos","textChars":35,"textLines":1,"bbox":[82.56,158.4,522.24,34.56]}
+{"kind":"textbox","id":"sh/gzy5s3a1","slide":13,"name":"Text 5","text":"Every instant is stored as TIMESTAMPTZ in UTC and rendered in Africa/Lagos for the reader. A due date is an instant, not a wall-clock reading, so it means the same thing whatever machine computes it.","textPreview":"Every instant is stored as TIMESTAMPTZ in UTC and rendered in Africa/Lagos for the reader. A due date is an instant, not a wall-clock rea...","textChars":199,"textLines":1,"bbox":[82.56,199.68,522.24,140.16]}
+{"kind":"shape","id":"sh/1076lobm","slide":13,"name":"Shape 6","bbox":[59.52,372.48,568.32,243.84]}
+{"kind":"textbox","id":"sh/hcfy9k3u","slide":13,"name":"Text 7","text":"The trap this closed","textPreview":"The trap this closed","textChars":20,"textLines":1,"bbox":[82.56,390.72,522.24,34.56]}
+{"kind":"textbox","id":"sh/gb6x0zm9","slide":13,"name":"Text 8","text":"Our container ships without timezone data. Loading Africa/Lagos failed silently and every displayed time fell back to UTC, one hour early. We compile the timezone database into the binary.","textPreview":"Our container ships without timezone data. Loading Africa/Lagos failed silently and every displayed time fell back to UTC, one hour early...","textChars":188,"textLines":1,"bbox":[82.56,432,522.24,168.96]}
+{"kind":"shape","id":"sh/vaxg7ulo","slide":13,"name":"Shape 9","bbox":[650.88,140.16,569.28,476.16]}
+{"kind":"textbox","id":"sh/u9ofyp43","slide":13,"name":"Text 10","text":"Indexing, measured with EXPLAIN ANALYZE","textPreview":"Indexing, measured with EXPLAIN ANALYZE","textChars":39,"textLines":1,"bbox":[673.92,158.4,523.2,34.56]}
+{"kind":"textbox","id":"sh/t8fy5k3i","slide":13,"name":"Text 11","text":"Search performance was measured before and after, on real data, not guessed at.","textPreview":"Search performance was measured before and after, on real data, not guessed at.","textChars":79,"textLines":1,"bbox":[673.92,186.24,523.2,44.16]}
+{"kind":"textbox","id":"sh/876xwfmx","slide":13,"name":"Text 12","text":"Title search","textPreview":"Title search","textChars":12,"textLines":1,"bbox":[673.92,247.68,523.2,26.88]}
+{"kind":"shape","id":"sh/7mdg3als","slide":13,"name":"Shape 13","bbox":[673.92,282.24,523.2,38.4]}
+{"kind":"textbox","id":"sh/6l4fu547","slide":13,"name":"Text 14","text":"51.5 ms before","textPreview":"51.5 ms before","textChars":14,"textLines":1,"bbox":[685.44,282.24,230.4,38.4]}
+{"kind":"shape","id":"sh/lkvy103m","slide":13,"name":"Shape 15","bbox":[673.92,328.32,222.49,38.4]}
+{"kind":"textbox","id":"sh/kjmxsfm1","slide":13,"name":"Text 16","text":"21.9 ms after","textPreview":"21.9 ms after","textChars":13,"textLines":1,"bbox":[685.44,328.32,230.4,38.4]}
+{"kind":"textbox","id":"sh/cnqh8fux","slide":13,"name":"Text 17","text":"Member lookup","textPreview":"Member lookup","textChars":13,"textLines":1,"bbox":[673.92,418.56,523.2,26.88]}
+{"kind":"shape","id":"sh/xozyhkbi","slide":13,"name":"Shape 18","bbox":[673.92,453.12,228.58,38.4]}
+{"kind":"textbox","id":"sh/q18f65cr","slide":13,"name":"Text 19","text":"22.5 ms before","textPreview":"22.5 ms before","textChars":14,"textLines":1,"bbox":[685.44,453.12,230.4,38.4]}
+{"kind":"shape","id":"sh/bmhgfatc","slide":13,"name":"Shape 20","bbox":[673.92,499.2,31.49,38.4]}
+{"kind":"textbox","id":"sh/oz6x4vul","slide":13,"name":"Text 21","text":"3.1 ms after","textPreview":"3.1 ms after","textChars":12,"textLines":1,"bbox":[716.93,499.2,230.4,38.4]}
+{"kind":"textbox","id":"sh/p0zyd0b6","slide":13,"name":"Text 22","text":"Trigram indexes for fuzzy title search; a partial index for open loans, which is the only slice ever queried.","textPreview":"Trigram indexes for fuzzy title search; a partial index for open loans, which is the only slice ever queried.","textChars":109,"textLines":1,"bbox":[673.92,552.96,523.2,48]}
+{"kind":"image","id":"im/dgfy5wry","slide":13,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/hgzapcr6","slide":13,"text":"If asked how we know an index helped: EXPLAIN ANALYZE before and after, on the real dataset."}
+{"kind":"slide","id":"sl/6lsnupw7","slide":14,"title":"THE SIMULATOR","textShapes":21}
+{"kind":"textbox","id":"sh/xc7eds76","slide":14,"name":"Text 0","text":"THE SIMULATOR","textPreview":"THE SIMULATOR","textChars":13,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/wbydknq1","slide":14,"name":"Text 1","text":"Proving the system works when nobody is watching","textPreview":"Proving the system works when nobody is watching","textChars":48,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/idgvmx8r","slide":14,"name":"Text 2","text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/5grehs7i","slide":14,"name":"Text 3","text":"An empty database proves nothing. We built a simulator that behaves like a library day: members register, borrow, return late, and reserve titles that are out.","textPreview":"An empty database proves nothing. We built a simulator that behaves like a library day: members register, borrow, return late, and reserv...","textChars":159,"textLines":1,"bbox":[59.52,140.16,1056,51.84]}
+{"kind":"shape","id":"sh/kfidonqx","slide":14,"name":"Shape 4","bbox":[59.52,205.44,568.32,197.76]}
+{"kind":"textbox","id":"sh/zi5c3y98","slide":14,"name":"Text 5","text":"What it is","textPreview":"What it is","textChars":10,"textLines":1,"bbox":[82.56,223.68,522.24,34.56]}
+{"kind":"textbox","id":"sh/ehwvat8n","slide":14,"name":"Text 6","text":"A client that calls the public API exactly as a browser would. It has no special access, so anything it does, a student could do, which is what makes its results evidence.","textPreview":"A client that calls the public API exactly as a browser would. It has no special access, so anything it does, a student could do, which i...","textChars":171,"textLines":1,"bbox":[82.56,264.96,522.24,122.88]}
+{"kind":"shape","id":"sh/c3e1gjyd","slide":14,"name":"Shape 7","bbox":[650.88,205.44,569.28,197.76]}
+{"kind":"textbox","id":"sh/x4ni9ofy","slide":14,"name":"Text 8","text":"What it is not","textPreview":"What it is not","textChars":14,"textLines":1,"bbox":[673.92,223.68,523.2,34.56]}
+{"kind":"textbox","id":"sh/a1wze9g7","slide":14,"name":"Text 9","text":"It is not a seeding script writing rows into the database. Every record it makes is flagged synthetic, and it refuses to touch a real borrower's loan.","textPreview":"It is not a seeding script writing rows into the database. Every record it makes is flagged synthetic, and it refuses to touch a real bor...","textChars":150,"textLines":1,"bbox":[673.92,264.96,523.2,122.88]}
+{"kind":"shape","id":"sh/b2507exs","slide":14,"name":"Shape 10","bbox":[59.52,420.48,1160.64,167.04]}
+{"kind":"textbox","id":"sh/kre1k3y9","slide":14,"name":"Text 11","text":"Live in production now","textPreview":"Live in production now","textChars":22,"textLines":1,"bbox":[82.56,438.72,1114.56,34.56]}
+{"kind":"textbox","id":"sh/ls7idofu","slide":14,"name":"Text 12","text":"223","textPreview":"223","textChars":3,"textLines":1,"bbox":[88.32,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/y5wjitgj","slide":14,"name":"Text 13","text":"titles","textPreview":"titles","textChars":6,"textLines":1,"bbox":[88.32,529.92,172.8,24.96]}
+{"kind":"textbox","id":"sh/z650byxo","slide":14,"name":"Text 14","text":"892","textPreview":"892","textChars":3,"textLines":1,"bbox":[277.44,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/0buh8zy5","slide":14,"name":"Text 15","text":"copies","textPreview":"copies","textChars":6,"textLines":1,"bbox":[277.44,529.92,172.8,24.96]}
+{"kind":"textbox","id":"sh/1w3i14fq","slide":14,"name":"Text 16","text":"99","textPreview":"99","textChars":2,"textLines":1,"bbox":[466.56,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/hsvy50re","slide":14,"name":"Text 17","text":"members","textPreview":"members","textChars":7,"textLines":1,"bbox":[466.56,529.92,172.8,24.96]}
+{"kind":"textbox","id":"sh/grmxwvqt","slide":14,"name":"Text 18","text":"86","textPreview":"86","textChars":2,"textLines":1,"bbox":[655.68,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/fqdg3q98","slide":14,"name":"Text 19","text":"loans","textPreview":"loans","textChars":5,"textLines":1,"bbox":[655.68,529.92,172.8,24.96]}
+{"kind":"textbox","id":"sh/up4fal83","slide":14,"name":"Text 20","text":"252","textPreview":"252","textChars":3,"textLines":1,"bbox":[844.8,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/pwvy90rq","slide":14,"name":"Text 21","text":"authors","textPreview":"authors","textChars":7,"textLines":1,"bbox":[844.8,529.92,172.8,24.96]}
+{"kind":"textbox","id":"sh/4vmh0vq5","slide":14,"name":"Text 22","text":"332","textPreview":"332","textChars":3,"textLines":1,"bbox":[1033.92,480,172.8,49.92]}
+{"kind":"textbox","id":"sh/3udg7q9k","slide":14,"name":"Text 23","text":"subjects","textPreview":"subjects","textChars":8,"textLines":1,"bbox":[1033.92,529.92,172.8,24.96]}
+{"kind":"image","id":"im/hory583a","slide":14,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/6lsnupw7","slide":14,"text":"The catalogue holds real bibliographic data from Open Library, not invented titles."}
+{"kind":"slide","id":"sl/vaxsvy10","slide":15,"title":"VERSION CONTROL AND DELIVERY","textShapes":22}
+{"kind":"textbox","id":"sh/547mhg3m","slide":15,"name":"Text 0","text":"VERSION CONTROL AND DELIVERY","textPreview":"VERSION CONTROL AND DELIVERY","textChars":28,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/k3y5ov21","slide":15,"name":"Text 1","text":"Nothing reaches production by hand","textPreview":"Nothing reaches production by hand","textChars":34,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/65gnqlk7","slide":15,"name":"Text 2","text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"textbox","id":"sh/t87ml0ji","slide":15,"name":"Text 3","text":"Work is tracked in Git on GitHub. Every push runs the same pipeline, and a failure at any stage stops the deployment.","textPreview":"Work is tracked in Git on GitHub. Every push runs the same pipeline, and a failure at any stage stops the deployment.","textChars":117,"textLines":1,"bbox":[59.52,140.16,1056,49.92]}
+{"kind":"shape","id":"sh/s7y5sv2x","slide":15,"name":"Shape 4","bbox":[59.52,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/na5476l8","slide":15,"name":"Text 5","text":"Test","textPreview":"Test","textChars":4,"textLines":1,"bbox":[72.96,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/m9c3e1kn","slide":15,"name":"Text 6","text":"101 tests\nacross 4 levels","textPreview":"101 tests | across 4 levels","textChars":25,"textLines":2,"bbox":[69.12,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/wrm9kvep","slide":15,"name":"Shape 7","bbox":[235.2,281.28,16.32,16.32]}
+{"kind":"shape","id":"sh/hsvat0fa","slide":15,"name":"Shape 8","bbox":[256.32,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/upkrilwj","slide":15,"name":"Text 9","text":"Scan","textPreview":"Scan","textChars":4,"textLines":1,"bbox":[269.76,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/vqdsrqx4","slide":15,"name":"Text 10","text":"Dependency\nvulnerabilities","textPreview":"Dependency | vulnerabilities","textChars":26,"textLines":2,"bbox":[265.92,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/4vm9ovel","slide":15,"name":"Shape 11","bbox":[432,281.28,16.32,16.32]}
+{"kind":"shape","id":"sh/5wvax0f6","slide":15,"name":"Shape 12","bbox":[453.12,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/it4rm5wv","slide":15,"name":"Text 13","text":"Migrate","textPreview":"Migrate","textChars":7,"textLines":1,"bbox":[466.56,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/judsvqxg","slide":15,"name":"Text 14","text":"Applied files\ncannot change","textPreview":"Applied files | cannot change","textChars":27,"textLines":2,"bbox":[462.72,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/0z29cbyh","slide":15,"name":"Shape 15","bbox":[628.8,281.28,16.32,16.32]}
+{"kind":"shape","id":"sh/l0bqlgf2","slide":15,"name":"Shape 16","bbox":[649.92,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/1kjyt83e","slide":15,"name":"Text 17","text":"Build","textPreview":"Build","textChars":5,"textLines":1,"bbox":[663.36,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/gjax03m9","slide":15,"name":"Text 18","text":"Docker image,\n15.5 MB","textPreview":"Docker image, | 15.5 MB","textChars":21,"textLines":2,"bbox":[659.52,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/fi1grylo","slide":15,"name":"Shape 19","bbox":[825.6,281.28,16.32,16.32]}
+{"kind":"shape","id":"sh/ehsfyt43","slide":15,"name":"Shape 20","bbox":[846.72,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/p8jyx83q","slide":15,"name":"Text 21","text":"Deploy","textPreview":"Deploy","textChars":6,"textLines":1,"bbox":[860.16,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/o7ah4nm5","slide":15,"name":"Text 22","text":"Render, only\nif all passed","textPreview":"Render, only | if all passed","textChars":26,"textLines":2,"bbox":[856.32,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/361gvilk","slide":15,"name":"Shape 23","bbox":[1022.4,281.28,16.32,16.32]}
+{"kind":"shape","id":"sh/25sf2d4z","slide":15,"name":"Shape 24","bbox":[1043.52,211.2,170.88,155.52]}
+{"kind":"textbox","id":"sh/dc3y1s3m","slide":15,"name":"Text 25","text":"Smoke","textPreview":"Smoke","textChars":5,"textLines":1,"bbox":[1056.96,228.48,144,30.72]}
+{"kind":"textbox","id":"sh/cbuh8nmh","slide":15,"name":"Text 26","text":"Health, docs\nand CORS live","textPreview":"Health, docs | and CORS live","textChars":26,"textLines":2,"bbox":[1053.12,263.04,151.68,88.32]}
+{"kind":"shape","id":"sh/uh4v2pkj","slide":15,"name":"Shape 27","bbox":[59.52,397.44,374.4,190.08]}
+{"kind":"textbox","id":"sh/vixcvu14","slide":15,"name":"Text 28","text":"Git discipline","textPreview":"Git discipline","textChars":14,"textLines":1,"bbox":[82.56,415.68,328.32,34.56]}
+{"kind":"textbox","id":"sh/wj6d4z2p","slide":15,"name":"Text 29","text":"33 commits, each one message describing why the change was made, not what the diff shows.","textPreview":"33 commits, each one message describing why the change was made, not what the diff shows.","textChars":89,"textLines":1,"bbox":[82.56,456.96,328.32,115.2]}
+{"kind":"shape","id":"sh/hkfexkja","slide":15,"name":"Shape 30","bbox":[453.12,397.44,374.4,190.08]}
+{"kind":"textbox","id":"sh/ilov6pkv","slide":15,"name":"Text 31","text":"Migrations are immutable","textPreview":"Migrations are immutable","textChars":24,"textLines":1,"bbox":[476.16,415.68,328.32,34.56]}
+{"kind":"textbox","id":"sh/jmxwzu1g","slide":15,"name":"Text 32","text":"The pipeline refuses a commit that edits an already-applied migration, because production has already run it.","textPreview":"The pipeline refuses a commit that edits an already-applied migration, because production has already run it.","textChars":109,"textLines":1,"bbox":[476.16,456.96,328.32,115.2]}
+{"kind":"shape","id":"sh/4n6d8z21","slide":15,"name":"Shape 33","bbox":[846.72,397.44,373.44,190.08]}
+{"kind":"textbox","id":"sh/5ofe14j6","slide":15,"name":"Text 34","text":"Why smoke tests","textPreview":"Why smoke tests","textChars":15,"textLines":1,"bbox":[869.76,415.68,327.36,34.56]}
+{"kind":"textbox","id":"sh/6p8va9kr","slide":15,"name":"Text 35","text":"A green test suite proves the code compiled. Only a request to the live URL proves the system is actually serving.","textPreview":"A green test suite proves the code compiled. Only a request to the live URL proves the system is actually serving.","textChars":114,"textLines":1,"bbox":[869.76,456.96,327.36,115.2]}
+{"kind":"image","id":"im/cri94vet","slide":15,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/vaxsvy10","slide":15,"text":"Automatic deploys from the dashboard were turned off deliberately, so the only route to production is through the pipeline."}
+{"kind":"slide","id":"sl/gny5sjyp","slide":16,"title":"DEPLOYMENT","textShapes":27}
+{"kind":"textbox","id":"sh/8z2h8bq1","slide":16,"name":"Text 0","text":"DEPLOYMENT","textPreview":"DEPLOYMENT","textChars":10,"textLines":1,"bbox":[59.52,40.32,864,24.96]}
+{"kind":"textbox","id":"sh/9kby1g7m","slide":16,"name":"Text 1","text":"Live, on a custom domain, with documentation","textPreview":"Live, on a custom domain, with documentation","textChars":44,"textLines":1,"bbox":[59.52,67.2,1017.6,59.52]}
+{"kind":"textbox","id":"sh/zutgvm94","slide":16,"name":"Text 2","text":"16","textPreview":"16","textChars":2,"textLines":1,"bbox":[1170.53,670.08,49.92,23.04]}
+{"kind":"shape","id":"sh/kv2h4rqp","slide":16,"name":"Shape 3","bbox":[59.52,138.24,609.6,232.32]}
+{"kind":"textbox","id":"sh/lwbyxwra","slide":16,"name":"Text 4","text":"Addresses","textPreview":"Addresses","textChars":9,"textLines":1,"bbox":[82.56,156.48,563.52,34.56]}
+{"kind":"textbox","id":"sh/ip4zel83","slide":16,"name":"Text 5","text":"API","textPreview":"API","textChars":3,"textLines":1,"bbox":[84.48,193.92,155.52,32.64]}
+{"kind":"textbox","id":"sh/3qdg7qpo","slide":16,"name":"Text 6","text":"api.library.appmd.dev","textPreview":"api.library.appmd.dev","textChars":21,"textLines":1,"bbox":[243.84,193.92,412.8,32.64]}
+{"kind":"textbox","id":"sh/fm1gzq5o","slide":16,"name":"Text 7","text":"Swagger docs","textPreview":"Swagger docs","textChars":12,"textLines":1,"bbox":[84.48,238.08,155.52,32.64]}
+{"kind":"textbox","id":"sh/e1sf65o3","slide":16,"name":"Text 8","text":"api.library.appmd.dev/docs","textPreview":"api.library.appmd.dev/docs","textChars":26,"textLines":1,"bbox":[243.84,238.08,412.8,32.64]}
+{"kind":"textbox","id":"sh/1ojy10ne","slide":16,"name":"Text 9","text":"OpenAPI spec","textPreview":"OpenAPI spec","textChars":12,"textLines":1,"bbox":[84.48,282.24,155.52,32.64]}
+{"kind":"textbox","id":"sh/gnax8v6t","slide":16,"name":"Text 10","text":"api.library.appmd.dev/openapi.yaml","textPreview":"api.library.appmd.dev/openapi.yaml","textChars":34,"textLines":1,"bbox":[243.84,282.24,412.8,32.64]}
+{"kind":"textbox","id":"sh/nqlg3a5k","slide":16,"name":"Text 11","text":"Front end","textPreview":"Front end","textChars":9,"textLines":1,"bbox":[84.48,326.4,155.52,32.64]}
+{"kind":"textbox","id":"sh/2pcfa5oz","slide":16,"name":"Text 12","text":"library.appmd.dev","textPreview":"library.appmd.dev","textChars":17,"textLines":1,"bbox":[243.84,326.4,412.8,32.64]}
+{"kind":"shape","id":"sh/ps3y5knq","slide":16,"name":"Shape 13","bbox":[698.88,138.24,521.57,232.32]}
+{"kind":"textbox","id":"sh/oruhcf65","slide":16,"name":"Text 14","text":"Where the data lives","textPreview":"Where the data lives","textChars":20,"textLines":1,"bbox":[721.92,156.48,475.49,34.56]}
+{"kind":"textbox","id":"sh/bulg7u5g","slide":16,"name":"Text 15","text":"Application","textPreview":"Application","textChars":11,"textLines":1,"bbox":[721.92,193.92,159.36,32.64]}
+{"kind":"textbox","id":"sh/atczepob","slide":16,"name":"Text 16","text":"Render, Ohio (US East)","textPreview":"Render, Ohio (US East)","textChars":22,"textLines":1,"bbox":[885.12,193.92,316.8,32.64]}
+{"kind":"textbox","id":"sh/mpgj6t8j","slide":16,"name":"Text 17","text":"Database","textPreview":"Database","textChars":8,"textLines":1,"bbox":[721.92,238.08,159.36,32.64]}
+{"kind":"textbox","id":"sh/7qp0zepo","slide":16,"name":"Text 18","text":"Neon Postgres, us-east-1","textPreview":"Neon Postgres, us-east-1","textChars":24,"textLines":1,"bbox":[885.12,238.08,316.8,32.64]}
+{"kind":"textbox","id":"sh/8by18jq9","slide":16,"name":"Text 19","text":"Cache","textPreview":"Cache","textChars":5,"textLines":1,"bbox":[721.92,282.24,159.36,32.64]}
+{"kind":"textbox","id":"sh/9c7i1o7u","slide":16,"name":"Text 20","text":"Upstash Redis, us-east-1","textPreview":"Upstash Redis, us-east-1","textChars":24,"textLines":1,"bbox":[885.12,282.24,316.8,32.64]}
+{"kind":"textbox","id":"sh/ylwj2987","slide":16,"name":"Text 21","text":"DNS and TLS","textPreview":"DNS and TLS","textChars":11,"textLines":1,"bbox":[721.92,326.4,159.36,32.64]}
+{"kind":"textbox","id":"sh/zm50veps","slide":16,"name":"Text 22","text":"Cloudflare, global edge","textPreview":"Cloudflare, global edge","textChars":23,"textLines":1,"bbox":[885.12,326.4,316.8,32.64]}
+{"kind":"shape","id":"sh/kne14jqd","slide":16,"name":"Shape 23","bbox":[59.52,387.84,374.4,199.68]}
+{"kind":"textbox","id":"sh/lo7ixo7y","slide":16,"name":"Text 24","text":"Documented API","textPreview":"Documented API","textChars":14,"textLines":1,"bbox":[82.56,406.08,328.32,34.56]}
+{"kind":"textbox","id":"sh/ih0jedob","slide":16,"name":"Text 25","text":"The OpenAPI file is compiled into the binary, so the documentation cannot drift away from the server that serves it.","textPreview":"The OpenAPI file is compiled into the binary, so the documentation cannot drift away from the server that serves it.","textChars":116,"textLines":1,"bbox":[82.56,447.36,328.32,124.8]}
+{"kind":"shape","id":"sh/ji9k7ypw","slide":16,"name":"Shape 26","bbox":[453.12,387.84,374.4,199.68]}
+{"kind":"textbox","id":"sh/tcbmdcre","slide":16,"name":"Text 27","text":"Encrypted in transit","textPreview":"Encrypted in transit","textChars":20,"textLines":1,"bbox":[476.16,406.08,328.32,34.56]}
+{"kind":"textbox","id":"sh/sb2l47at","slide":16,"name":"Text 28","text":"TLS certificate issued by Google Trust Services and valid to December 2026. Plain HTTP is redirected, never served.","textPreview":"TLS certificate issued by Google Trust Services and valid to December 2026. Plain HTTP is redirected, never served.","textChars":115,"textLines":1,"bbox":[476.16,447.36,328.32,124.8]}
+{"kind":"shape","id":"sh/rat4b298","slide":16,"name":"Shape 29","bbox":[846.72,387.84,373.44,199.68]}
+{"kind":"textbox","id":"sh/69k32xsn","slide":16,"name":"Text 30","text":"Known limit","textPreview":"Known limit","textChars":11,"textLines":1,"bbox":[869.76,406.08,327.36,34.56]}
+{"kind":"textbox","id":"sh/58bm9sr2","slide":16,"name":"Text 31","text":"The free tier sleeps when idle, so the first request after a quiet period takes a few seconds. A scheduled ping keeps it warm.","textPreview":"The free tier sleeps when idle, so the first request after a quiet period takes a few seconds. A scheduled ping keeps it warm.","textChars":126,"textLines":1,"bbox":[869.76,447.36,327.36,124.8]}
+{"kind":"image","id":"im/jmlon6hc","slide":16,"name":"Image 0","bbox":[1170.53,38.4,49.92,48.96]}
+{"kind":"notes","id":"nt/gny5sjyp","slide":16,"text":"Have the Swagger page already open in a second tab before the defence begins."}
+{"kind":"slide","id":"sl/14bup87q","slide":17,"title":"TESTING AND DEFECTS","textShapes":23}
+{"kind":"textbox","id":"sh/1c7e50ni","slide":17,"name":"Text 0","text":"TESTING AND DEFECTS","textPreview":"TESTING AND DEFECTS","textChars":19,"textLines":1,"bbox":[59.52,49.92,864,26.88]}
+{"kind":"textbox","id":"sh/gbedwfmx","slide":17,"name":"Text 1","text":"Twenty-seven defects found. Twenty-seven closed.","textPreview":"Twenty-seven defects found. Twenty-seven closed.","textChars":48,"textLines":1,"bbox":[59.52,80.64,1056,57.6]}
+{"kind":"textbox","id":"sh/6lwvql4v","slide":17,"name":"Text 2","text":"No single technique found more than half of them. That is the finding we would defend hardest.","textPreview":"No single technique found more than half of them. That is the finding we would defend hardest.","textChars":94,"textLines":1,"bbox":[59.52,153.6,1056,34.56]}
+{"kind":"shape","id":"sh/t8ne10n6","slide":17,"name":"Shape 3","bbox":[59.52,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/snedsvml","slide":17,"name":"Text 4","text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[71.04,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/jilcvq54","slide":17,"name":"Text 5","text":"adversarial audit","textPreview":"adversarial audit","textChars":17,"textLines":1,"bbox":[67.2,280.32,163.2,51.84]}
+{"kind":"shape","id":"sh/ihcvml4j","slide":17,"name":"Shape 6","bbox":[256.32,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/4by9or6l","slide":17,"name":"Text 7","text":"7","textPreview":"7","textChars":1,"textLines":1,"bbox":[267.84,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/pc7qhwn6","slide":17,"name":"Text 8","text":"checklist review","textPreview":"checklist review","textChars":16,"textLines":1,"bbox":[264,280.32,163.2,51.84]}
+{"kind":"shape","id":"sh/29grm1of","slide":17,"name":"Shape 9","bbox":[453.12,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/3ap8fm50","slide":17,"name":"Text 10","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[464.64,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/gnepkr69","slide":17,"name":"Text 11","text":"first real database run","textPreview":"first real database run","textChars":23,"textLines":1,"bbox":[460.8,280.32,163.2,51.84]}
+{"kind":"shape","id":"sh/honqdwnu","slide":17,"name":"Shape 12","bbox":[649.92,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/ulw7ihoj","slide":17,"name":"Text 13","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[661.44,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/fm58bm54","slide":17,"name":"Text 14","text":"EXPLAIN ANALYZE","textPreview":"EXPLAIN ANALYZE","textChars":15,"textLines":1,"bbox":[657.6,280.32,163.2,51.84]}
+{"kind":"shape","id":"sh/0ji9wb6t","slide":17,"name":"Shape 15","bbox":[846.72,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/14rqpgne","slide":17,"name":"Text 16","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[858.24,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/90nq9gfi","slide":17,"name":"Text 17","text":"concurrency test","textPreview":"concurrency test","textChars":16,"textLines":1,"bbox":[854.4,280.32,163.2,51.84]}
+{"kind":"shape","id":"sh/8ze9gbyx","slide":17,"name":"Shape 18","bbox":[1043.52,211.2,178.56,134.4]}
+{"kind":"textbox","id":"sh/ny5876xc","slide":17,"name":"Text 19","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[1055.04,226.56,155.52,51.84]}
+{"kind":"textbox","id":"sh/mxw7e1gr","slide":17,"name":"Text 20","text":"unit test","textPreview":"unit test","textChars":9,"textLines":1,"bbox":[1051.2,280.32,163.2,51.84]}
+{"kind":"textbox","id":"sh/lwnq5gf6","slide":17,"name":"Text 21","text":"Four levels of testing","textPreview":"Four levels of testing","textChars":22,"textLines":1,"bbox":[59.52,384,362.88,30.72]}
+{"kind":"textbox","id":"sh/0vepcbyl","slide":17,"name":"Text 22","text":"Unit tests for the library's rules, integration tests against a real Postgres, contract tests against the OpenAPI file, and system tests against the deployed URL.","textPreview":"Unit tests for the library's rules, integration tests against a real Postgres, contract tests against the OpenAPI file, and system tests ...","textChars":162,"textLines":1,"bbox":[59.52,422.4,362.88,138.24]}
+{"kind":"textbox","id":"sh/zul836xg","slide":17,"name":"Text 23","text":"Coverage where it counts","textPreview":"Coverage where it counts","textChars":24,"textLines":1,"bbox":[452.16,384,362.88,30.72]}
+{"kind":"textbox","id":"sh/ytc7a1gv","slide":17,"name":"Text 24","text":"94.7% on the domain package, which holds the borrowing rules. 83.6% on authentication. Coverage is highest where a mistake would be most expensive.","textPreview":"94.7% on the domain package, which holds the borrowing rules. 83.6% on authentication. Coverage is highest where a mistake would be most ...","textChars":147,"textLines":1,"bbox":[452.16,422.4,362.88,138.24]}
+{"kind":"textbox","id":"sh/d83q1wfa","slide":17,"name":"Text 25","text":"The lesson","textPreview":"The lesson","textChars":10,"textLines":1,"bbox":[844.8,384,362.88,30.72]}
+{"kind":"textbox","id":"sh/c7up8ryp","slide":17,"name":"Text 26","text":"Our worst defects passed their own tests. A fake database cannot execute SQL, so a test written against one can confirm a rule the real system never enforces.","textPreview":"Our worst defects passed their own tests. A fake database cannot execute SQL, so a test written against one can confirm a rule the real s...","textChars":158,"textLines":1,"bbox":[844.8,422.4,362.88,138.24]}
+{"kind":"textbox","id":"sh/2dsn2xwn","slide":17,"name":"Text 27","text":"Group 4  ·  SEN 106 / SEN 216  ·  Obafemi Awolowo University, Ile-Ife","textPreview":"Group 4  ·  SEN 106 / SEN 216  ·  Obafemi Awolowo University, Ile-Ife","textChars":69,"textLines":1,"bbox":[59.52,608.64,912,28.8]}
+{"kind":"textbox","id":"sh/3e1ob2d8","slide":17,"name":"Text 28","text":"17","textPreview":"17","textChars":2,"textLines":1,"bbox":[1170.53,608.64,49.92,28.8]}
+{"kind":"image","id":"im/zy5wvmp4","slide":17,"name":"Image 0","bbox":[1170.53,48,49.92,48.96]}
+{"kind":"notes","id":"nt/14bup87q","slide":17,"text":"Close on this: 105 planned test cases, 27 defects, all closed and recorded with the technique that found each one."}
+{"kind":"slide","id":"sl/y5wne50z","slide":18,"title":"Thank you","textShapes":28}
+{"kind":"shape","id":"sh/wrelszu9","slide":18,"name":"Shape 0","bbox":[-115.2,-28.8,652.8,652.8]}
+{"kind":"shape","id":"sh/hsn2l4bu","slide":18,"name":"Shape 1","bbox":[595.2,259.2,518.4,518.4]}
+{"kind":"textbox","id":"sh/itw3upcf","slide":18,"name":"Text 2","text":"Thank you","textPreview":"Thank you","textChars":9,"textLines":1,"bbox":[59.52,55.68,729.6,90.24]}
+{"kind":"textbox","id":"sh/je5knut0","slide":18,"name":"Text 3","text":"We are happy to take questions, and to show any part of it running.","textPreview":"We are happy to take questions, and to show any part of it running.","textChars":67,"textLines":1,"bbox":[59.52,149.76,825.6,34.56]}
+{"kind":"textbox","id":"sh/4felwzu5","slide":18,"name":"Text 4","text":"Ibrahim Aliyah Oiza\nSEN/2025/076","textPreview":"Ibrahim Aliyah Oiza | SEN/2025/076","textChars":32,"textLines":2,"bbox":[68.16,194.3,282.24,48]}
+{"kind":"textbox","id":"sh/5gnmp4bq","slide":18,"name":"Text 5","text":"Olawale Ibrahim Eniola\nSEN/2025/109","textPreview":"Olawale Ibrahim Eniola | SEN/2025/109","textChars":35,"textLines":2,"bbox":[348.1,198.91,282.24,48]}
+{"kind":"textbox","id":"sh/6hw3y9sb","slide":18,"name":"Text 6","text":"Fagbemiro Ibukunoluwa Ayodeji\nSEN/2025/071","textPreview":"Fagbemiro Ibukunoluwa Ayodeji | SEN/2025/071","textChars":42,"textLines":2,"bbox":[659.14,203.52,282.24,48]}
+{"kind":"textbox","id":"sh/rip4retw","slide":18,"name":"Text 7","text":"Ige Tobiloluwa Ayodeji\nSEN/2025/079","textPreview":"Ige Tobiloluwa Ayodeji | SEN/2025/079","textChars":35,"textLines":2,"bbox":[49.15,244.8,282.24,48]}
+{"kind":"textbox","id":"sh/fapkr6pw","slide":18,"name":"Text 8","text":"Adebayo Malik Ayobami\nSEN/2025/008","textPreview":"Adebayo Malik Ayobami | SEN/2025/008","textChars":34,"textLines":2,"bbox":[357.6,251.33,282.24,48]}
+{"kind":"textbox","id":"sh/upg3i18r","slide":18,"name":"Text 9","text":"Akinwunmi David Temidayo\nSEN/2025/042","textPreview":"Akinwunmi David Temidayo | SEN/2025/042","textChars":37,"textLines":2,"bbox":[644.45,246.72,282.24,48]}
+{"kind":"textbox","id":"sh/1cr2tg72","slide":18,"name":"Text 10","text":"Ojewole Darasimi Johnson\nSEN/2025/098","textPreview":"Ojewole Darasimi Johnson | SEN/2025/098","textChars":37,"textLines":2,"bbox":[69.89,303.74,282.24,48]}
+{"kind":"textbox","id":"sh/gbylkbqh","slide":18,"name":"Text 11","text":"Abdul Raheem Abdul Raheem Olawale\nSEN/2025/003","textPreview":"Abdul Raheem Abdul Raheem Olawale | SEN/2025/003","textChars":46,"textLines":2,"bbox":[345.5,294.53,282.24,48]}
+{"kind":"textbox","id":"sh/7mpknmp0","slide":18,"name":"Text 12","text":"Oresajo Oluwaferanmi Idunnuoluwa\nSEN/2025/120","textPreview":"Oresajo Oluwaferanmi Idunnuoluwa | SEN/2025/120","textChars":45,"textLines":2,"bbox":[649.63,300.29,282.24,48]}
+{"kind":"textbox","id":"sh/6lg3e18f","slide":18,"name":"Text 13","text":"Bello OluwaseounTimofe Emmanuel\nSEN/2025/145","textPreview":"Bello OluwaseounTimofe Emmanuel | SEN/2025/145","textChars":44,"textLines":2,"bbox":[72.48,353.86,282.24,48]}
+{"kind":"textbox","id":"sh/to72pw76","slide":18,"name":"Text 14","text":"Onigbinde Goodluck Jesse\nSEN/2025/116","textPreview":"Onigbinde Goodluck Jesse | SEN/2025/116","textChars":37,"textLines":2,"bbox":[344.64,347.71,282.24,48]}
+{"kind":"textbox","id":"sh/snylgrql","slide":18,"name":"Text 15","text":"Ejeh Chibuikem Philemon\nSEN/2025/066","textPreview":"Ejeh Chibuikem Philemon | SEN/2025/066","textChars":36,"textLines":2,"bbox":[653.09,355.39,282.24,48]}
+{"kind":"textbox","id":"sh/bi94zqp4","slide":18,"name":"Text 16","text":"Adeneye Adebisi Crystal\nSEN/2025/017","textPreview":"Adeneye Adebisi Crystal | SEN/2025/017","textChars":36,"textLines":2,"bbox":[55.2,399.74,282.24,48]}
+{"kind":"textbox","id":"sh/qh03ql8j","slide":18,"name":"Text 17","text":"Adegbola Paul Temitope\nCSCS/2025/022","textPreview":"Adegbola Paul Temitope | CSCS/2025/022","textChars":36,"textLines":2,"bbox":[362.78,403.58,282.24,48]}
+{"kind":"textbox","id":"sh/md4nipsr","slide":18,"name":"Text 18","text":"Oti Chiagoziem Evans\nSEN/2025/123","textPreview":"Oti Chiagoziem Evans | SEN/2025/123","textChars":33,"textLines":2,"bbox":[635.81,397.06,282.24,48]}
+{"kind":"textbox","id":"sh/nedoru9c","slide":18,"name":"Text 19","text":"Elusanmi Ayomide David\nSEN/2025/068","textPreview":"Elusanmi Ayomide David | SEN/2025/068","textChars":35,"textLines":2,"bbox":[61.25,456,282.24,48]}
+{"kind":"textbox","id":"sh/8zm5kzax","slide":18,"name":"Text 20","text":"Mogaji Toyosi Ebenezer\nSEN/2025/089","textPreview":"Mogaji Toyosi Ebenezer | SEN/2025/089","textChars":35,"textLines":2,"bbox":[361.06,449.86,282.24,48]}
+{"kind":"textbox","id":"sh/90v6t4ri","slide":18,"name":"Text 21","text":"Amure Oluwatobiloba David\nSEN/2025/045","textPreview":"Amure Oluwatobiloba David | SEN/2025/045","textChars":38,"textLines":2,"bbox":[640.99,457.54,282.24,48]}
+{"kind":"textbox","id":"sh/a14nm9s3","slide":18,"name":"Text 22","text":"Ayodeji Oluwakorede Ifeoluwa\nSEN/2025/054","textPreview":"Ayodeji Oluwakorede Ifeoluwa | SEN/2025/054","textChars":41,"textLines":2,"bbox":[70.75,498.43,282.24,48]}
+{"kind":"textbox","id":"sh/v2xovu9o","slide":18,"name":"Text 23","text":"Alabi Flavour Olatomiwa\nSEN/2026/043","textPreview":"Alabi Flavour Olatomiwa | SEN/2026/043","textChars":36,"textLines":2,"bbox":[349.82,504.96,282.24,48]}
+{"kind":"textbox","id":"sh/w36poza9","slide":18,"name":"Text 24","text":"Asante William Jesutofunmi\nSEN/2025/047","textPreview":"Asante William Jesutofunmi | SEN/2025/047","textChars":39,"textLines":2,"bbox":[652.22,501.89,282.24,48]}
+{"kind":"textbox","id":"sh/x4f6x4re","slide":18,"name":"Text 25","text":"ADEBAYO Honour Oluwafadeyemi\nSEN/2025/007","textPreview":"ADEBAYO Honour Oluwafadeyemi | SEN/2025/007","textChars":41,"textLines":2,"bbox":[50.02,558.53,282.24,48]}
+{"kind":"shape","id":"sh/q5kna5sz","slide":18,"name":"Shape 26","bbox":[956.16,218.88,251.52,299.52]}
+{"kind":"textbox","id":"sh/t0zqp8bm","slide":18,"name":"Text 27","text":"Scan to open the library","textPreview":"Scan to open the library","textChars":24,"textLines":1,"bbox":[963.84,451.2,236.16,23.04]}
+{"kind":"textbox","id":"sh/szq9g3uh","slide":18,"name":"Text 28","text":"library.appmd.dev","textPreview":"library.appmd.dev","textChars":17,"textLines":1,"bbox":[963.84,476.16,236.16,23.04]}
+{"kind":"textbox","id":"sh/6x8retcb","slide":18,"name":"Text 29","text":"SEN 106 / SEN 216  ·  Obafemi Awolowo University, Ile-Ife","textPreview":"SEN 106 / SEN 216  ·  Obafemi Awolowo University, Ile-Ife","textChars":57,"textLines":1,"bbox":[128.64,647.04,691.2,28.8]}
+{"kind":"textbox","id":"sh/h4jqtsby","slide":18,"name":"Text 30","text":"api.library.appmd.dev/docs","textPreview":"api.library.appmd.dev/docs","textChars":26,"textLines":1,"bbox":[806.4,647.04,412.8,28.8]}
+{"kind":"image","id":"im/3ed07u58","slide":18,"name":"Image 0","bbox":[981.12,241.92,201.6,201.6]}
+{"kind":"image","id":"im/4zm1gzmt","slide":18,"name":"Image 1","bbox":[59.52,637.44,49.92,48.96]}
+{"kind":"notes","id":"nt/y5wne50z","slide":18,"text":"Leave this up for questions. Invite them to scan during the presentation rather than after it: a room of examiners searching the live catalogue is the strongest thing we can show."}
