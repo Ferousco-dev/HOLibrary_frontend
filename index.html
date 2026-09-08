@@ -135,7 +135,9 @@
       <input class="input" type="search" id="q" name="q" required minlength="2"
              placeholder="Try: structural analysis" aria-describedby="q-hint"
              autocomplete="off" data-hint="q-hint"
-             data-error="Type something to search for, at least two letters.">
+             data-error="Type something to search for, at least two letters."
+             aria-controls="search-suggestions" aria-expanded="false">
+      <div id="search-suggestions" class="search-suggestions" aria-label="Matching titles" hidden></div>
       <button class="btn btn--primary" type="submit">Search</button>
     </form>
     <p class="hero__hint" id="q-hint">
@@ -303,6 +305,16 @@
       <ul>
         <li><a href="index.html">Search the catalogue</a></li>
         <li><a href="pages/06-reservations.html">Reservations</a></li>
+        <li>
+          <details class="opening-hours">
+            <summary>Opening hours</summary>
+            <div class="opening-hours__content">
+              <p><strong>Monday to Friday:</strong> 8:00 am to 10:00 pm</p>
+              <p><strong>Saturday:</strong> 8:00 am to 4:00 pm</p>
+              <p><strong>Sunday:</strong> 2:00 pm to 10:00 pm</p>
+            </div>
+          </details>
+        </li>
         <li><a href="pages/wings.html">Wings and shelving</a></li>
       </ul>
     </div>
@@ -325,9 +337,8 @@
     <div>
       <h2>Visit</h2>
       <ul>
-        <li>Hezekiah Oluwasanmi Library</li>
-        <li>Obafemi Awolowo University</li>
-        <li>Ile-Ife, Osun State</li>
+        <li><a href="https://www.google.com/maps/search/?api=1&amp;query=Hezekiah+Oluwasanmi+Library+Obafemi+Awolowo+University+Ile-Ife+Osun+State" target="_blank" rel="noopener noreferrer">Find Hezekiah Oluwasanmi Library on Google Maps</a></li>
+        <li><a href="mailto:library@oauife.edu.ng">library@oauife.edu.ng</a></li>
       </ul>
     </div>
   </div>
@@ -363,6 +374,58 @@
 const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
+const suggestions = document.getElementById("search-suggestions");
+let suggestionTimer;
+let suggestionRequest = 0;
+
+function clearSuggestions() {
+  suggestions.replaceChildren();
+  suggestions.hidden = true;
+  input.setAttribute("aria-expanded", "false");
+}
+
+function showSuggestions(items, query) {
+  clearSuggestions();
+  items.slice(0, 5).forEach(function (book) {
+    const title = book.Title || "Untitled";
+    const option = document.createElement("button");
+    option.type = "button";
+    option.className = "search-suggestion";
+    option.textContent = title;
+    option.addEventListener("click", function () {
+      input.value = title;
+      clearSuggestions();
+      go(title || query, 1);
+    });
+    suggestions.appendChild(option);
+  });
+  if (suggestions.childElementCount) {
+    suggestions.hidden = false;
+    input.setAttribute("aria-expanded", "true");
+  }
+}
+
+input.addEventListener("input", function () {
+  const query = input.value.trim();
+  clearTimeout(suggestionTimer);
+  if (query.length < 2) { clearSuggestions(); return; }
+  suggestionTimer = setTimeout(async function () {
+    const requestId = ++suggestionRequest;
+    try {
+      const response = await api.get("/books?q=" + encodeURIComponent(query) + "&page=1&per_page=5");
+      if (requestId === suggestionRequest && input.value.trim() === query) showSuggestions(response.data || [], query);
+    } catch (err) {
+      if (requestId === suggestionRequest) clearSuggestions();
+    }
+  }, 300);
+});
+input.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") clearSuggestions();
+});
+document.addEventListener("pointerdown", function (event) {
+  if (!suggestions.contains(event.target) && event.target !== input) clearSuggestions();
+});
+
 const activeFilters = document.getElementById("active-filters");
 
 // Check the field as the reader leaves it, and report the reason next to it.

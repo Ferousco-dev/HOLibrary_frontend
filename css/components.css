@@ -562,3 +562,12 @@
 .plainlist { list-style: none; margin: 0; padding: 0; }
 .plainlist li + li { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--rule); }
 .plainlist .hint { margin-top: var(--space-1); }
+
+/* Footer opening hours uses the native disclosure control, which works with
+   mouse, keyboard and assistive technology without a custom script. */
+.opening-hours summary { cursor: pointer; list-style: none; color: var(--on-dark-muted); }
+.opening-hours summary::-webkit-details-marker { display: none; }
+.opening-hours summary::after { content: " +"; color: var(--gold); }
+.opening-hours[open] summary::after { content: " −"; }
+.opening-hours__content { padding: var(--space-2) 0 0; font-size: var(--text-sm); }
+.opening-hours__content p { margin: var(--space-1) 0; }
