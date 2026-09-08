@@ -86,6 +86,7 @@ See [`DEC-001`](.ilana/decisions.md) in the Ìlànà record for the full reasoni
 | `pages/09-desk-return.html` | `/pages/09-desk-return` | **Receive a return** — desk workflow for checking a copy back in. |
 | `pages/10-members.html` | `/pages/10-members` | **Members** — search and list all library members, with links to individual records. |
 | `pages/13-member-record.html` | `/pages/13-member-record` | **Member record** — full loan and account history for one member; staff can suspend or reactivate. |
+| `pages/17-inventory.html` | `/pages/17-inventory` | **Inventory and cataloguing** — look up book details, create title records, register copies, and maintain copy status. |
 
 ### Administration (admin role only)
 

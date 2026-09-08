@@ -107,7 +107,7 @@ function buildNav(list) {
       { file: "20-books-out.html", text: "Books out" },
       { file: "14-overdue.html", text: "Overdue" },
       { file: "10-members.html", text: "Members" },
-      { file: "17-inventory.html", text: "Inventory" },
+      { file: "17-inventory.html", text: "Inventory and cataloguing" },
     ]));
   }
 
