@@ -133,8 +133,13 @@
     <form id="search-form" class="hero__search" role="search">
       <label class="sr-only" for="q">Search by title, author, ISBN or subject</label>
       <input class="input" type="search" id="q" name="q"
-             placeholder="Try: structural analysis" aria-describedby="q-hint" autocomplete="off">
-      <button class="btn btn--primary" type="submit">Search</button>
+       placeholder="Try: structural analysis"
+       aria-describedby="q-hint"
+       autocomplete="off">
+
+<div id="search-suggestions" class="search-suggestions" hidden></div>
+
+<button class="btn btn--primary" type="submit">Search</button>
     </form>
     <p class="hero__hint" id="q-hint">
       You do not have to spell it perfectly. Searching for <em>strutural</em> still
@@ -193,7 +198,14 @@
       <ul>
         <li><a href="index.html">Search the catalogue</a></li>
         <li><a href="pages/06-reservations.html">Reservations</a></li>
-        <li><a href="#">Opening hours</a></li>
+          <details class="opening-hours">
+    <summary>Opening hours</summary>
+    <div class="opening-hours__content">
+      <p><strong>Mon–Fri:</strong> 8:00am–10:00pm</p>
+      <p><strong>Sat:</strong> 8:00am–4:00pm</p>
+      <p><strong>Sun:</strong> 2:00pm–10:00pm</p>
+    </div>
+  </details>
         <li><a href="#">Wings and floors</a></li>
       </ul>
     </div>
@@ -214,15 +226,25 @@
         <li><a href="pages/privacy.html">Privacy</a></li>
       </ul>
     </div>
-    <div>
-      <h2>Visit</h2>
-      <ul>
-        <li>Hezekiah Oluwasanmi Library</li>
-        <li>Obafemi Awolowo University</li>
-        <li>Ile-Ife, Osun State</li>
-      </ul>
-    </div>
-  </div>
+  <div>
+  <h2>Visit</h2>
+  <ul>
+    <li>
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=Hezekiah+Oluwasanmi+Library+Obafemi+Awolowo+University+Ile-Ife+Osun+State"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Hezekiah Oluwasanmi Library
+      </a>
+    </li>
+       <li>
+      <a href="mailto:library@oauife.edu.ng">
+        library@oauife.edu.ng
+      </a>
+    </li>
+  </ul>
+</div>
   <div class="sitefoot__base">
     <span>&copy; 2026 Obafemi Awolowo University. Built by Group 4, SEN 106 / SEN 216.</span>
     <span>Catalogue and circulation only. This library does not lend digital texts.</span>
@@ -253,6 +275,64 @@
 const form = document.getElementById("search-form");
 const input = document.getElementById("q");
 const results = document.getElementById("results");
+const suggestions = document.getElementById("search-suggestions");
+
+let suggestionTimer;
+let suggestionRequest = 0;
+input.addEventListener("input", function () {
+  const query = input.value.trim();
+
+  clearTimeout(suggestionTimer);
+
+  if (query.length < 2) {
+    suggestions.innerHTML = "";
+    suggestions.hidden = true;
+    return;
+  }
+
+  suggestionTimer = setTimeout(async function () {
+    const requestId = ++suggestionRequest;
+
+    try {
+      const result = await api.get(
+        "/books?q=" + encodeURIComponent(query) + "&page=1&per_page=5"
+      );
+
+      // Ignore an older request if the user has typed something newer.
+      if (requestId !== suggestionRequest) return;
+
+      const items = result.data || [];
+
+      suggestions.innerHTML = "";
+
+      if (items.length === 0) {
+        suggestions.hidden = true;
+        return;
+      }
+
+      items.forEach(function (book) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "search-suggestion";
+        button.textContent = book.Title || "Untitled";
+
+        button.addEventListener("click", function () {
+          input.value = book.Title || "";
+          suggestions.innerHTML = "";
+          suggestions.hidden = true;
+          go(book.Title || query, 1);
+        });
+
+        suggestions.appendChild(button);
+      });
+
+      suggestions.hidden = false;
+    } catch (err) {
+      suggestions.innerHTML = "";
+      suggestions.hidden = true;
+    }
+  }, 300);
+});
 
 form.addEventListener("submit", function (event) {
   event.preventDefault();

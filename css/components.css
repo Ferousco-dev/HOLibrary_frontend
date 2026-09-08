@@ -332,3 +332,29 @@
 .pushoffer__text b { display: block; color: var(--indigo); font-size: var(--text-base); }
 .pushoffer__text span { font-size: var(--text-sm); color: var(--ink-muted); }
 .pushoffer__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+/* Opening hours dropdown */
+.opening-hours summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.opening-hours summary::-webkit-details-marker {
+  display: none;
+}
+
+.opening-hours summary::after {
+  content: " +";
+}
+
+.opening-hours[open] summary::after {
+  content: " −";
+}
+
+.opening-hours__content {
+  padding: 10px 0 5px 0;
+  font-size: 0.9rem;
+}
+
+.opening-hours__content p {
+  margin: 5px 0;
+}
