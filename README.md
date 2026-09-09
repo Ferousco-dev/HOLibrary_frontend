@@ -59,7 +59,6 @@ See [`DEC-001`](.ilana/decisions.md) in the Ìlànà record for the full reasoni
 | `pages/browse.html` | `/pages/browse` | **Browse the catalogue** — subject and library-wing starting points for physical books. |
 | `pages/subjects.html` | `/pages/subjects` | **Browse by subject** — broad shelf-classification entry points. |
 | `pages/new-arrivals.html` | `/pages/new-arrivals` | **New arrivals** — newest catalogue records, with covers and availability. |
-| `pages/library-info.html` | `/pages/library-info` | **Library information** — opening hours, location, contact, borrowing help, and the OAU repository link. |
 | `pages/03-book.html` | `/pages/03-book` | **Book detail** — full record for a single title: cover image (via Open Library), call number, all physical copies with their individual statuses, and a Reserve button. |
 | `pages/04-signin.html` | `/pages/04-signin` | **Sign in** — accepts a matric or staff number and password. Redirects back to the page the reader came from after a successful sign-in. |
 | `pages/404.html` | `/404` | **Not found** — returned by Vercel for any path that does not exist. |
@@ -139,7 +138,6 @@ holibrary-frontend/
 │   ├── browse.html
 │   ├── subjects.html
 │   ├── new-arrivals.html
-│   ├── library-info.html
 │   ├── 13-member-record.html
 │   ├── 404.html
 │   ├── accessibility.html

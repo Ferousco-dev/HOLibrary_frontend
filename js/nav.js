@@ -82,7 +82,6 @@ function buildNav(list) {
     { file: "browse.html", text: "Browse the catalogue" },
     { file: "new-arrivals.html", text: "New arrivals" },
     { file: "subjects.html", text: "Browse by subject" },
-    { file: "library-info.html", text: "Library information" },
   ];
   if (api.isStaff()) {
     catalogue.push({ file: "16-catalogue-tools.html", text: "Catalogue tools" });
