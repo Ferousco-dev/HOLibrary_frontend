@@ -12,7 +12,7 @@
 <header class="siteheader"><div class="siteheader__inner"><a class="brand" href="../index.html"><img class="brand__crest" src="../assets/oau-logo.png" alt="Obafemi Awolowo University crest"><span class="brand__name">Hezekiah Oluwasanmi Library</span></a><nav class="mainnav" aria-label="Main navigation"><button class="navtoggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="navtoggle__bars" aria-hidden="true"><span></span></span>Menu</button><ul class="mainnav__list" id="primary-nav" hidden><li><a class="mainnav__link" href="../index.html">Search the catalogue</a></li></ul></nav></div></header>
 <div class="shell"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Catalogue</a></li><li aria-current="page">Inventory</li></ol></nav></div>
 <main id="main" class="shell page">
-  <div class="page__head"><h1>Inventory and cataloguing</h1><p class="page__lead">Register the book first, then its physical copy. The catalogue record holds the title and author; the accession number identifies the volume on the shelf.</p></div>
+  <div class="page__head"><h1>Inventory and cataloguing</h1><p class="page__lead">On the left, register a new title and its first copy. On the right, look up any existing title by any of its accession numbers to add another copy, edit a copy's status, or archive the title.</p></div>
   <p class="liveregion" id="live" aria-live="polite" role="status"></p>
   <div class="split">
     <div>
@@ -41,16 +41,49 @@
       </section>
     </div>
     <aside class="split__aside">
-      <section class="panel" aria-labelledby="copy-heading"><h2 class="panel__title" id="copy-heading">Add another copy</h2><p class="hint">Use this only when the title is already in the catalogue.</p><form id="copy-form" novalidate><div class="field"><label for="existing-book-id">Book ID</label><input class="input" id="existing-book-id" required autocomplete="off"></div><div class="field"><label for="extra-accession">Accession number</label><input class="input" id="extra-accession" required autocomplete="off" placeholder="HOL-748212"></div><div class="field"><label for="extra-policy">Loan policy</label><select class="select" id="extra-policy"><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="copy-btn">Register copy</button></form><div id="copy-result"></div></section>
-      <section class="panel" aria-labelledby="update-heading"><h2 class="panel__title" id="update-heading">Find and update a copy</h2><p class="hint">Scan or enter the accession number; the book title and copy ID are found for you.</p><form id="find-copy-form" novalidate><div class="field"><label for="find-accession">Accession number</label><input class="input" id="find-accession" required autocomplete="off" inputmode="text" autofocus placeholder="HOL-748211"></div><button class="btn btn--secondary" type="submit" id="find-copy-btn">Find copy</button></form><div id="found-copy"></div><form id="update-form" novalidate hidden><input type="hidden" id="copy-id"><div class="field"><label for="copy-status">Status</label><select class="select" id="copy-status"><option value="">Leave unchanged</option><option value="available">Available</option><option value="lost">Lost</option><option value="damaged">Damaged</option><option value="withdrawn">Withdrawn</option></select></div><div class="field"><label for="update-policy">Loan policy</label><select class="select" id="update-policy"><option value="">Leave unchanged</option><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="update-btn">Save copy changes</button></form><div id="update-result"></div></section>
-      <section class="panel" aria-labelledby="archive-heading">
-        <h2 class="panel__title" id="archive-heading">Archive a title</h2>
-        <p class="hint">Archiving removes a title from public catalogue search without deleting its borrowing history.</p>
-        <form id="archive-form" novalidate>
-          <div class="field"><label for="archive-id">Book ID</label><input class="input" type="text" id="archive-id" required autocomplete="off"></div>
-          <button class="btn btn--danger" type="submit" id="archive-btn">Archive title</button>
+      <section class="panel" aria-labelledby="manage-heading">
+        <h2 class="panel__title" id="manage-heading">Manage an existing title</h2>
+        <p class="hint">Scan or type any accession number for a copy of the title. Everything else is looked up for you.</p>
+        <form id="find-copy-form" novalidate>
+          <div class="field"><label for="find-accession">Accession number</label><input class="input" id="find-accession" required autocomplete="off" inputmode="text" autofocus placeholder="HOL-748211"></div>
+          <button class="btn btn--secondary" type="submit" id="find-copy-btn">Find title</button>
         </form>
-        <div id="archive-result"></div>
+        <div id="found-copy"></div>
+
+        <!-- Everything below is revealed once a title is found. The book id
+             that these actions need is held in the hidden field, so a
+             librarian never has to know or type it. -->
+        <div id="manage-actions" hidden>
+          <h3>Edit this copy</h3>
+          <form id="update-form" novalidate>
+            <input type="hidden" id="copy-id">
+            <div class="formrow">
+              <div class="field"><label for="copy-status">Status</label><select class="select" id="copy-status"><option value="">Leave unchanged</option><option value="available">Available</option><option value="lost">Lost</option><option value="damaged">Damaged</option><option value="withdrawn">Withdrawn</option></select></div>
+              <div class="field"><label for="update-policy">Loan policy</label><select class="select" id="update-policy"><option value="">Leave unchanged</option><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div>
+            </div>
+            <button class="btn btn--primary" type="submit" id="update-btn">Save copy changes</button>
+          </form>
+          <div id="update-result"></div>
+
+          <h3>Add another copy of this title</h3>
+          <p class="hint">Give the new volume a fresh accession number.</p>
+          <form id="copy-form" novalidate>
+            <input type="hidden" id="existing-book-id">
+            <div class="formrow">
+              <div class="field"><label for="extra-accession">New accession number</label><input class="input" id="extra-accession" required autocomplete="off" placeholder="HOL-748212"></div>
+              <div class="field"><label for="extra-policy">Loan policy</label><select class="select" id="extra-policy"><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div>
+            </div>
+            <button class="btn btn--primary" type="submit" id="copy-btn">Register copy</button>
+          </form>
+          <div id="copy-result"></div>
+
+          <h3>Archive this title</h3>
+          <p class="hint">Archiving removes the title from public catalogue search without deleting its borrowing history.</p>
+          <form id="archive-form" novalidate>
+            <button class="btn btn--danger" type="submit" id="archive-btn">Archive title</button>
+          </form>
+          <div id="archive-result"></div>
+        </div>
       </section>
     </aside>
   </div>
@@ -70,17 +103,40 @@ async function addCopy(bookId, accession, policy) { return (await api.post("/boo
 function copyEntries() { return Array.from(document.querySelectorAll(".copy-entry")).map(function (row) { return { accession: row.querySelector("[data-accession]").value.trim(), policy: row.querySelector("[data-policy]").value }; }); }
 function addCopyRow() { const count = document.querySelectorAll(".copy-entry").length + 1; const row = el("div", { className: "formrow copy-entry" }, [el("div", { className: "field" }, [el("label", {}, "Accession number " + count), el("input", { className: "input", type: "text", "data-accession": true, autocomplete: "off", placeholder: "HOL-748212" })]), el("div", { className: "field" }, [el("label", {}, "Loan policy"), el("select", { className: "select", "data-policy": true }, [el("option", { value: "circulating" }, "Circulating"), el("option", { value: "reference_only" }, "Reference only"), el("option", { value: "on_display" }, "On display"), el("option", { value: "restricted" }, "Restricted")])]), el("div", { className: "field field--fixed" }, el("button", { type: "button", className: "btn", onClick: function () { row.remove(); } }, "Remove"))]); document.getElementById("copy-fields").appendChild(row); row.querySelector("input").focus(); }
 document.getElementById("add-copy-row").addEventListener("click", addCopyRow);
-document.getElementById("book-form").addEventListener("submit", async function (event) { event.preventDefault(); const target = document.getElementById("book-result"), copies = copyEntries(); if (!value("title") || !value("call-number") || copies.some(function (copy) { return !copy.accession; })) { notice(target, "Complete the required fields", "Book title, call number and every accession number are required.", "warn"); return; } const button = document.getElementById("book-btn"), payload = { title: value("title"), call_number: value("call-number") }; [["subtitle", "subtitle"], ["isbn13", "isbn13"], ["publisher", "publisher"], ["place", "place_of_publication"], ["description", "description"]].forEach(function (pair) { if (value(pair[0])) payload[pair[1]] = value(pair[0]); }); if (value("published-year")) payload.published_year = Number(value("published-year")); if (listValue("authors").length) payload.authors = listValue("authors"); if (listValue("subjects").length) payload.subjects = listValue("subjects"); button.disabled = true; button.textContent = "Saving…"; try { const book = (await api.post("/books", payload)).data || {}; const bookId = book.ID || book.id; if (!bookId) throw new Error("The title was created, but the server did not return its ID. Add copies from the title record."); for (const copy of copies) await addCopy(bookId, copy.accession, copy.policy); const link = el("a", { href: "03-book.html?id=" + encodeURIComponent(bookId) }, "View the new title"); replace(target, el("div", { className: "notice notice--ok" }, [el("p", { className: "notice__head" }, "Book and " + copies.length + " " + (copies.length === 1 ? "copy" : "copies") + " registered"), el("p", { className: "notice__body" }, "The title is now in the catalogue and its physical volumes are in inventory."), link])); document.getElementById("existing-book-id").value = bookId; this.reset(); document.getElementById("copy-fields").replaceChildren(); addCopyRow(); announce("Book and physical copies registered."); } catch (err) { notice(target, "Record not completed", err.message, "bad"); announce(err.message); } finally { button.disabled = false; button.textContent = "Save book and register copies"; } });
+document.getElementById("book-form").addEventListener("submit", async function (event) { event.preventDefault(); const target = document.getElementById("book-result"), copies = copyEntries(); if (!value("title") || !value("call-number") || copies.some(function (copy) { return !copy.accession; })) { notice(target, "Complete the required fields", "Book title, call number and every accession number are required.", "warn"); return; } const button = document.getElementById("book-btn"), payload = { title: value("title"), call_number: value("call-number") }; [["subtitle", "subtitle"], ["isbn13", "isbn13"], ["publisher", "publisher"], ["place", "place_of_publication"], ["description", "description"]].forEach(function (pair) { if (value(pair[0])) payload[pair[1]] = value(pair[0]); }); if (value("published-year")) payload.published_year = Number(value("published-year")); if (listValue("authors").length) payload.authors = listValue("authors"); if (listValue("subjects").length) payload.subjects = listValue("subjects"); button.disabled = true; button.textContent = "Saving…"; try { const book = (await api.post("/books", payload)).data || {}; const bookId = book.ID || book.id; if (!bookId) throw new Error("The title was created, but the server did not return its ID. Add copies from the title record."); for (const copy of copies) await addCopy(bookId, copy.accession, copy.policy); const link = el("a", { href: "03-book.html?id=" + encodeURIComponent(bookId) }, "View the new title"); replace(target, el("div", { className: "notice notice--ok" }, [el("p", { className: "notice__head" }, "Book and " + copies.length + " " + (copies.length === 1 ? "copy" : "copies") + " registered"), el("p", { className: "notice__body" }, "The title is now in the catalogue and its physical volumes are in inventory."), link])); document.getElementById("existing-book-id").value = bookId; document.getElementById("manage-actions").hidden = false; this.reset(); document.getElementById("copy-fields").replaceChildren(); addCopyRow(); announce("Book and physical copies registered."); } catch (err) { notice(target, "Record not completed", err.message, "bad"); announce(err.message); } finally { button.disabled = false; button.textContent = "Save book and register copies"; } });
 
-document.getElementById("copy-form").addEventListener("submit", async function (event) { event.preventDefault(); const target = document.getElementById("copy-result"), bookId = value("existing-book-id"), accession = value("extra-accession"); if (!bookId || !accession) { notice(target, "Book ID and accession number are required", "Complete both fields before registering another copy.", "warn"); return; } const button = document.getElementById("copy-btn"); button.disabled = true; button.textContent = "Registering…"; try { await addCopy(bookId, accession, document.getElementById("extra-policy").value); notice(target, "Copy registered", accession + " has been added to this title.", "ok"); this.reset(); document.getElementById("existing-book-id").value = bookId; } catch (err) { notice(target, "Copy not registered", err.message, "bad"); } finally { button.disabled = false; button.textContent = "Register copy"; } });
+document.getElementById("copy-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const target = document.getElementById("copy-result");
+  const bookId = value("existing-book-id");
+  const accession = value("extra-accession");
+  if (!bookId) {
+    notice(target, "Find a title first", "Look up any accession number of the title before adding another copy.", "warn");
+    return;
+  }
+  if (!accession) {
+    notice(target, "Accession number is required", "Give the new volume a fresh accession number.", "warn");
+    return;
+  }
+  const button = document.getElementById("copy-btn");
+  button.disabled = true; button.textContent = "Registering…";
+  try {
+    await addCopy(bookId, accession, document.getElementById("extra-policy").value);
+    notice(target, "Copy registered", accession + " has been added to this title.", "ok");
+    document.getElementById("extra-accession").value = "";
+    document.getElementById("extra-accession").focus();
+  } catch (err) {
+    notice(target, "Copy not registered", err.message, "bad");
+  } finally {
+    button.disabled = false; button.textContent = "Register copy";
+  }
+});
 
 function chooseCopy(copy, book) {
   const copyId = copy.ID || copy.id;
   document.getElementById("copy-id").value = copyId;
   document.getElementById("copy-status").value = (copy.Status || copy.status) === "on_loan" ? "" : (copy.Status || copy.status || "");
   document.getElementById("update-policy").value = copy.LoanPolicy || copy.loan_policy || "";
-  document.getElementById("update-form").hidden = false;
-  document.getElementById("update-heading").textContent = "Edit " + (copy.AccessionNumber || copy.accession_number || "copy");
   document.getElementById("update-form").scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 function renderSelectedRecord(book, copies, selected) {
@@ -89,29 +145,63 @@ function renderSelectedRecord(book, copies, selected) {
   const title = book.Title || book.title || "Untitled";
   const authors = Array.isArray(book.Authors || book.authors) ? (book.Authors || book.authors).join(", ") : (book.Author || book.author || "Unknown author");
   const heading = el("h3", { id: "selected-record-heading" }, "Selected record");
-  const edit = el("button", { type: "button", className: "btn btn--secondary", onClick: function () { chooseCopy(selected, book); } }, "✎ Edit this copy");
-  const add = el("button", { type: "button", className: "btn btn--primary", onClick: function () { document.getElementById("existing-book-id").value = bookId; document.getElementById("extra-accession").focus(); } }, "+ Add accession number");
   const table = el("div", { className: "table-wrap" }, el("table", { className: "table table--responsive" }, [el("caption", {}, "Physical copies of " + title), el("thead", {}, el("tr", {}, [el("th", { scope: "col" }, "Accession"), el("th", { scope: "col" }, "Status"), el("th", { scope: "col" }, "Loan policy"), el("th", { scope: "col" }, "Action")])), el("tbody", {}, copies.map(function (copy) { const accession = copy.AccessionNumber || copy.accession_number || "—"; const status = copy.Status || copy.status || "Unknown"; const policy = copy.LoanPolicy || copy.loan_policy || "—"; return el("tr", {}, [el("td", { "data-label": "Accession" }, el("span", { className: "accession" }, accession)), el("td", { "data-label": "Status" }, status), el("td", { "data-label": "Loan policy" }, policy.replace(/_/g, " ")), el("td", { "data-label": "Action" }, el("button", { type: "button", className: "btn btn--secondary", onClick: function () { chooseCopy(copy, book); } }, "Edit"))]); }))]));
-  replace(target, el("div", { className: "notice notice--ok" }, [heading, el("p", { className: "notice__head" }, title), el("p", { className: "notice__body" }, authors + " · " + (book.CallNumber || book.call_number || "No call number")), el("dl", { className: "dl" }, [el("dt", {}, "ISBN"), el("dd", {}, book.ISBN13 || book.isbn13 || "Not recorded"), el("dt", {}, "Publisher"), el("dd", {}, book.Publisher || book.publisher || "Not recorded"), el("dt", {}, "Subjects"), el("dd", {}, (book.Subjects || book.subjects || []).join(", ") || "Not recorded"), el("dt", {}, "Selected accession"), el("dd", {}, selected.AccessionNumber || selected.accession_number || "—")]), el("p", { className: "result__actions" }, [edit, add]), table]));
+  replace(target, el("div", { className: "notice notice--ok" }, [heading, el("p", { className: "notice__head" }, title), el("p", { className: "notice__body" }, authors + " · " + (book.CallNumber || book.call_number || "No call number")), el("dl", { className: "dl" }, [el("dt", {}, "ISBN"), el("dd", {}, book.ISBN13 || book.isbn13 || "Not recorded"), el("dt", {}, "Publisher"), el("dd", {}, book.Publisher || book.publisher || "Not recorded"), el("dt", {}, "Subjects"), el("dd", {}, (book.Subjects || book.subjects || []).join(", ") || "Not recorded"), el("dt", {}, "Selected accession"), el("dd", {}, selected.AccessionNumber || selected.accession_number || "—")]), table]));
+
+  // Reveal the action forms and prime them with the found record, so the
+  // librarian only ever types accession numbers -- the book id is set here
+  // once and reused by every subsequent action.
+  document.getElementById("existing-book-id").value = bookId || "";
+  document.getElementById("manage-actions").hidden = false;
+  chooseCopy(selected, book);
+
   heading.tabIndex = -1; heading.focus({ preventScroll: true });
   announce(title + ", accession " + (selected.AccessionNumber || selected.accession_number || "") + " selected. " + copies.length + " copies found.");
 }
-document.getElementById("find-copy-form").addEventListener("submit", async function (event) { event.preventDefault(); const accession = value("find-accession"), target = document.getElementById("found-copy"); if (!accession) return; const button = document.getElementById("find-copy-btn"); button.disabled = true; button.textContent = "Finding…"; replace(target, loadingState("Finding the copy")); try { const found = (await api.get("/copies/lookup?accession=" + encodeURIComponent(accession))).data || {}; const selected = found.copy || {}; const bookId = (found.book || {}).ID || (found.book || {}).id || selected.BookID || selected.book_id; if (!bookId) throw new Error("The server did not return the title for this copy."); const record = (await api.get("/books/" + encodeURIComponent(bookId))).data || {}; renderSelectedRecord(record.book || found.book || {}, record.copies || [selected], selected); } catch (err) { notice(target, "Copy not found", err.message, "bad"); document.getElementById("update-form").hidden = true; } finally { button.disabled = false; button.textContent = "Find copy"; } });
+document.getElementById("find-copy-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const accession = value("find-accession"), target = document.getElementById("found-copy");
+  if (!accession) return;
+  const button = document.getElementById("find-copy-btn");
+  button.disabled = true; button.textContent = "Finding…";
+  replace(target, loadingState("Finding the copy"));
+  try {
+    const found = (await api.get("/copies/lookup?accession=" + encodeURIComponent(accession))).data || {};
+    const selected = found.copy || {};
+    const bookId = (found.book || {}).ID || (found.book || {}).id || selected.BookID || selected.book_id;
+    if (!bookId) throw new Error("The server did not return the title for this copy.");
+    const record = (await api.get("/books/" + encodeURIComponent(bookId))).data || {};
+    renderSelectedRecord(record.book || found.book || {}, record.copies || [selected], selected);
+  } catch (err) {
+    notice(target, "Title not found", err.message, "bad");
+    document.getElementById("manage-actions").hidden = true;
+    document.getElementById("existing-book-id").value = "";
+  } finally {
+    button.disabled = false; button.textContent = "Find title";
+  }
+});
 
 document.getElementById("update-form").addEventListener("submit", async function (event) { event.preventDefault(); const target = document.getElementById("update-result"), id = value("copy-id"), status = document.getElementById("copy-status").value, policy = document.getElementById("update-policy").value; if (!status && !policy) { notice(target, "Choose a change", "Select a new status or loan policy.", "warn"); return; } const payload = {}; if (status) payload.status = status; if (policy) payload.loan_policy = policy; const button = document.getElementById("update-btn"); button.disabled = true; button.textContent = "Saving…"; try { await api.patch("/copies/" + encodeURIComponent(id), payload); notice(target, "Copy updated", "The inventory details have been saved.", "ok"); } catch (err) { notice(target, "Copy not updated", err.message, "bad"); } finally { button.disabled = false; button.textContent = "Save copy changes"; } });
 
 document.getElementById("archive-form").addEventListener("submit", async function (event) {
   event.preventDefault();
   const target = document.getElementById("archive-result");
-  if (!value("archive-id")) return;
+  const bookId = value("existing-book-id");
+  if (!bookId) {
+    notice(target, "Find a title first", "Look up any accession number of the title before archiving.", "warn");
+    return;
+  }
   const sure = await confirmAction({ title: "Archive this title?", body: "It will leave catalogue search, but its borrowing history will remain.", confirm: "Archive title", cancel: "Keep title", tone: "bad" });
   if (!sure) return;
   const button = document.getElementById("archive-btn");
   button.disabled = true; button.textContent = "Archiving…";
   try {
-    await api.post("/books/" + encodeURIComponent(value("archive-id")) + "/archive");
+    await api.post("/books/" + encodeURIComponent(bookId) + "/archive");
     notice(target, "Title archived", "The title no longer appears in catalogue search.", "ok");
-    this.reset();
+    document.getElementById("manage-actions").hidden = true;
+    document.getElementById("found-copy").replaceChildren();
+    document.getElementById("existing-book-id").value = "";
+    document.getElementById("find-accession").focus();
     announce("Title archived.");
   } catch (err) {
     notice(target, "Title not archived", err.message, "bad");
