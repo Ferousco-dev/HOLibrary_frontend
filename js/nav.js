@@ -83,9 +83,6 @@ function buildNav(list) {
     { file: "new-arrivals.html", text: "New arrivals" },
     { file: "subjects.html", text: "Browse by subject" },
   ];
-  if (api.isStaff()) {
-    catalogue.push({ file: "16-catalogue-tools.html", text: "Catalogue tools" });
-  }
   list.appendChild(group("nav-catalogue", "Catalogue", catalogue));
 
   const account = signedIn

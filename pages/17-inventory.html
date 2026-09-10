@@ -43,6 +43,15 @@
     <aside class="split__aside">
       <section class="panel" aria-labelledby="copy-heading"><h2 class="panel__title" id="copy-heading">Add another copy</h2><p class="hint">Use this only when the title is already in the catalogue.</p><form id="copy-form" novalidate><div class="field"><label for="existing-book-id">Book ID</label><input class="input" id="existing-book-id" required autocomplete="off"></div><div class="field"><label for="extra-accession">Accession number</label><input class="input" id="extra-accession" required autocomplete="off" placeholder="HOL-748212"></div><div class="field"><label for="extra-policy">Loan policy</label><select class="select" id="extra-policy"><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="copy-btn">Register copy</button></form><div id="copy-result"></div></section>
       <section class="panel" aria-labelledby="update-heading"><h2 class="panel__title" id="update-heading">Find and update a copy</h2><p class="hint">Scan or enter the accession number; the book title and copy ID are found for you.</p><form id="find-copy-form" novalidate><div class="field"><label for="find-accession">Accession number</label><input class="input" id="find-accession" required autocomplete="off" inputmode="text" autofocus placeholder="HOL-748211"></div><button class="btn btn--secondary" type="submit" id="find-copy-btn">Find copy</button></form><div id="found-copy"></div><form id="update-form" novalidate hidden><input type="hidden" id="copy-id"><div class="field"><label for="copy-status">Status</label><select class="select" id="copy-status"><option value="">Leave unchanged</option><option value="available">Available</option><option value="lost">Lost</option><option value="damaged">Damaged</option><option value="withdrawn">Withdrawn</option></select></div><div class="field"><label for="update-policy">Loan policy</label><select class="select" id="update-policy"><option value="">Leave unchanged</option><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div><button class="btn btn--primary" type="submit" id="update-btn">Save copy changes</button></form><div id="update-result"></div></section>
+      <section class="panel" aria-labelledby="archive-heading">
+        <h2 class="panel__title" id="archive-heading">Archive a title</h2>
+        <p class="hint">Archiving removes a title from public catalogue search without deleting its borrowing history.</p>
+        <form id="archive-form" novalidate>
+          <div class="field"><label for="archive-id">Book ID</label><input class="input" type="text" id="archive-id" required autocomplete="off"></div>
+          <button class="btn btn--danger" type="submit" id="archive-btn">Archive title</button>
+        </form>
+        <div id="archive-result"></div>
+      </section>
     </aside>
   </div>
 </main>
@@ -90,4 +99,25 @@ function renderSelectedRecord(book, copies, selected) {
 document.getElementById("find-copy-form").addEventListener("submit", async function (event) { event.preventDefault(); const accession = value("find-accession"), target = document.getElementById("found-copy"); if (!accession) return; const button = document.getElementById("find-copy-btn"); button.disabled = true; button.textContent = "Finding…"; replace(target, loadingState("Finding the copy")); try { const found = (await api.get("/copies/lookup?accession=" + encodeURIComponent(accession))).data || {}; const selected = found.copy || {}; const bookId = (found.book || {}).ID || (found.book || {}).id || selected.BookID || selected.book_id; if (!bookId) throw new Error("The server did not return the title for this copy."); const record = (await api.get("/books/" + encodeURIComponent(bookId))).data || {}; renderSelectedRecord(record.book || found.book || {}, record.copies || [selected], selected); } catch (err) { notice(target, "Copy not found", err.message, "bad"); document.getElementById("update-form").hidden = true; } finally { button.disabled = false; button.textContent = "Find copy"; } });
 
 document.getElementById("update-form").addEventListener("submit", async function (event) { event.preventDefault(); const target = document.getElementById("update-result"), id = value("copy-id"), status = document.getElementById("copy-status").value, policy = document.getElementById("update-policy").value; if (!status && !policy) { notice(target, "Choose a change", "Select a new status or loan policy.", "warn"); return; } const payload = {}; if (status) payload.status = status; if (policy) payload.loan_policy = policy; const button = document.getElementById("update-btn"); button.disabled = true; button.textContent = "Saving…"; try { await api.patch("/copies/" + encodeURIComponent(id), payload); notice(target, "Copy updated", "The inventory details have been saved.", "ok"); } catch (err) { notice(target, "Copy not updated", err.message, "bad"); } finally { button.disabled = false; button.textContent = "Save copy changes"; } });
+
+document.getElementById("archive-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+  const target = document.getElementById("archive-result");
+  if (!value("archive-id")) return;
+  const sure = await confirmAction({ title: "Archive this title?", body: "It will leave catalogue search, but its borrowing history will remain.", confirm: "Archive title", cancel: "Keep title", tone: "bad" });
+  if (!sure) return;
+  const button = document.getElementById("archive-btn");
+  button.disabled = true; button.textContent = "Archiving…";
+  try {
+    await api.post("/books/" + encodeURIComponent(value("archive-id")) + "/archive");
+    notice(target, "Title archived", "The title no longer appears in catalogue search.", "ok");
+    this.reset();
+    announce("Title archived.");
+  } catch (err) {
+    notice(target, "Title not archived", err.message, "bad");
+    announce(err.message);
+  } finally {
+    button.disabled = false; button.textContent = "Archive title";
+  }
+});
 </script></body></html>
