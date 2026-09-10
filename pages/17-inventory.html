@@ -45,7 +45,7 @@
         <h2 class="panel__title" id="manage-heading">Manage an existing title</h2>
         <p class="hint">Scan or type any accession number for a copy of the title. Everything else is looked up for you.</p>
         <form id="find-copy-form" novalidate>
-          <div class="field"><label for="find-accession">Accession number</label><input class="input" id="find-accession" required autocomplete="off" inputmode="text" autofocus placeholder="HOL-748211"></div>
+          <div class="field"><label for="find-accession">Accession number</label><input class="input" type="text" id="find-accession" required autocomplete="off" inputmode="text" autofocus placeholder="HOL-748211"></div>
           <button class="btn btn--secondary" type="submit" id="find-copy-btn">Find title</button>
         </form>
         <div id="found-copy"></div>
@@ -70,7 +70,7 @@
           <form id="copy-form" novalidate>
             <input type="hidden" id="existing-book-id">
             <div class="formrow">
-              <div class="field"><label for="extra-accession">New accession number</label><input class="input" id="extra-accession" required autocomplete="off" placeholder="HOL-748212"></div>
+              <div class="field"><label for="extra-accession">New accession number</label><input class="input" type="text" id="extra-accession" required autocomplete="off" placeholder="HOL-748212"></div>
               <div class="field"><label for="extra-policy">Loan policy</label><select class="select" id="extra-policy"><option value="circulating">Circulating</option><option value="reference_only">Reference only</option><option value="on_display">On display</option><option value="restricted">Restricted</option></select></div>
             </div>
             <button class="btn btn--primary" type="submit" id="copy-btn">Register copy</button>
