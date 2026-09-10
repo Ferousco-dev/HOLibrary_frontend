@@ -649,17 +649,23 @@ async function reserveTitle(book, btn, resultBox) {
   try {
     const result = await api.post("/reservations", { book_id: book.ID });
     const reservation = result.data || result;
-    const place = reservation.queue_position + ordinal(reservation.queue_position);
+    const qp = reservation.queue_position;
+    const hasPlace = Number.isInteger(qp) && qp > 0;
+    const heading = hasPlace
+      ? "You are " + qp + ordinal(qp) + " in the queue."
+      : "You are in the queue for this title.";
 
     replace(resultBox, el("div", { className: "notice notice--ok" }, [
-      el("p", { className: "notice__head" }, "You are " + place + " in the queue."),
+      el("p", { className: "notice__head" }, heading),
       el("p", { className: "notice__body" },
         "We will tell you as soon as a copy of \u201c" + book.Title
         + "\u201d is ready for you."),
       el("p", {}, el("a", { href: "06-reservations.html" }, "See your reservations")),
     ]));
     btn.remove();
-    announce("You are " + place + " in the queue for " + book.Title + ".");
+    announce(hasPlace
+      ? "You are " + qp + ordinal(qp) + " in the queue for " + book.Title + "."
+      : "You are in the queue for " + book.Title + ".");
   } catch (err) {
     // The server refuses for reasons the browser cannot know: already in this
     // queue, account suspended, a limit reached. Show its sentence, not a guess.

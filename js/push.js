@@ -72,7 +72,7 @@ const push = (function () {
 
     try {
       const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
-      firebase.initializeApp(HOL.FIREBASE);
+      firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(HOL.FIREBASE);
       const messaging = firebase.messaging();
 
       const token = await messaging.getToken({

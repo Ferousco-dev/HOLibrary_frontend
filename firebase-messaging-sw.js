@@ -23,6 +23,9 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+
 /* A message that arrives while the site is closed or in another tab.
 
    The server sends a data-only payload on purpose. A payload carrying a

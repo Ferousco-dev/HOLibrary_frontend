@@ -502,6 +502,7 @@ saveSearchButton.addEventListener("click", function () {
   const url = window.location.pathname + window.location.search;
   const label = input.value.trim() || "Browse: " + (collectFilters().subject || collectFilters().wing || "all titles");
   const saved = saveCurrentSearch(label, url);
+  if (!saved) { announce("Sign in to save searches."); return; }
   saveSearchButton.textContent = saved.url === url ? "Search saved" : "Save this search";
   announce("Search saved to this device.");
 });
@@ -532,8 +533,6 @@ window.addEventListener("popstate", function () {
     cls: params.get("class") || "",
     subject: params.get("subject") || "",
     author: params.get("author") || "",
-    faculty: params.get("faculty") || "",
-    department: params.get("department") || "",
     faculty: params.get("faculty") || "",
     department: params.get("department") || "",
     yearFrom: params.get("yearFrom") || "",
@@ -602,6 +601,8 @@ async function runSearch(query, page, filters) {
     cls: params.get("class") || "",
     subject: params.get("subject") || "",
     author: params.get("author") || "",
+    faculty: params.get("faculty") || "",
+    department: params.get("department") || "",
     yearFrom: params.get("yearFrom") || "",
     yearTo: params.get("yearTo") || "",
     language: params.get("language") || "",
@@ -700,7 +701,9 @@ function renderFilterChips(query, filters) {
     sort: "Sort: ",
   };
   Object.keys(labels).forEach(function (key) {
-    if (filters && filters[key]) values.push([labels[key] + filters[key], key]);
+    if (!filters || !filters[key]) return;
+    if (key === "sort" && filters[key] === "relevance") return;
+    values.push([labels[key] + filters[key], key]);
   });
   if (filters && filters.borrowable) values.push(["Available to borrow now", "borrowable"]);
 

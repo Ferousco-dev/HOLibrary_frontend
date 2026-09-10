@@ -153,7 +153,11 @@ const api = (function () {
       const body = await r.json();
       setSession(body.data || body);
       return true;
-    } catch (e) { clearSession(); return false; }
+    } catch (e) {
+      // A network failure (offline, DNS, dropped connection) is not proof the
+      // refresh token is bad — keep it in place and let the caller retry.
+      throw e;
+    }
   }
 
   return {

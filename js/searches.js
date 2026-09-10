@@ -2,16 +2,21 @@
    The search itself remains a normal URL, so it can still be shared anywhere. */
 function savedSearchKey() {
   const user = api.who() || {};
-  return "hol.saved-searches." + (user.id || user.ID || user.login || user.email || "member");
+  const id = user.id || user.ID || user.login || user.email;
+  return id ? "hol.saved-searches." + id : null;
 }
 
 function readSavedSearches() {
-  try { return JSON.parse(localStorage.getItem(savedSearchKey()) || "[]"); }
+  const key = savedSearchKey();
+  if (!key) return [];
+  try { return JSON.parse(localStorage.getItem(key) || "[]"); }
   catch (error) { return []; }
 }
 
 function writeSavedSearches(searches) {
-  localStorage.setItem(savedSearchKey(), JSON.stringify(searches));
+  const key = savedSearchKey();
+  if (!key) return;
+  localStorage.setItem(key, JSON.stringify(searches));
 }
 
 function savedSearchUrl(search) {
@@ -23,6 +28,7 @@ function savedSearchUrl(search) {
 }
 
 function saveCurrentSearch(label, url) {
+  if (!savedSearchKey()) return null;
   const searches = readSavedSearches();
   const existing = searches.find(function (search) { return search.url === url; });
   if (existing) return existing;

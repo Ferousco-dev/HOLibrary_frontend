@@ -90,7 +90,7 @@ function redirectToSignIn(expired) {
 
 function accessDeniedState() {
   return messageState("You do not have permission to view this page.", "bad", [
-    el("p", { className: "hint" }, el("a", { href: "../index.html" }, "Back to the catalogue")),
+    el("p", { className: "hint" }, el("a", { href: (location.pathname.indexOf("/pages/") !== -1 ? "../index.html" : "index.html") }, "Back to the catalogue")),
   ]);
 }
 
